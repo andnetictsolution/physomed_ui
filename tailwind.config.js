@@ -8,6 +8,7 @@ export default  {
   content: [
     './views/**/*.{js,jsx,vue}',
     './components/**/*.{js,jsx,vue}',
+    "./node_modules/flowbite/**/*.js",
     './app/**/*.{js,jsx,vue}',
     './src/**/*.{js,jsx,vue}',
 	],

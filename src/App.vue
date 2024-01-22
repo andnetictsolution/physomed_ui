@@ -1,20 +1,14 @@
 <script setup>
-import DefaultHeader from "./components/default/DefaultHeader.vue"
-import DefaultFooter from "./components/default/DefaultFooter.vue"
-
+// import DefaultFooter from './components/default/DefaultFooter.vue'
+import DefaultSidebar from './components/core/defaultSidebar.vue'
 </script>
 
 <template>
+  <div>
     <div>
-      <DefaultHeader />
-      <RouterView />
-      <DefaultFooter/>
-      
+      <DefaultSidebar />
     </div>
-
-  
+  </div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
