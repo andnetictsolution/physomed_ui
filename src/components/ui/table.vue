@@ -230,10 +230,10 @@
     >
       <div class="relative w-full max-w-2xl max-h-full">
         <!-- Modal content -->
-        <form class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <form class="relative bg-white rounded-lg shadow dark:bg-gray-000">
           <!-- Modal header -->
           <div class="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">Edit user</h3>
+            <h3 class="text-xl font-semibold text-gray-900 dark:text-black">Edit user</h3>
             <button
               type="button"
               class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -259,124 +259,116 @@
           </div>
           <!-- Modal body -->
           <div class="p-6 space-y-6">
+            <div class="grid grid-cols-2 gap-6">
+              <div class="relative z-0">
+                <input
+                  type="text"
+                  id="floating_standard"
+                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                />
+                <label
+                  for="floating_standard"
+                  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                  >First name</label
+                >
+              </div>
+              <div class="relative z-0">
+                <input
+                  type="text"
+                  id="floating_standard"
+                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                />
+                <label
+                  for="floating_standard"
+                  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                  >Father's name</label
+                >
+              </div>
+              <div class="relative z-0">
+                <input
+                  type="text"
+                  id="floating_standard"
+                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                />
+                <label
+                  for="floating_standard"
+                  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                  >Phone no.</label
+                >
+              </div>
+              <div class="relative z-0">
+                <input
+                  type="text"
+                  id="floating_standard"
+                  class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                  placeholder=" "
+                />
+                <label
+                  for="floating_standard"
+                  class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
+                  >Email address</label
+                >
+              </div>
+            </div>
             <div class="grid grid-cols-6 gap-6">
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="first-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
                   >First Name</label
                 >
                 <input
                   type="text"
                   name="first-name"
                   id="first-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Bonnie"
-                  required=""
+                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="first name"
+                  required
                 />
               </div>
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="last-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
                   >Last Name</label
                 >
                 <input
                   type="text"
                   name="last-name"
                   id="last-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Green"
-                  required=""
                 />
               </div>
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
                   >Email</label
                 >
                 <input
                   type="email"
                   name="email"
                   id="email"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="example@company.com"
-                  required=""
                 />
               </div>
               <div class="col-span-6 sm:col-span-3">
                 <label
                   for="phone-number"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
                   >Phone Number</label
                 >
                 <input
                   type="number"
                   name="phone-number"
                   id="phone-number"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="e.g. +(12)3456 789"
-                  required=""
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="department"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Department</label
-                >
-                <input
-                  type="text"
-                  name="department"
-                  id="department"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Development"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="company"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Company</label
-                >
-                <input
-                  type="number"
-                  name="company"
-                  id="company"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="123456"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="current-password"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >Current Password</label
-                >
-                <input
-                  type="password"
-                  name="current-password"
-                  id="current-password"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="••••••••"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="new-password"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >New Password</label
-                >
-                <input
-                  type="password"
-                  name="new-password"
-                  id="new-password"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="••••••••"
                   required
                 />
               </div>

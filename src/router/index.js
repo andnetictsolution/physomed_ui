@@ -39,7 +39,7 @@ const router = createRouter({
     {
       path: '/cashier',
       name: 'cashier',
-      component: () => import('../components/ui/cashier.vue')
+      component: () => import('../components/ui/table.vue')
     }
   ]
 })
