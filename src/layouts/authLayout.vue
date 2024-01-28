@@ -1,5 +1,5 @@
 <script setup>
-import DefaultHeader from '../default/DefaultHeader.vue'
+import DefaultHeader from '../components/default/DefaultHeader.vue'
 import { onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
 
@@ -64,7 +64,7 @@ onMounted(() => {
         </li>
         <li>
           <a
-            href="/userRegistration"
+            href="/user/register"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <svg

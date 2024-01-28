@@ -1,12 +1,29 @@
-<script setup>
-// import DefaultFooter from './components/default/DefaultFooter.vue'
-import DefaultSidebar from './components/core/defaultSidebar.vue'
+<script>
+import { ref } from 'vue';
+import AuthLayout from './layouts/authLayout.vue'
+import DefaultLayout from './layouts/defaultLayout.vue'
+
+export default {
+  components: {
+    DefaultLayout,
+    AuthLayout,
+  },
+  setup(){
+    const currentLayout = ref(true)
+    return{
+      currentLayout
+    }
+  }
+  
+}
 </script>
 
 <template>
   <div>
     <div>
-      <DefaultSidebar />
+      <component :is="currentLayout ? 'AuthLayout' : 'DefaultLayout'">
+      </component>
+     
     </div>
   </div>
 </template>
