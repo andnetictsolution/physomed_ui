@@ -11,13 +11,22 @@ export const userStore = defineStore('user', {
     },
     getSingleUser: (state) => {
       return state.user
+    },
+    getAllUsersss(state) {
+      return axios.get('/api/users')
+        .then((response) => {
+          state.users = response.data
+          console.log("KKKK", response.data.users)
+          return state.users
+        })
     }
   },
   actions: {
     addNewUser(payload) {
-      console.log(payload)
-      axios.post('/user', { here: payload })
+      axios.post('/api/users/register', payload)
+    },
+    deletuser(payload) {
+      axios.delete('/api/users/remove/', id)
     }
   }
 })
-

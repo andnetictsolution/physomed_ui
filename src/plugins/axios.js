@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 // baseurl
-axios.defaults.baseURL = 'http://192.168.1.120:4000/api/v1/'
+// axios.defaults.baseURL = 'http://192.168.1.120:4000/api/v1/'
+axios.defaults.baseURL = 'http://127.0.0.1:5000'
+
 
 // for outgoing requests
 axios.interceptors.request.use((config) => {

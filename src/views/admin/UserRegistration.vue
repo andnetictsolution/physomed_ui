@@ -3,27 +3,33 @@ import { ref } from 'vue'
 import { userStore } from '../../stores/admin/user'
 const userPinia = userStore()
 const user = ref({
-  firstName: '',
-  middleName: '',
-  lastName: '',
-  phoneNumber: '',
+  first_name: '',
+  last_name: '',
+  phone: '',
   email: '',
-  role: ''
+  role: '',
+  password: ''
 })
 const registerUser = () => {
   userPinia.addNewUser(user.value)
 }
+const getAllUser = userStore()
+const gettt = userPinia.getAllUsersss
+
+console.log('DD', gettt)
+const firstName = getAllUser.getAllUsersss
+console.log('FFF', firstName)
 </script>
 
 <template>
-  <div class="max-w-md mx-auto my-auto">
+  <div class="max-w-md mx-auto my-auto pt-2">
     <div class="relative z-0 w-full mb-5 group">
       <input
         v-model="user.email"
         type="email"
         name="floating_email"
         id="floating_email"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
         required
       />
@@ -33,13 +39,16 @@ const registerUser = () => {
         >Email address</label
       >
     </div>
+    <div>
+      <!-- <p>my First Name is {{ fName }}</p> -->
+    </div>
 
     <div class="grid md:grid-cols-3 md:gap-6">
       <div class="relative z-0 w-full mb-5 group">
         <input
-          v-model="user.firstName"
+          v-model="user.first_name"
           type="text"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=""
           required
         />
@@ -51,39 +60,39 @@ const registerUser = () => {
       </div>
       <div class="relative z-0 w-full mb-5 group">
         <input
-          v-model="user.middleName"
+          v-model="user.last_name"
           type="text"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=""
           required
         />
         <label
           for="floating_middle_name"
           class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Middle name</label
+          >Last name</label
         >
       </div>
       <div class="relative z-0 w-full mb-5 group">
         <input
-          v-model="user.lastName"
+          v-model="user.password"
           type="text"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
         />
         <label
           for="floating_last_name"
           class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Last name</label
+          >Password</label
         >
       </div>
     </div>
     <div class="grid md:grid-cols-2 md:gap-6">
       <div class="relative z-0 w-full mb-5 group">
         <input
-          v-model="user.phoneNumber"
+          v-model="user.phone"
           type="tel"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "
           required
         />
@@ -97,7 +106,7 @@ const registerUser = () => {
         <select
           v-model="user.role"
           id="role"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         >
           <option
             value="null"

@@ -16,6 +16,12 @@ const adminRoutes = [
     name: 'patientRegister',
     component: () => import('../views/admin/PatientRegistration.vue'),
     meta: { requiresAuth: false, userGuard: 'All', layout: "auth" }
+  },
+  {
+    path: '/user/view',
+    name: 'userView',
+    component: () => import('../components/table/table.vue'),
+    meta: { requiresAuth: false, userGuard: 'All', layout: "auth" }
   }
 ]
 

@@ -1,4 +1,31 @@
-<script setup></script>
+<script setup>
+import { ref, onMounted, defineComponent } from 'vue'
+
+import { patientStore } from '../../stores/reception/patient.js'
+import { storeToRefs } from 'pinia'
+
+const patientPinia = patientStore()
+const { getAllPatients } = storeToRefs(patientPinia)
+
+const patient = ref({
+  full_name: '',
+  date_of_birth: '',
+  sex: '',
+  phone: '',
+  medicalHistory: ''
+})
+const registerPatient = () => {
+  patientPinia.addNewPatient(patient.value)
+}
+const getPatients = () => {
+  //   const data = patientPinia.getAllPatients
+  console.log('ZZ', getAllPatients)
+}
+console.log('LLLKKKFFF', getAllPatients)
+
+const getAllPatient = patientPinia.getAllPatients
+console.log('Patient', getAllPatient)
+</script>
 <template>
   <form>
     <div>
@@ -7,6 +34,7 @@
     <div class="grid gap-6 mb-6 md:grid-cols-2 pt-2">
       <div class="relative z-0">
         <input
+          v-model="patient.full_name"
           type="text"
           id="floating_standard"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -116,10 +144,20 @@
       <div></div>
       <div>
         <button
+          @click.prevent="registerPatient"
           type="submit"
           class="float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800: text-end"
         >
           Submit
+        </button>
+      </div>
+      <div>
+        <button
+          @click.prevent="getPatients"
+          type="submit"
+          class="float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800: text-end"
+        >
+          Get
         </button>
       </div>
     </div>
