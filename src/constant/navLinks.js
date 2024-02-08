@@ -11,7 +11,7 @@ export const adminLinks = [
   },
   {
     name: 'View User',
-    to: '/user',
+    to: '/user/view',
     icon: ''
   },
   {

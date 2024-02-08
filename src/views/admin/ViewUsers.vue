@@ -14,6 +14,6 @@ const column = ['first_name', 'last_name', 'phone', 'email', 'role']
 </script>
 <template>
   <div>
-    <BaseTable :column="column" :data="allUsers" />
+    <BaseTable :column="column" route="/users" :data="allUsers" />
   </div>
 </template>
