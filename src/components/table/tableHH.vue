@@ -20,17 +20,16 @@
               <slot :name="column.slot" :row="row"> </slot>
             </template>
           </td>
-          <td v-for="act in actions" :key="column.field" class="px-6 py-4">
+          <!-- <td v-for="act in actions" :key="column.field" class="px-6 py-4">
             <a
               href="#"
               type="button"
               class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
               >Action Button</a
             >hgjahd
-          </td>
+          </td> -->
 
-          <td class="px-6 py-4">
-            <!-- Modal toggle -->
+          <!-- <td class="px-6 py-4">
             <a
               href="#"
               type="button"
@@ -41,7 +40,6 @@
             >
           </td>
           <td class="px-6 py-4">
-            <!-- Modal toggle -->
             <a
               href="/doctor/patientMedicalHistory"
               type="button"
@@ -50,7 +48,7 @@
               class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
               >Patient detail</a
             >
-          </td>
+          </td> -->
         </tr>
       </tbody>
     </table>
