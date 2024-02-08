@@ -11,6 +11,7 @@
       <tbody>
         <tr
           v-for="row in data"
+          @click="routeTo(row._id)"
           :key="row.id"
           class="odd:bg-white :bg-gray-900 even:bg-gray-50 :bg-gray-800 border-b dark:border-gray-700"
         >
@@ -162,6 +163,8 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
+
 const props = defineProps({
   column: {
     type: Array,
@@ -173,6 +176,14 @@ const props = defineProps({
   },
   actions: {
     type: Array
+  },
+  route: {
+    type: String
   }
 })
+const router = useRouter()
+const routeTo = (id) => {
+  router.push(`${props.route}/${id}`)
+  console.log('inside route cliked')
+}
 </script>
