@@ -1,47 +1,34 @@
 <template>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-000 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="p-4"></th>
-          <th scope="col" class="px-6 py-3">Name</th>
-          <th scope="col" class="px-6 py-3">Status</th>
-          <th scope="col" class="px-6 py-3">Sex</th>
-          <th scope="col" class="px-6 py-3">Status</th>
-          <th scope="col" class="px-6 py-3">Action</th>
+          <th scope="col" class="px-6 py-3" v-for="item in props.column" :key="item.id">
+            {{ item }}
+          </th>
         </tr>
       </thead>
       <tbody>
         <tr
-          class="bg-white border-b dark:bg-gray-000 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-100"
+          v-for="row in data"
+          :key="row.id"
+          class="odd:bg-white :bg-gray-900 even:bg-gray-50 :bg-gray-800 border-b dark:border-gray-700"
         >
-          <td class="w-4 p-4">
-            <div class="flex items-center">
-              <input
-                id="checkbox-table-search-1"
-                type="checkbox"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-            </div>
+          <td v-for="column in column" :key="column.field" class="px-6 py-4">
+            {{ row[column] }}
+            <template v-if="column.slot">
+              <slot :name="column.slot" :row="row"> </slot>
+            </template>
           </td>
-          <th
-            scope="row"
-            class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            <div class="ps-3">
-              <div class="text-base font-semibold text-black">Neil Sims</div>
-              <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
-            </div>
-          </th>
-          <td class="px-6 py-4">React Developer</td>
-          <td class="px-6 py-4">Male</td>
-          <td class="px-6 py-4">
-            <div class="flex items-center">
-              <div class="h-2.5 w-2.5 rounded-full bg-green-000 me-2"></div>
-              Online
-            </div>
+          <td v-for="act in actions" :key="column.field" class="px-6 py-4">
+            <a
+              href="#"
+              type="button"
+              class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+              >Action Button</a
+            >hgjahd
           </td>
+
           <td class="px-6 py-4">
             <!-- Modal toggle -->
             <a
@@ -53,51 +40,20 @@
               >Edit user</a
             >
           </td>
-        </tr>
-
-        <tr class="bg-white dark:bg-gray-000 hover:bg-gray-50 dark:hover:bg-gray-100">
-          <td class="w-4 p-4">
-            <div class="flex items-center">
-              <input
-                id="checkbox-table-search-3"
-                type="checkbox"
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-              />
-              <label for="checkbox-table-search-3" class="sr-only">checkbox</label>
-            </div>
-          </td>
-          <th
-            scope="row"
-            class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-          >
-            <div class="ps-3">
-              <div class="text-base font-semibold text-black">Leslie Livingston</div>
-              <div class="font-normal text-gray-500">leslie@flowbite.com</div>
-            </div>
-          </th>
-          <td class="px-6 py-4">SEO Specialist</td>
-          <td class="px-6 py-4">Female</td>
-
-          <td class="px-6 py-4">
-            <div class="flex items-center">
-              <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div>
-              Offline
-            </div>
-          </td>
           <td class="px-6 py-4">
             <!-- Modal toggle -->
             <a
-              href="#"
+              href="/doctor/patientMedicalHistory"
               type="button"
+              data-modal-target="editUserModal"
               data-modal-show="editUserModal"
               class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >Edit user</a
+              >Patient detail</a
             >
           </td>
         </tr>
       </tbody>
     </table>
-    <!-- Edit user modal -->
     <div
       id="editUserModal"
       tabindex="-1"
@@ -189,66 +145,6 @@
                 >
               </div>
             </div>
-            <div class="grid grid-cols-6 gap-6">
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="first-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >First Name</label
-                >
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="first name"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="last-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >Last Name</label
-                >
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Green"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >Email</label
-                >
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="example@company.com"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="phone-number"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >Phone Number</label
-                >
-                <input
-                  type="number"
-                  name="phone-number"
-                  id="phone-number"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="e.g. +(12)3456 789"
-                  required
-                />
-              </div>
-            </div>
           </div>
           <!-- Modal footer -->
           <div
@@ -266,3 +162,19 @@
     </div>
   </div>
 </template>
+
+<script setup>
+const props = defineProps({
+  column: {
+    type: Array,
+    required: true // Make it mandatory if needed
+  },
+  data: {
+    type: Array,
+    required: true
+  },
+  actions: {
+    type: Array
+  }
+})
+</script>

@@ -1,12 +1,34 @@
-<script></script>
-<template>
-  <h1 class="text-xl pt-2">Patient Medical History</h1>
+<script setup>
+import { ref } from 'vue'
+import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
+const patientMedicalHistoryPinia = patientMedicalHistoryStore()
+const patientMedicalHistory = ref({
+  chief_complaint: 'kkkk',
+  when_did_it_start: '12/02/2002',
+  list_of_other_diagnosis: 'jk',
+  list_of_previous_diagnosis: 'ahgsdjs',
+  is_patient_pregnant: 'yes',
+  patient_id: '65ba0bbd8eab859545a42bc8'
+})
+const registerPatientMedicalHistory = () => {
+  patientMedicalHistoryPinia.addpatientmedicalHistory(patientMedicalHistory.value)
+}
+</script>
 
+<template>
+  <h1 class="text-xl">Patient Medical History</h1>
+  <div class="float-end block mb-2 text-sm font-medium text-gray-900 dark:text-black">
+    <p>Name Fred zak</p>
+    <p>Phone No. 0912321232</p>
+    <p>Sex M</p>
+  </div>
+  <br />
   <div>
     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
       >1. What is your chief compliant?</label
     >
     <textarea
+      v-model="patientMedicalHistory.chief_complaint"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -33,6 +55,7 @@
         </svg>
       </div>
       <input
+        v-model="patientMedicalHistory.when_did_it_start"
         datepicker
         type="text"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-000 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -48,6 +71,7 @@
     <div class="grid gap-1 mb-6 md:grid-cols-3 ml-4">
       <div class="flex items-center">
         <input
+          v-model="patientMedicalHistory.list_of_other_diagnosis"
           id="link-checkbox"
           type="checkbox"
           value=""
@@ -221,6 +245,7 @@
     <div class="ml-4">
       <div class="flex items-center">
         <input
+          v-model="is_patient_pregnant"
           id="link-checkbox"
           type="checkbox"
           value=""
@@ -260,6 +285,7 @@
     >
     <div>
       <textarea
+        v-model="patientMedicalHistory.list_of_previous_diagnosis"
         id="whenToStrat"
         rows="4"
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -269,6 +295,7 @@
   </div>
   <div>
     <button
+      @click.prevent="registerPatientMedicalHistory"
       type="submit"
       class="float-right mt-4 mb-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-end dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800: pt-4"
     >

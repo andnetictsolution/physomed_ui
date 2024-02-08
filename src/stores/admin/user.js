@@ -12,14 +12,7 @@ export const userStore = defineStore('user', {
     getSingleUser: (state) => {
       return state.user
     },
-    getAllUsersss(state) {
-      return axios.get('/api/users')
-        .then((response) => {
-          state.users = response.data
-          console.log("KKKK", response.data.users)
-          return state.users
-        })
-    }
+
   },
   actions: {
     addNewUser(payload) {
@@ -27,6 +20,11 @@ export const userStore = defineStore('user', {
     },
     deletuser(payload) {
       axios.delete('/api/users/remove/', id)
+    },
+    async fetchUsers() {
+      let response = await axios.get('/api/users');
+      console.log(response);
+      this.users = response.data.users
     }
   }
 })

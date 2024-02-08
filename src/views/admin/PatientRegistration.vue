@@ -5,7 +5,6 @@ import { patientStore } from '../../stores/reception/patient.js'
 import { storeToRefs } from 'pinia'
 
 const patientPinia = patientStore()
-const { getAllPatients } = storeToRefs(patientPinia)
 
 const patient = ref({
   full_name: '',
@@ -17,14 +16,6 @@ const patient = ref({
 const registerPatient = () => {
   patientPinia.addNewPatient(patient.value)
 }
-const getPatients = () => {
-  //   const data = patientPinia.getAllPatients
-  console.log('ZZ', getAllPatients)
-}
-console.log('LLLKKKFFF', getAllPatients)
-
-const getAllPatient = patientPinia.getAllPatients
-console.log('Patient', getAllPatient)
 </script>
 <template>
   <form>
@@ -43,26 +34,13 @@ console.log('Patient', getAllPatient)
         <label
           for="floating_standard"
           class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >First name</label
+          >Full name</label
         >
       </div>
-      <div></div>
-      <div class="relative z-0">
-        <input
-          type="text"
-          id="floating_standard"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-        />
-        <label
-          for="floating_standard"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >Father's name</label
-        >
-      </div>
-      <div></div>
+
       <div>
         <select
+          v-model="patient.sex"
           id="countries"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
         >
@@ -71,9 +49,10 @@ console.log('Patient', getAllPatient)
           <option value="CA">Female</option>
         </select>
       </div>
-      <div></div>
+
       <div class="relative z-0">
         <input
+          v-model="patient.date_of_birth"
           type="text"
           id="floating_standard"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -85,9 +64,10 @@ console.log('Patient', getAllPatient)
           >Age</label
         >
       </div>
-      <div></div>
+
       <div class="relative z-0">
         <input
+          v-model="patient.phone"
           type="text"
           id="floating_standard"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
@@ -99,7 +79,7 @@ console.log('Patient', getAllPatient)
           >Phone No.</label
         >
       </div>
-      <div></div>
+
       <div class="relative z-0">
         <input
           type="text"
@@ -113,7 +93,7 @@ console.log('Patient', getAllPatient)
           >Email address</label
         >
       </div>
-      <div></div>
+
       <div class="relative z-0">
         <input
           type="text"
@@ -127,7 +107,6 @@ console.log('Patient', getAllPatient)
           >Sub City</label
         >
       </div>
-      <div></div>
       <div class="relative z-0">
         <input
           type="text"
@@ -149,15 +128,6 @@ console.log('Patient', getAllPatient)
           class="float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800: text-end"
         >
           Submit
-        </button>
-      </div>
-      <div>
-        <button
-          @click.prevent="getPatients"
-          type="submit"
-          class="float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800: text-end"
-        >
-          Get
         </button>
       </div>
     </div>
