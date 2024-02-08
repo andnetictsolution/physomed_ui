@@ -3,14 +3,15 @@ import { ref } from 'vue'
 import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
 const patientMedicalHistoryPinia = patientMedicalHistoryStore()
 const patientMedicalHistory = ref({
-  chief_complaint: 'kkkk',
-  when_did_it_start: '12/02/2002',
-  list_of_other_diagnosis: 'jk',
-  list_of_previous_diagnosis: 'ahgsdjs',
-  is_patient_pregnant: 'yes',
+  chief_complaint: '',
+  when_did_it_start: '',
+  list_of_other_diagnosis: '',
+  list_of_previous_diagnosis: '',
+  is_patient_pregnant: '',
   patient_id: '65ba0bbd8eab859545a42bc8'
 })
 const registerPatientMedicalHistory = () => {
+  console.log(patientMedicalHistory.value, 'in commponent')
   patientMedicalHistoryPinia.addpatientmedicalHistory(patientMedicalHistory.value)
 }
 </script>

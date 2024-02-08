@@ -6,21 +6,25 @@ export const adminLinks = [
   },
   {
     name: 'Add User',
-    to: '/user',
+    to: '/user/register',
     icon: ''
   },
   {
     name: 'View User',
-    to: '/user',
+    to: '/user/view',
     icon: ''
   },
   {
     name: 'Add Service',
-    to: '/service',
+    to: '/service/add',
+    icon: ''
+  },
+  {
+    name: 'View Service',
+    to: '/service/view',
     icon: ''
   }
 ]
-
 export const receptionLinks = [
   {
     name: 'Dashboard',

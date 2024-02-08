@@ -9,17 +9,17 @@ export const patientMedicalHistoryStore = defineStore('patientMedicalHistory', {
 
     },
     actions: {
-        addpatientmedicalHistory(payload) {
-            console.log("Patient Id", payload.patient_id)
-            axios.post(`/api/medicalHistory/save/${payload.patient_id}`)
+        async addpatientmedicalHistory(payload) {
+            console.log("Patient Id", payload)
+            await axios.post(`/api/medicalHistory/save/${payload.patient_id}`, { medical_history_data: payload })
         },
         deletuser(payload) {
             axios.delete('/api/users/remove/', id)
         },
-        async fetchUsers() {
-            let response = await axios.get('/api/users');
+        async fetchMedicalHistory() {
+            let response = await axios.get('/');
             console.log(response);
-            this.users = response.data.users
+            this.users = response.data.medicalHistories
         }
     }
 })

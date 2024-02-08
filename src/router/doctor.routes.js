@@ -10,6 +10,11 @@ const doctorRoutes = [
     path: '/doctor/investigation',
     name: 'Investigation',
     component: () => import('../views/doctor/DoctorInvestigation.vue')
+  },
+  {
+    path: '/doctor/medicalHistory',
+    name: 'medicalHistory',
+    component: () => import('../views/doctor/viewPatientMedicalHistory.vue')
   }
 ]
 
