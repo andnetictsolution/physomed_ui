@@ -1,17 +1,21 @@
 <script>
-import { ref } from 'vue'
+import { computed } from 'vue'
 import AuthLayout from './layouts/authLayout.vue'
 import DefaultLayout from './layouts/defaultLayout.vue'
-
+import { authStore } from './stores/auth/auth'
 export default {
   components: {
     DefaultLayout,
     AuthLayout
   },
   setup() {
-    const currentLayout = ref(true)
+    // const currentLayout = ref(false);
+    const authPinia = authStore()
+    const isAuthenticated = computed(() => {
+      return localStorage.getItem('physomed_token') ? true : authPinia.isAuthenticatedUser
+    })
     return {
-      currentLayout
+      isAuthenticated
     }
   }
 }
@@ -20,7 +24,7 @@ export default {
 <template>
   <div>
     <div>
-      <component :is="currentLayout ? 'AuthLayout' : 'DefaultLayout'"> </component>
+      <component :is="isAuthenticated ? 'AuthLayout' : 'DefaultLayout'"> </component>
     </div>
   </div>
 </template>
