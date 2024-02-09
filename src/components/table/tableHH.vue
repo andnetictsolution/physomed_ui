@@ -21,14 +21,14 @@
               <slot :name="column.slot" :row="row"> </slot>
             </template>
           </td>
-          <!-- <td v-for="act in actions" :key="column.field" class="px-6 py-4">
+          <td v-for="act in actions" :key="actions.field" class="px-6 py-4">
             <a
               href="#"
               type="button"
               class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >Action Button</a
-            >hgjahd
-          </td> -->
+              >{{ act }}</a
+            >
+          </td>
 
           <!-- <td class="px-6 py-4">
             <a

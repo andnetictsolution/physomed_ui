@@ -32,31 +32,38 @@ export const receptionLinks = [
     icon: ''
   },
   {
+    name: 'View Patient',
+    to: '/patient/view',
+    icon: ''
+  },
+  {
     name: 'Add Patinet',
-    to: '/patient',
+    to: '/patient/register',
     icon: ''
   },
-  {
-    name: 'Payment Order',
-    to: '/user',
-    icon: ''
-  },
-  {
-    name: 'Appointment lists',
-    to: '/service',
-    icon: ''
-  }
+
+  // {
+  //   name: 'Payment Order',
+  //   to: '/user',
+  //   icon: ''
+  // },
+
 ]
 
 export const nurseLinks = [
   {
     name: 'Dashboard',
-    to: '/admin/dashboard',
+    to: '/nurse/dashboard',
     icon: ''
   },
   {
     name: 'Patinet Queue',
-    to: '/patient',
+    to: '/patient/view',
+    icon: ''
+  },
+  {
+    name: 'Patient Medical History',
+    to: '/nurse/patientMedicalHistory',
     icon: ''
   }
 ]
@@ -69,12 +76,22 @@ export const doctorLinks = [
   },
   {
     name: 'Patient Queue',
-    to: '/patient/view',
+    to: '/doctor/patients',
+    icon: ''
+  },
+  // {
+  //   name: 'Daily appointment',
+  //   to: '/user',
+  //   icon: ''
+  // },
+  {
+    name: 'Patient Medical History',
+    to: '/doctor/medicalHistory',
     icon: ''
   },
   {
-    name: 'Daily appointment',
-    to: '/user',
+    name: 'Investigations',
+    to: '/doctor/investigation',
     icon: ''
   }
 ]
@@ -87,8 +104,12 @@ export const physotrapistLinks = [
   },
   {
     name: 'Patinet Queue',
-    to: '/patient',
+    to: '/patient/view',
     icon: ''
+  },
+  {
+    name: 'Patient Treatment',
+    to: '/patient/treatment'
   }
 ]
 

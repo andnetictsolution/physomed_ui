@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 // baseurl
-axios.defaults.baseURL = 'http://192.168.74.200:5000/'
-// axios.defaults.baseURL = 'http://127.0.0.1:5000'
+// axios.defaults.baseURL = 'http://192.168.107.200:5000/'
+axios.defaults.baseURL = 'http://127.0.0.1:5000'
 
 
 // for outgoing requests

@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import permisionDenied from '../views/403Page.vue'
 import notFound from '../views/404Page.vue'
+import welcome from "../views/welcome.vue"
 import adminRoutes from './admin.routes'
 import configurationRoutes from './configuration.routes'
 import doctorRoutes from './doctor.routes'
@@ -8,6 +9,7 @@ import nurseRoutes from './nurse.routes'
 import physotrapistRoutes from './physotrapist.routes'
 import receptionRoutes from './reception.routes'
 import authRoutes from './auth.routes'
+
 // import jwt_decode from "jwt-decode";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,7 +26,13 @@ const router = createRouter({
       name: 'permisiondenied',
       component: permisionDenied
     },
-    
+
+    {
+      path: '/welcome',
+      name: 'welcome',
+      component: welcome
+    },
+
     {
       path: '/:catchAll(.*)',
       name: 'notFound',
@@ -34,7 +42,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  
+
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!localStorage.getItem("physomed_token")) {
       next({ path: "/Login" });

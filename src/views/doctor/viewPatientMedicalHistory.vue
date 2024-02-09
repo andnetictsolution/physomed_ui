@@ -57,7 +57,6 @@ const patientMedicalHistoryPinia = patientMedicalHistoryStore()
     <div class="grid gap-1 mb-6 md:grid-cols-3 ml-4">
       <div class="flex items-center">
         <input
-          v-model="patientMedicalHistory.list_of_other_diagnosis"
           id="link-checkbox"
           type="checkbox"
           value=""
@@ -117,7 +116,6 @@ const patientMedicalHistoryPinia = patientMedicalHistoryStore()
     >
     <div>
       <textarea
-        v-model="patientMedicalHistory.list_of_previous_diagnosis"
         id="whenToStrat"
         rows="4"
         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"

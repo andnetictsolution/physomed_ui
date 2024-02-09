@@ -2,6 +2,7 @@
 import AuthHeader from '../components/auth/authHeader.vue'
 import { computed, onMounted } from 'vue'
 import { initFlowbite } from 'flowbite'
+import { useRouter } from 'vue-router'
 import {
   adminLinks,
   doctorLinks,
@@ -13,8 +14,9 @@ import {
 
 onMounted(() => {
   initFlowbite()
+  router.push('/welcome')
 })
-
+const router = useRouter()
 const user_role = computed(() => {
   return localStorage.getItem('physomed_user_role')
 })

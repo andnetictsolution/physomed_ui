@@ -10,10 +10,11 @@ const allPatients = computed(() => {
   return patientPinia.getAllPatients
 })
 
-const column = ['full_name', 'sex', 'date_of_birth', 'phone']
+const column = ['full_name', 'sex', 'date_of_birth', 'phone', 'Actions']
+const action = ['Edit Patient', 'Delete Patient', 'Pay']
 </script>
 <template>
   <div>
-    <BaseTable :column="column" :data="allPatients" />
+    <BaseTable :column="column" route="#" :data="allPatients" :actions="action" />
   </div>
 </template>

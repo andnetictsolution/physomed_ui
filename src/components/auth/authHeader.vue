@@ -57,6 +57,7 @@
 
 <script>
 import { authStore } from '@/stores/auth/auth'
+import { useRouter } from 'vue-router'
 import { reactive, ref, onMounted, onUnmounted, computed } from 'vue'
 export default {
   setup() {
@@ -69,9 +70,13 @@ export default {
     const role = computed(() => {
       return localStorage.getItem('physomed_role')
     })
-    const logout = () => {
+    const logout = async () => {
+      await router.push('/login')
       authPinia.logoutUser()
     }
+
+    const router = useRouter()
+
     const toggleMobileMenu = () => {
       isMobileMenuOpen.value = !isMobileMenuOpen.value
     }
@@ -87,7 +92,6 @@ export default {
 
     onMounted(() => {
       window.addEventListener('resize', handleResize)
-     
     })
 
     onUnmounted(() => {
