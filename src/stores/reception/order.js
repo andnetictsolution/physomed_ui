@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia'
 import axios from '../../plugins/axios'
-export const patientStore = defineStore('patient', {
+export const orderStore = defineStore('order', {
     state: () => ({
-        patient: {},
-        patients: []
+        order: {},
+        orders: []
     }),
     getters: {
         getAllPatients(state) {
@@ -11,13 +11,15 @@ export const patientStore = defineStore('patient', {
         },
     },
     actions: {
-        addNewPatient(payload) {
-            axios.post('/api/patients/register', payload)
+        async createOrder(payload) {
+            const response = await axios.post('/api/orders/add', payload);
+            console.log(response, "response")
         },
         async fetchPatients() {
             let response = await axios.get('/api/patients/all')
             console.log("Fetch All patints", response)
             this.patients = response.data.patients
+
         }
     }
 })

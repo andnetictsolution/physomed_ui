@@ -1,20 +1,7 @@
-<script>
-const props = defineProps({
-  column: {
-    type: Array,
-    required: true // Make it mandatory if needed
-  },
-  data: {
-    type: Array,
-    required: true
-  }
-})
-</script>
-
 <template>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-000 dark:text-gray-400">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3" v-for="item in props.column" :key="item.id">
             {{ item }}
@@ -24,8 +11,9 @@ const props = defineProps({
       <tbody>
         <tr
           v-for="row in data"
+          @click="routeTo(row._id)"
           :key="row.id"
-          class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+          class="odd:bg-white :bg-gray-900 even:bg-gray-50 :bg-gray-800 border-b dark:border-gray-700"
         >
           <td v-for="column in column" :key="column.field" class="px-6 py-4">
             {{ row[column] }}
@@ -33,22 +21,38 @@ const props = defineProps({
               <slot :name="column.slot" :row="row"> </slot>
             </template>
           </td>
-
-          <td class="px-6 py-4">
-            <!-- Modal toggle -->
+          <td v-for="act in actions" :key="actions.field" class="px-6 py-4">
             <a
               href="#"
               type="button"
-              data-modal-target="editUserModal"
-              data-modal-show="editUserModal"
               class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >Edit user</a
+              >{{ act }}</a
             >
           </td>
+
+          <!-- <td class="px-6 py-4">
+              <a
+                href="#"
+                type="button"
+                data-modal-target="editUserModal"
+                data-modal-show="editUserModal"
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >Edit user</a
+              >
+            </td>
+            <td class="px-6 py-4">
+              <a
+                href="/doctor/patientMedicalHistory"
+                type="button"
+                data-modal-target="editUserModal"
+                data-modal-show="editUserModal"
+                class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                >Patient detail</a
+              >
+            </td> -->
         </tr>
       </tbody>
     </table>
-    <!-- Edit user modal -->
     <div
       id="editUserModal"
       tabindex="-1"
@@ -140,66 +144,6 @@ const props = defineProps({
                 >
               </div>
             </div>
-            <div class="grid grid-cols-6 gap-6">
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="first-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >First Name</label
-                >
-                <input
-                  type="text"
-                  name="first-name"
-                  id="first-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="first name"
-                  required
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="last-name"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >Last Name</label
-                >
-                <input
-                  type="text"
-                  name="last-name"
-                  id="last-name"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="Green"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="email"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >Email</label
-                >
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="example@company.com"
-                />
-              </div>
-              <div class="col-span-6 sm:col-span-3">
-                <label
-                  for="phone-number"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
-                  >Phone Number</label
-                >
-                <input
-                  type="number"
-                  name="phone-number"
-                  id="phone-number"
-                  class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-000 dark:border-gray-500 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="e.g. +(12)3456 789"
-                  required
-                />
-              </div>
-            </div>
           </div>
           <!-- Modal footer -->
           <div
@@ -217,3 +161,29 @@ const props = defineProps({
     </div>
   </div>
 </template>
+
+<script setup>
+import { useRouter } from 'vue-router'
+
+const props = defineProps({
+  column: {
+    type: Array,
+    required: true // Make it mandatory if needed
+  },
+  data: {
+    type: Array,
+    required: true
+  },
+  actions: {
+    type: Array
+  },
+  route: {
+    type: String
+  }
+})
+const router = useRouter()
+const routeTo = (id) => {
+  router.push(`${props.route}/${id}`)
+  console.log('inside route cliked')
+}
+</script>

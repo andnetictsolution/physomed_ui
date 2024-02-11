@@ -3,54 +3,11 @@
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 dark:text-gray-400">
         <tr>
-          <th scope="col" class="px-6 py-3" v-for="item in props.column" :key="item.id">
-            {{ item }}
-          </th>
+          <slot name="header"></slot>
         </tr>
       </thead>
       <tbody>
-        <tr
-          v-for="row in data"
-          @click="routeTo(row._id)"
-          :key="row.id"
-          class="odd:bg-white :bg-gray-900 even:bg-gray-50 :bg-gray-800 border-b dark:border-gray-700"
-        >
-          <td v-for="column in column" :key="column.field" class="px-6 py-4">
-            {{ row[column] }}
-            <template v-if="column.slot">
-              <slot :name="column.slot" :row="row"> </slot>
-            </template>
-          </td>
-          <td v-for="act in actions" :key="actions.field" class="px-6 py-4">
-            <a
-              href="#"
-              type="button"
-              class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >{{ act }}</a
-            >
-          </td>
-
-          <!-- <td class="px-6 py-4">
-            <a
-              href="#"
-              type="button"
-              data-modal-target="editUserModal"
-              data-modal-show="editUserModal"
-              class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >Edit user</a
-            >
-          </td>
-          <td class="px-6 py-4">
-            <a
-              href="/doctor/patientMedicalHistory"
-              type="button"
-              data-modal-target="editUserModal"
-              data-modal-show="editUserModal"
-              class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-              >Patient detail</a
-            >
-          </td> -->
-        </tr>
+        <slot name="body"></slot>
       </tbody>
     </table>
     <div
@@ -166,14 +123,6 @@
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
-  column: {
-    type: Array,
-    required: true // Make it mandatory if needed
-  },
-  data: {
-    type: Array,
-    required: true
-  },
   actions: {
     type: Array
   },

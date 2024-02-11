@@ -10,6 +10,11 @@ const nurseRoutes = [
     name: 'MedicalHistory',
     component: () => import('../views/nurse/PatientMedicalHistory.vue')
   },
+  {
+    path: '/view/cardPaid/patients',
+    name: 'cardPaidPatients',
+    component: () => import('../views/nurse/ViewPatientsTheyPaidForCard.vue')
+  }
 ]
 
 export default nurseRoutes

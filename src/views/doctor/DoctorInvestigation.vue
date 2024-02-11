@@ -10,7 +10,7 @@ const doctorInvestigations = ref({
   patientExpectation: '',
   observation: '',
   palpation: '',
-  assesssment: '',
+  assessment: '',
   treatmentPlan: '',
   progressNotes: ''
 })
@@ -26,7 +26,7 @@ const addDoctorInvestigation = () => {
       >Referral Diagonsis</label
     >
     <textarea
-      v-model="doctorInvestigation.refferalDiagnosis"
+      v-model="doctorInvestigations.refferalDiagnosis"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -39,7 +39,7 @@ const addDoctorInvestigation = () => {
       >Chief Compliant</label
     >
     <textarea
-      v-model="doctorInvestigation.chiefCompliant"
+      v-model="doctorInvestigations.chiefCompliant"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -52,7 +52,7 @@ const addDoctorInvestigation = () => {
       >HPI</label
     >
     <textarea
-      v-model="doctorInvestigation.hpi"
+      v-model="doctorInvestigations.hpi"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -64,7 +64,7 @@ const addDoctorInvestigation = () => {
       >PMH</label
     >
     <textarea
-      v-model="doctorInvestigation.pmh"
+      v-model="doctorInvestigations.pmh"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -76,7 +76,7 @@ const addDoctorInvestigation = () => {
       >Patient expectation</label
     >
     <textarea
-      v-model="doctorInvestigation.patientExpectation"
+      v-model="doctorInvestigations.patientExpectation"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -88,7 +88,7 @@ const addDoctorInvestigation = () => {
       >Observation</label
     >
     <textarea
-      v-model="doctorInvestigation.observation"
+      v-model="doctorInvestigations.observation"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -100,7 +100,7 @@ const addDoctorInvestigation = () => {
       >Palpation</label
     >
     <textarea
-      v-model="doctorInvestigation.palpation"
+      v-model="doctorInvestigations.palpation"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -112,7 +112,7 @@ const addDoctorInvestigation = () => {
       >Assessment</label
     >
     <textarea
-      v-model="doctorInvestigation.assessment"
+      v-model="doctorInvestigations.assessment"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -124,7 +124,19 @@ const addDoctorInvestigation = () => {
       >Treatment</label
     >
     <textarea
-      v-model="doctorInvestigation.treatmentPlan"
+      v-model="doctorInvestigations.treatmentPlan"
+      id="whenToStrat"
+      rows="4"
+      class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      placeholder="Write your thoughts here..."
+    ></textarea>
+  </div>
+  <div>
+    <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
+      >Progres notes</label
+    >
+    <textarea
+      v-model="doctorInvestigations.progressNotes"
       id="whenToStrat"
       rows="4"
       class="block p-2.5 w-3/4 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"

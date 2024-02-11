@@ -12,7 +12,7 @@ export const doctorInvestigation = defineStore('doctorInvestigation', {
     },
     actions: {
         addDoctorInvestigation(payload) {
-            axios.post('/', payload)
+            axios.post('/api/medicalHistory/save', payload)
         },
         async fetchDoctorInvestigation() {
             let response = await axios.get('/')

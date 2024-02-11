@@ -20,6 +20,11 @@ const doctorRoutes = [
     path: '/doctor/patients',
     name: 'doctorPatients',
     component: () => import('../views/doctor/ViewPatientsSendFromNurse.vue')
+  },
+  {
+    path: '/doctor/treatment',
+    name: 'patientTreatmentPlan',
+    component: () => import('../views/doctor/PatientTreatmentPlan.vue')
   }
 ]
 

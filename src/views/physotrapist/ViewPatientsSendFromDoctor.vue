@@ -1,56 +1,50 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
 import { orderStore } from '../../stores/reception/order'
-import { serviceStore } from '../../stores/admin/service'
+import { patientStoreInPhysotropist } from '../../stores/physotrapist/patientsSendFromDoctor'
 import { computed, onMounted, ref } from 'vue'
 import Dialog from 'primevue/dialog'
-import Toast from 'primevue/toast'
-const patientPinia = orderStore()
-const servicePinia = serviceStore()
+const patientInPhysotrapistPinia = patientStoreInPhysotropist()
 onMounted(async () => {
-  await patientPinia.fetchPatients()
-  await servicePinia.fetchServices()
+  await patientInPhysotrapistPinia.fetchPatientsFromPhysotrapist()
+  // await servicePinia.fetchServices()
 })
 
-const allPatients = computed(() => {
-  return patientPinia.getAllPatients
+const allPatientsInPhysotrapy = computed(() => {
+  return patientInPhysotrapistPinia.getAllPatientsFromPhysotrapist
 })
-console.log('Patient in view patients', allPatients)
-const allServices = computed(() => {
-  return servicePinia.getAllServices
-})
-console.log('allServices', allServices)
-const visible = ref(false)
-const orderVars = ref({
-  patient: '',
-  service: '',
-  quantity: '',
-  schedule: '',
-  ordered_by: localStorage.getItem('physomed_user_id'),
-  payment: ''
-})
+console.log('All Patientss', allPatientsInPhysotrapy)
 
-const openModal = (value) => {
-  orderVars.value.patient = value
-  visible.value = !visible.value
-}
+// const visible = ref(false)
+// const orderVars = ref({
+//   patient: '',
+//   service: '',
+//   quantity: '',
+//   schedule: '',
+//   ordered_by: localStorage.getItem('physomed_user_id'),
+//   payment: ''
+// })
 
-const sendOrder = () => {
-  const pp = patientPinia.createOrder(orderVars.value)
-  if (pp) {
-    Toast('successfully sent')
-  }
-}
-const fillPayment = async () => {
-  console.log(orderVars.value.service, 'service')
-  let payment = await allServices.value.find((service) => {
-    return service._id == orderVars.value.service
-  })
-  orderVars.value.quantity = orderVars.value.quantity = 1
-  orderVars.value.payment = payment.price_per_item
-  console.log(payment)
-}
-const column = ['full_name', 'sex', 'date_of_birth', 'phone', 'Actions']
+// const openModal = (value) => {
+//   console.log('Open Modal', value)
+//   console.log('Order', orderVars)
+//   orderVars.value.patient = value
+//   visible.value = !visible.value
+// }
+
+// const sendOrder = () => {
+//   patientPinia.createOrder(orderVars.value)
+// }
+// const fillPayment = async () => {
+//   console.log(orderVars.value.service, 'service')
+//   let payment = await allServices.value.find((service) => {
+//     return service._id == orderVars.value.service
+//   })
+//   orderVars.value.quantity = orderVars.value.quantity = 1
+//   orderVars.value.payment = payment.price_per_item
+//   console.log(payment)
+// }
+const column = ['full_name', 'sex', 'date_of_birth', 'phone']
 const action = ['Edit', 'Delete']
 </script>
 
@@ -66,15 +60,14 @@ const action = ['Edit', 'Delete']
       <template v-slot:body>
         <tr
           class="bg-white border-b dark:bg-gray-000 dark:border-gray-700"
-          v-for="item in allPatients"
+          v-for="item in allPatientsInPhysotrapy"
           :key="item._id"
         >
           <td class="px-6 py-4" v-for="col in column" :key="col">
             {{ item[col] }}
           </td>
           <td class="px-6 py-4">
-            <button class="mx-2" @click="edit">Edit</button>
-            <button @click="openModal(item._id)">Send to Nurse</button>
+            <button @click="openModal(item._id)">Fill Medical History</button>
           </td>
         </tr>
       </template>

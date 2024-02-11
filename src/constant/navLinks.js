@@ -42,11 +42,12 @@ export const receptionLinks = [
     icon: ''
   },
 
-  // {
-  //   name: 'Payment Order',
-  //   to: '/user',
-  //   icon: ''
-  // },
+  {
+    name: 'Payment Order',
+    to: '/payment/page',
+    icon: ''
+  },
+
 
 ]
 
@@ -58,7 +59,7 @@ export const nurseLinks = [
   },
   {
     name: 'Patinet Queue',
-    to: '/patient/view',
+    to: '/view/cardPaid/patients',
     icon: ''
   },
   {
@@ -93,6 +94,11 @@ export const doctorLinks = [
     name: 'Investigations',
     to: '/doctor/investigation',
     icon: ''
+  },
+  {
+    name: 'Treatment Plan',
+    to: '/doctor/treatment',
+    icon: ''
   }
 ]
 
@@ -109,7 +115,7 @@ export const physotrapistLinks = [
   },
   {
     name: 'Patient Treatment',
-    to: '/patient/treatment'
+    to: '/physotrapist/treatment'
   }
 ]
 

@@ -19,7 +19,8 @@ export const userStore = defineStore('user', {
       axios.post('/api/users/register', payload)
     },
     deletuser(payload) {
-      axios.delete('/api/users/remove/', id)
+      console.log("Inside delete")
+      axios.delete('/api/users/remove/', payload._id)
     },
     async fetchUsers() {
       let response = await axios.get('/api/users');

@@ -1,4 +1,4 @@
 <script></script>
 <template>
-  <h1>Physotrapist Dashobrd</h1>
+  <h1>Patient Treatment plan</h1>
 </template>

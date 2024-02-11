@@ -10,6 +10,16 @@ const physotrapistRoutes = [
   //   name: 'physotrapistTreatment',
   //   component: () => import('../views/physotrapist')
   // }
+  {
+    path: '/physotrapist/treatment',
+    name: 'physotrapist treatment',
+    component: () => import('../views/physotrapist/ViewTreatmentPlan.vue')
+  },
+  {
+    path: '/physotrapist/viewPatient',
+    name: 'physotrapistPatient',
+    component: () => import('../views/physotrapist/ViewPatientsSendFromDoctor.vue')
+  }
 ]
 
 export default physotrapistRoutes

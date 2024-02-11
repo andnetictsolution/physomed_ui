@@ -41,6 +41,11 @@ const adminRoutes = [
     name: 'serviceview',
     component: () => import('../views/admin/ViewService.vue'),
     meta: { requiresAuth: false, userGuard: 'All', layout: "auth" }
+  },
+  {
+    path: '/equpment/view',
+    name: 'equipmentView',
+    component: () => import('../views/admin/ViewService.vue')
   }
 ]
 
