@@ -9,7 +9,6 @@ export default {
     AuthLayout
   },
   setup() {
-    // const currentLayout = ref(false);
     const authPinia = authStore()
     const isAuthenticated = computed(() => {
       return localStorage.getItem('physomed_token') ? true : authPinia.isAuthenticatedUser

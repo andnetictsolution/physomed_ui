@@ -15,7 +15,9 @@ export const authStore = defineStore('authStore', {
   },
   actions: {
     async login(payload) {
+      console.log(payload)
       const response = await axios.post('/api/users/login', payload)
+      console.log(response,"response here")
       if (!response) return
       console.log(response.data, 'response')
       const { first_name, last_name, role, phone, email, _id, token } = response.data

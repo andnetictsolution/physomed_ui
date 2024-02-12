@@ -25,6 +25,16 @@ const doctorRoutes = [
     path: '/doctor/treatment',
     name: 'patientTreatmentPlan',
     component: () => import('../views/doctor/PatientTreatmentPlan.vue')
+  },
+  {
+    path: '/doctor/order',
+    name: 'doctorQueue',
+    component: () => import('../views/doctor/patientOrder.vue')
+  },
+  {
+    path: '/doctor/order/:id',
+    name: 'doctorOrderDetail',
+    component: () => import('../views/doctor/patientDetail.vue')
   }
 ]
 

@@ -12,7 +12,6 @@ const allServices = computed(() => {
 console.log('Inside View service', allServices)
 
 const column = ['name', 'description', 'price_per_item']
-const actions = ['Edit']
 </script>
 <template>
   <div>
@@ -21,6 +20,7 @@ const actions = ['Edit']
         <th scope="col" class="px-6 py-3" v-for="(item, i) in column" :key="i">
           {{ item }}
         </th>
+        <th scope="col" class="px-6 py-3">Category</th>
         <th scope="col" class="px-6 py-3">Actions</th>
       </template>
       <template v-slot:body>
@@ -33,8 +33,10 @@ const actions = ['Edit']
             {{ item[col] }}
           </td>
           <td class="px-6 py-4">
+            {{ item?.category?.name }}
+          </td>
+          <td class="px-6 py-4">
             <button class="mx-2" @click="edit">Edit</button>
-            <button @click="delete">Delete</button>
           </td>
         </tr>
       </template>

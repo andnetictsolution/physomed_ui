@@ -149,11 +149,12 @@ const user_role = computed(() => {
     </div>
   </aside>
 
-  <div class="p-4 sm:ml-64">
+  <div class="py-4 sm:ml-64">
     <AuthHeader />
-    <!-- <UserRegistration /> -->
-    <!-- <PatientRegistration /> -->
-    <!-- <PatientMedeicalHistoryForm /> -->
-    <RouterView />
+    <RouterView class="calc-screen"/>
   </div>
 </template>
+
+<style>
+
+</style>

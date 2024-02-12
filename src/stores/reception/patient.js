@@ -7,12 +7,12 @@ export const patientStore = defineStore('patient', {
     }),
     getters: {
         getAllPatients(state) {
-            return this.patients
+            return state.patients
         },
     },
     actions: {
-        addNewPatient(payload) {
-            axios.post('/api/patients/register', payload)
+        async addNewPatient(payload) {
+            await axios.post('/api/patients/register', payload)
         },
         async fetchPatients() {
             let response = await axios.get('/api/patients/all')

@@ -9,7 +9,7 @@ import nurseRoutes from './nurse.routes'
 import physotrapistRoutes from './physotrapist.routes'
 import receptionRoutes from './reception.routes'
 import authRoutes from './auth.routes'
-
+import categorieRoutes from "./category.routes"
 // import jwt_decode from "jwt-decode";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,6 +21,7 @@ const router = createRouter({
     ...physotrapistRoutes,
     ...receptionRoutes,
     ...authRoutes,
+    ...categorieRoutes,
     {
       path: '/permision-denied',
       name: 'permisiondenied',

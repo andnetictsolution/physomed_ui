@@ -11,10 +11,15 @@ const receptionRoutes = [
     component: () => import('../components/table/table1.vue')
   },
   {
-    path: '/payment/page',
-    name: 'paymentPage',
-    component: () => import('../views/reception/PaymentPage.vue')
-  }
+    path: '/payment/order',
+    name: 'paymentorder',
+    component: () => import('../views/reception/paymentOrder.vue')
+  },
+  {
+    path: '/payment/order/:id',
+    name: 'paymentDetail',
+    component: () => import('../views/reception/paymentDetail.vue')
+  },
 ]
 
 export default receptionRoutes

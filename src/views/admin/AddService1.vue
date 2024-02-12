@@ -1,21 +1,44 @@
 <script setup>
-import { ref, onMounted, defineComponent } from 'vue'
+import Dropdown from 'primevue/dropdown'
+import { computed, onMounted, ref } from 'vue'
 
 import { serviceStore } from '../../stores/admin/service'
+import { categoryStore } from '../../stores/admin/category'
 const servicePinia = serviceStore()
-
+const categoryPinia = categoryStore()
+onMounted(async () => {
+  await categoryPinia.fetchCategories()
+})
+const allCategories = computed(() => {
+  return categoryPinia.getAllCategories
+})
+console.log(allCategories)
 const service = ref({
   name: '',
   description: '',
-  price_per_item: ''
+  price_per_item: '',
+  category: ''
 })
+const category = ref('')
 const addService = () => {
-  servicePinia.addNewservice(service.value)
+  console.log(category.value)
+  servicePinia.addNewservice({...service.value,category:category.value})
 }
+console.log(allCategories)
 </script>
 
 <template>
   <div class="max-w-md mx-auto my-auto pt-2">
+    <div class="relative z-0 w-full mb-5 group">
+      <Dropdown
+        v-model="category"
+        :options="allCategories"
+        optionLabel="name"
+        option-value="_id"
+        placeholder="Select category"
+        class="w-full md:w-14rem"
+      />
+    </div>
     <div class="relative z-0 w-full mb-5 group">
       <input
         v-model="service.name"

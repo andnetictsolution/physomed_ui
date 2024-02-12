@@ -14,6 +14,11 @@ const nurseRoutes = [
     path: '/view/cardPaid/patients',
     name: 'cardPaidPatients',
     component: () => import('../views/nurse/ViewPatientsTheyPaidForCard.vue')
+  },
+  {
+    path: '/nurse/patient/:id',
+    name: 'patientDetailNurse',
+    component: () => import('../views/nurse/patientDetail.vue')
   }
 ]
 

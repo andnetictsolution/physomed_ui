@@ -1,20 +1,23 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
-import { patientPaymentStore } from '../../stores/reception/patient'
+import { orderStore } from '../../stores/reception/order'
 import { computed, onMounted } from 'vue'
-const patientPaymentPinia = patientPaymentStore()
+const orderPina = orderStore()
+
+// const confirm = useConfirm();
 onMounted(() => {
-  patientPaymentPinia.fetchPatients()
+  orderPina.fetchOrders()
 })
-const allPatients = computed(() => {
-  return patientPaymentPinia.getAllPatients
+const allOrders = computed(() => {
+  return orderPina.getAllOrders
 })
-const sendToNurse = () => {
-  patientPaymentPinia
+
+const processPayment = (payment) => {
+  console.log(payment)
+  orderPina.confirmPayment({ payments: [payment] })
 }
 
-const column = ['full_name', 'sex', 'date_of_birth', 'phone', 'Actions']
-const action = ['Edit', 'Delete']
+const column = ['Full Name', 'sex', 'service', 'quantity', 'U.price', 'T.price', 'status']
 </script>
 <!-- <template>
   <div>
@@ -34,15 +37,32 @@ const action = ['Edit', 'Delete']
       <template v-slot:body>
         <tr
           class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-          v-for="item in allPatients"
+          v-for="item in allOrders"
           :key="item._id"
         >
-          <td class="px-6 py-4" v-for="col in column" :key="col">
-            {{ item[col] }}
+          <td class="px-6 py-4">
+            {{ item.patient.full_name }}
           </td>
           <td class="px-6 py-4">
-            <button class="mx-2" @click="edit">Edit</button>
-            <button @click="delete">Send to Nurse</button>
+            {{ item.patient.sex }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.service.name }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.quantity }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.service.price_per_item }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.payment.price }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.payment.isPaid ? 'Paid' : 'Not paid' }}
+          </td>
+          <td class="px-6 py-4">
+            <button @click="processPayment(item.payment._id)" class="p-2 rounded-sm">Pay</button>
           </td>
         </tr>
       </template>

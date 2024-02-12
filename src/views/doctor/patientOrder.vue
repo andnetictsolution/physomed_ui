@@ -4,20 +4,19 @@ import { orderStore } from '../../stores/reception/order'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 const orderPina = orderStore()
-
-// const confirm = useConfirm();
+const router = useRouter()
 onMounted(() => {
   orderPina.fetchOrders()
 })
 const allOrders = computed(() => {
   return orderPina.getAllOrders
 })
-const router = useRouter()
-const routeTo = (id) => {
-  router.push(`/nurse/patient/${id}`)
+
+const routeTO = (id) => {
+  router.push(`/doctor/order/${id}`)
 }
 
-const column = ['Full Name', 'Sex', 'Payment Status']
+const column = ['Full Name', 'sex', 'service', 'quantity', 'U.price', 'T.price', 'status']
 </script>
 <!-- <template>
   <div>
@@ -47,10 +46,22 @@ const column = ['Full Name', 'Sex', 'Payment Status']
             {{ item.patient.sex }}
           </td>
           <td class="px-6 py-4">
+            {{ item.service.name }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.quantity }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.service.price_per_item }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.payment.price }}
+          </td>
+          <td class="px-6 py-4">
             {{ item.payment.isPaid ? 'Paid' : 'Not paid' }}
           </td>
           <td class="px-6 py-4">
-            <button @click="routeTo(item._id)" class="p-2 rounded-sm">Detail</button>
+            <button @click="routeTO(item._id)" class="p-2 rounded-sm">Pay</button>
           </td>
         </tr>
       </template>

@@ -15,6 +15,11 @@ export const adminLinks = [
     icon: ''
   },
   {
+    name: 'Add Category',
+    to: '/category',
+    icon: ''
+  },
+  {
     name: 'Add Service',
     to: '/service/add',
     icon: ''
@@ -44,7 +49,7 @@ export const receptionLinks = [
 
   {
     name: 'Payment Order',
-    to: '/payment/page',
+    to: '/payment/order',
     icon: ''
   },
 
@@ -62,11 +67,6 @@ export const nurseLinks = [
     to: '/view/cardPaid/patients',
     icon: ''
   },
-  {
-    name: 'Patient Medical History',
-    to: '/nurse/patientMedicalHistory',
-    icon: ''
-  }
 ]
 
 export const doctorLinks = [
@@ -77,7 +77,7 @@ export const doctorLinks = [
   },
   {
     name: 'Patient Queue',
-    to: '/doctor/patients',
+    to: '/doctor/order',
     icon: ''
   },
   // {

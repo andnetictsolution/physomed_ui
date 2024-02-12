@@ -1,17 +1,11 @@
 <script setup>
-import { ref } from 'vue'
-import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
-const patientMedicalHistoryPinia = patientMedicalHistoryStore()
+// import { ref } from 'vue'
+// import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
+// const patientMedicalHistoryPinia = patientMedicalHistoryStore()
 </script>
 
 <template>
-  <h1 class="text-xl">Patient Medical History</h1>
-  <div class="float-end block mb-2 text-sm font-medium text-gray-900 dark:text-black">
-    <p>Name Fred zak</p>
-    <p>Phone No. 0912321232</p>
-    <p>Sex M</p>
-  </div>
-  <br />
+  
   <div>
     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black"
       >1.chief compliant's</label

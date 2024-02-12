@@ -1,18 +1,28 @@
-<script>
-import { patientStore } from '@/stores/reception/patient'
-import { computed, onMounted } from 'vue'
-const patientPinia = patientStore()
-onMounted(() => {
-  patientPinia.fetchPatients()
-})
-const allPatients = computed(() => {
-  return patientPinia.getAllPatients
-})
-</script>
 <template>
-  <p>Full name {{ 'patientPinia.full_name' }}</p>
-  <p>MRN</p>
-  <p>Sex {{ 'patientPinia.sex' }}</p>
-  <p>Full name</p>
-  <p>Full name</p>
+  <div class="flex p-4 flex-col md:flex-row border justify-between border-gray-200 rounded-lg">
+    <div class="flex flex-col list-none">
+      <ListItem label="Full Name" :value="props.personal?.full_name" />
+      <ListItem label="Sex" :value="props.personal?.sex" />
+      <ListItem label="Age" :value="convertDOB(props.personal?.age)" />
+    </div>
+    <div class="flex flex-col list-none mr-20">
+      <ListItem label="MRN" :value="props.personal?.id" />
+      <ListItem label="Last Visted" :value="props.personal?.last_visted" />
+      <!-- <ListItem label="" :value="props.personal." /> -->
+    </div>
+  </div>
 </template>
+
+<script setup>
+import { convertDOBToAge } from '@/utils/moment'
+import ListItem from '../default/listItem.vue'
+const props = defineProps({
+  personal: {
+    type: Object,
+    required: true // Make it mandatory if needed
+  }
+})
+const convertDOB = (dob) => {
+  return convertDOBToAge(dob)
+}
+</script>
