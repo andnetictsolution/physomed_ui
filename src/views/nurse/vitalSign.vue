@@ -1,45 +1,56 @@
 <script setup>
+import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
 import InputText from 'primevue/inputtext'
 import { ref } from 'vue'
-const vs = ref({
-  bp: '',
-  pr: '',
-  rr: '',
-  wt: '',
-  t: ''
+const MHPinia = patientMedicalHistoryStore()
+const props = defineProps({
+  patientId: {
+    type: String,
+    required: true
+  }
 })
-const saveVS = () => {
-  console.log(vs.value)
+const vs = ref({
+  BP: '',
+  PR: '',
+  RR: '',
+  Wt: '',
+  Temp: ''
+})
+const saveVS = async () => {
+  await MHPinia.saveVitalSign({
+    id: props.patientId,
+    vitalSigns: vs.value
+  })
 }
 </script>
 
 <template>
   <div class="flex justify-start gap-2">
-    <div class="flex flex-col">
-      <div class="flex flex-col md:flex-row">
+    <div class="flex flex-col ">
+      <div class="flex flex-col md:flex-row gap-2">
         <div class="flex flex-col">
           <label>BP</label>
-          <InputText class="border border-gray-400 p-1" v-model="vs.bp" />
+          <InputText class="border border-gray-400 p-1" v-model="vs.BP" />
         </div>
         <div class="flex flex-col">
           <label>PR</label>
-          <InputText class="border border-gray-400 p-1" v-model="vs.pr" />
+          <InputText class="border border-gray-400 p-1" v-model="vs.PR" />
         </div>
       </div>
-      <div class="flex flex-col md:flex-row">
+      <div class="flex flex-col md:flex-row gap-2">
         <div class="flex flex-col">
           <label>RR</label>
-          <InputText class="border border-gray-400 p-1" v-model="vs.rr" />
+          <InputText class="border border-gray-400 p-1" v-model="vs.RR" />
         </div>
         <div class="flex flex-col">
           <label>WT</label>
-          <InputText class="border border-gray-400 p-1" v-model="vs.wt" />
+          <InputText class="border border-gray-400 p-1" v-model="vs.Wt" />
         </div>
       </div>
-      <div class="flex flex-col md:flex-row">
+      <div class="flex flex-col md:flex-row gap-2">
         <div class="flex flex-col">
           <label>T</label>
-          <InputText class="border border-gray-400 p-1" v-model="vs.t" />
+          <InputText class="border border-gray-400 p-1" v-model="vs.Temp" />
         </div>
         <div class="flex flex-col mt-8">
           <button @click="saveVS" class="text-base font-medium">Save vital sign</button>

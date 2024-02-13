@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
+import RadioButton from 'primevue/radiobutton'
 const patientMedicalHistoryPinia = patientMedicalHistoryStore()
 const patientMedicalHistory = ref({
   chief_complaint: '',
@@ -10,9 +11,48 @@ const patientMedicalHistory = ref({
   is_patient_pregnant: '',
   patient_id: '65ba0bbd8eab859545a42bc8'
 })
-const registerPatientMedicalHistory = () => {
+const props = defineProps({
+  patientId: {
+    type: String,
+    required: true
+  }
+})
+const pregnancyCheckList = ref([
+  {
+    label: 'Yes'
+  },
+  {
+    label: 'No'
+  },
+  {
+    label: 'NA'
+  }
+])
+const diseaseList = ref([
+  { label: 'HIV' },
+  { label: 'Cancer' },
+  { label: 'Balance problem' },
+  { label: 'Hypertation' },
+  { label: 'Stroke' },
+  { label: 'DM' },
+  { label: 'Pacemaker' },
+  { label: 'Allergies' }
+])
+const selectedDiseases = ref(['HIV', 'DM'])
+const selectedPregnant = ref('')
+const saveAssesment = () => {
+  console.log(selectedDiseases)
   console.log(patientMedicalHistory.value, 'in commponent')
-  patientMedicalHistoryPinia.addpatientmedicalHistory(patientMedicalHistory.value)
+  patientMedicalHistoryPinia.saveMedicalAssement({
+    id: props.patientId,
+    medical_history: {
+      list_of_other_diagnosis: selectedDiseases.value,
+      when_did_it_start: patientMedicalHistory.value.when_did_it_start,
+      is_patient_pregnant: selectedPregnant.value,
+      chief_complaint: patientMedicalHistory.value.chief_complaint,
+      list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
+    }
+  })
 }
 </script>
 
@@ -35,19 +75,6 @@ const registerPatientMedicalHistory = () => {
     >
 
     <div class="relative max-w-sm">
-      <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
-        <svg
-          class="w-4 h-4 text-gray-500 dark:text-gray-400"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-        >
-          <path
-            d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
-          />
-        </svg>
-      </div>
       <input
         v-model="patientMedicalHistory.when_did_it_start"
         datepicker
@@ -63,170 +90,15 @@ const registerPatientMedicalHistory = () => {
       >3. How you ever been diagnosed with any of the following?</label
     >
     <div class="grid gap-1 mb-6 md:grid-cols-3 ml-4">
-      <div class="flex items-center">
+      <div class="flex items-center" v-for="disease in diseaseList" :key="disease">
         <input
-          v-model="patientMedicalHistory.list_of_other_diagnosis"
-          id="link-checkbox"
+          v-model="selectedDiseases"
           type="checkbox"
-          value=""
+          :value="disease.label"
           class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
         />
         <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Hypertension
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >DM
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Animea
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Cancer
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value="cancer"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Pacemaker
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value="pacemaker"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Heat disease
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value="heatdisease"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Stroke
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value="stroke"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Allergies
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value="allergies"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Hepititus
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value="heptititus"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >HIV
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value="hiv"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Eplipsy
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Astma
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Balance problem
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Dizziness
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Surgery
+          >{{ disease.label }}
         </label>
       </div>
     </div>
@@ -238,38 +110,20 @@ const registerPatientMedicalHistory = () => {
     >
     <div class="ml-4">
       <div class="flex items-center">
-        <input
-          v-model="is_patient_pregnant"
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Yes
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >No
-        </label>
-      </div>
-      <div class="flex items-center">
-        <input
-          id="link-checkbox"
-          type="checkbox"
-          value=""
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00"
-          >Am not sure
-        </label>
+        <div
+          v-for="category in pregnancyCheckList"
+          :key="category.key"
+          class="flex align-items-center"
+        >
+          <RadioButton
+            class="border border-gray-400 rounded-lg"
+            v-model="selectedPregnant"
+            :inputId="category.label"
+            name="dynamic"
+            :value="category.label"
+          />
+          <label :for="category.key" class="ml-2">{{ category.label }}</label>
+        </div>
       </div>
     </div>
   </div>
@@ -287,7 +141,7 @@ const registerPatientMedicalHistory = () => {
       ></textarea>
     </div>
     <div class="flex flex-col justify-center my-2">
-      <button class="font-medium text-base ">Save Assesment</button>
+      <button @click="saveAssesment" class="font-medium text-base">Save Assesment</button>
     </div>
   </div>
 </template>

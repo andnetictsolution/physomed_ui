@@ -6,13 +6,13 @@
     />
     <TabView class="dark:text-black h-full z-0">
       <TabPanel header="Vital Sign">
-        <VS />
+        <VS :patient-id="order?.patient?._id" />
       </TabPanel>
       <TabPanel header="Medical Assesment">
-        <PMH />
+        <PMH :patient-id="order?.patient?._id" />
       </TabPanel>
       <TabPanel header="Medical Result">
-        <p>Medical result</p>
+        <PR />
       </TabPanel>
     </TabView>
   </div>
@@ -23,6 +23,7 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import PersonalInfo from '@/components/auth/personalInfo.vue'
 import PMH from './PatientMedicalHistory.vue'
+import PR from './resultDisplay.vue'
 import { orderStore } from '@/stores/reception/order'
 import VS from './vitalSign.vue'
 import { computed, onMounted } from 'vue'

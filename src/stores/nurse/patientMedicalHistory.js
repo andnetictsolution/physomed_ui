@@ -14,9 +14,20 @@ export const patientMedicalHistoryStore = defineStore('patientMedicalHistory', {
       })
     },
     async saveVitalSign(payload) {
-      console.log(payload);
-     const response = await axios.post(`api/medicalhistory/save/${payload.patientId}`,payload.vitalSign);
-     console.log(response)
+      console.log(payload.vitalSigns)
+      const response = await axios.post(`api/medicalhistory/save/${payload.id}`, {
+        medical_history_data: {
+          vitalSigns: [payload.vitalSigns]
+        }
+      })
+      console.log(response)
+    },
+    async saveMedicalAssement(payload) {
+      console.log(payload.vitalSigns)
+      const response = await axios.post(`api/medicalhistory/save/${payload.id}`, {
+        medical_history_data: payload.medical_history
+      })
+      console.log(response)
     },
 
     async fetchMedicalHistory() {
