@@ -9,7 +9,7 @@ const patientMedicalHistory = ref({
   list_of_other_diagnosis: '',
   list_of_previous_diagnosis: '',
   is_patient_pregnant: '',
-  patient_id: '65ba0bbd8eab859545a42bc8'
+  patient_id: ''
 })
 const props = defineProps({
   patientId: {
@@ -17,6 +17,7 @@ const props = defineProps({
     required: true
   }
 })
+
 const pregnancyCheckList = ref([
   {
     label: 'Yes'

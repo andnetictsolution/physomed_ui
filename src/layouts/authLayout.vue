@@ -18,6 +18,7 @@ onMounted(() => {
 })
 const router = useRouter()
 const user_role = computed(() => {
+  console.log('Inside user role', localStorage.getItem('physomed_user_role'))
   return localStorage.getItem('physomed_user_role')
 })
 </script>
@@ -151,10 +152,8 @@ const user_role = computed(() => {
 
   <div class="py-4 sm:ml-64">
     <AuthHeader />
-    <RouterView class="calc-screen"/>
+    <RouterView class="calc-screen" />
   </div>
 </template>
 
-<style>
-
-</style>
+<style></style>

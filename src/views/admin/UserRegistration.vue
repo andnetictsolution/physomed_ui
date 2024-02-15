@@ -1,6 +1,9 @@
 <script setup>
-import { ref } from 'vue'
+import Dropdown from 'primevue/dropdown'
+import { computed, onMounted, ref } from 'vue'
+import { roleStore } from '../../stores/admin/role'
 import { userStore } from '../../stores/admin/user'
+const rolePinia = roleStore()
 const userPinia = userStore()
 const user = ref({
   first_name: '',
@@ -13,12 +16,13 @@ const user = ref({
 const registerUser = () => {
   userPinia.addNewUser(user.value)
 }
-const getAllUser = userStore()
-const gettt = userPinia.getAllUsersss
+onMounted(() => {
+  rolePinia.fetchRoles()
+})
 
-console.log('DD', gettt)
-const firstName = getAllUser.getAllUsersss
-console.log('FFF', firstName)
+const allRoles = computed(() => {
+  return rolePinia.getAllRoles
+})
 </script>
 
 <template>
@@ -102,55 +106,16 @@ console.log('FFF', firstName)
           >Phone number (0909090909)</label
         >
       </div>
+
       <div class="relative z-0 w-full mb-5 group">
-        <select
+        <Dropdown
           v-model="user.role"
-          id="role"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        >
-          <option
-            value="null"
-            selected
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            Choose a role
-          </option>
-          <option
-            value="Admin"
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            Admin
-          </option>
-          <option
-            value="Nurse"
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            Nurse
-          </option>
-          <option
-            value="Physotrapist"
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            Physotrapist
-          </option>
-          <option
-            value="Doctor"
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            Doctor
-          </option>
-          <option
-            value="Reception"
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          >
-            Reception
-          </option>
-        </select>
-        <label
-          for="floating_company"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Role</label
-        >
+          :options="allRoles"
+          optionLabel="name"
+          option-value="_id"
+          placeholder="Select Role"
+          class="w-full md:w-14rem"
+        />
       </div>
     </div>
     <button

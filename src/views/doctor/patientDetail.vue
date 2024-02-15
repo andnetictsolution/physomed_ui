@@ -1,13 +1,14 @@
 <template>
   <div class="card">
     <PersonalInfo
-      :personal="personal"
+      :personal="order.patient"
       class="sticky top-0 z-30 dark:bg-white dark:text-black text-white bg-gray-700"
     />
     <TabView class="dark:text-black h-full z-0">
       <TabPanel header="Patient History">
         <VPMH />
       </TabPanel>
+
       <TabPanel header="Order Excercise">
         <DoctorInvestigation />
       </TabPanel>

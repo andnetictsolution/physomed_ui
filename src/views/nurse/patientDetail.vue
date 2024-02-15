@@ -12,7 +12,7 @@
         <PMH :patient-id="order?.patient?._id" />
       </TabPanel>
       <TabPanel header="Medical Result">
-        <PR />
+        <PR :patient-id="order?.patient?._id" />
       </TabPanel>
     </TabView>
   </div>

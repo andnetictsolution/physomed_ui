@@ -1,14 +1,16 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
+import { roleStore } from '../../stores/admin/role'
 import { userStore } from '../../stores/admin/user'
 import Dialog from 'primevue/dialog'
 
 import { computed, onMounted, ref } from 'vue'
 const visible = ref(false)
-
+const rolePinia = roleStore()
 const userPinia = userStore()
 onMounted(() => {
   userPinia.fetchUsers()
+  rolePinia.fetchRoles()
 })
 const allUsers = computed(() => {
   return userPinia.getAllUsers
@@ -50,7 +52,6 @@ const column = ['first_name', 'last_name', 'phone', 'email', 'role']
     </BaseTable>
   </div>
 
-  //
   <div>
     <Dialog
       v-model:visible="visible"

@@ -46,6 +46,16 @@ const adminRoutes = [
     path: '/equpment/view',
     name: 'equipmentView',
     component: () => import('../views/admin/ViewService.vue')
+  },
+  {
+    path: '/add/role',
+    name: 'AddRole',
+    component: () => import('../views/admin/AddRole.vue')
+  },
+  {
+    path: '/view/role',
+    name: 'ViewRole',
+    component: () => import('../views/admin/ViewRole.vue')
   }
 ]
 

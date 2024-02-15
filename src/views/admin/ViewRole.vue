@@ -1,28 +1,20 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
-import { patientStoreInDoctor } from '../../stores/doctor/patientSendFromNurse'
-
+import { roleStore } from '../../stores/admin/role'
 import { computed, onMounted } from 'vue'
-const patientPiniaInDoctor = patientStoreInDoctor()
+const rolePinia = roleStore()
 onMounted(() => {
-  patientPiniaInDoctor.fetchPatientsFromDoctor()
+  rolePinia.fetchRoles()
 })
-const allPatients = computed(() => {
-  return patientPiniaInDoctor.getAllPatientsFromDoctor
+const allRoles = computed(() => {
+  return rolePinia.getAllRoles
 })
+console.log('Inside View service', allRoles)
 
-const column = ['full_name', 'sex', 'date_of_birth', 'phone']
+const column = ['name']
 </script>
-<!-- 
 <template>
   <div>
-    <BaseTable :column="column" :data="allPatients" route="/doctor/medicalHistory" />
-  </div>
-</template> -->
-
-<template>
-  <div>
-    <p>KHA</p>
     <BaseTable>
       <template v-slot:header>
         <th scope="col" class="px-6 py-3" v-for="(item, i) in column" :key="i">
@@ -32,16 +24,16 @@ const column = ['full_name', 'sex', 'date_of_birth', 'phone']
       </template>
       <template v-slot:body>
         <tr
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-          v-for="item in allPatients"
+          class="bg-white border-b dark:bg-gray-000 dark:border-gray-700"
+          v-for="item in allRoles"
           :key="item._id"
         >
           <td class="px-6 py-4" v-for="col in column" :key="col">
             {{ item[col] }}
           </td>
+
           <td class="px-6 py-4">
             <button class="mx-2" @click="edit">Edit</button>
-            <button @click="delete">Delete</button>
           </td>
         </tr>
       </template>

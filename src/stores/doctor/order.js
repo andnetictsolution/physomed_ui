@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from '../../plugins/axios'
-export const orderStore = defineStore('order', {
+export const orderStore = defineStore('orderDoctor', {
     state: () => ({
         order: {},
         patients: [],
