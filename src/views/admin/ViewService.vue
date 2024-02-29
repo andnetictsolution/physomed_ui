@@ -25,7 +25,7 @@ const column = ['name', 'description', 'price_per_item']
       </template>
       <template v-slot:body>
         <tr
-          class="bg-white border-b dark:bg-gray-000 dark:border-gray-700"
+          class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400"
           v-for="item in allServices"
           :key="item._id"
         >

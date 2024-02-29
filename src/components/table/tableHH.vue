@@ -1,12 +1,12 @@
 <template>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 dark:text-gray-400">
+      <thead class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
         <tr>
           <slot name="header"></slot>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
         <slot name="body"></slot>
       </tbody>
     </table>
@@ -133,6 +133,5 @@ const props = defineProps({
 const router = useRouter()
 const routeTo = (id) => {
   router.push(`${props.route}/${id}`)
-  console.log('inside route cliked')
 }
 </script>

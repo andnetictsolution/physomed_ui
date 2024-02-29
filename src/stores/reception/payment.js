@@ -1,25 +1,29 @@
 import { defineStore } from 'pinia'
 import axios from '../../plugins/axios'
 export const patientCardPaymentStore = defineStore('patientCardPayment', {
-    state: () => ({
-        patientPayment: {},
-        patientPayments: []
-    }),
-    getters: {
-        getAllPatientsTheyPayForCard(state) {
-            return this.patients
-        },
-
+  state: () => ({
+    patientPayments: [],
+    onePatientPayments: []
+  }),
+  getters: {
+    getAllPayments(state) {
+      return state.patientPayments
     },
-    actions: {
-        addNewPatientTheyPayForCard(payload) {
-            axios.post('/api/patients/register', payload)
-        },
-        async fetchPatients() {
-            let response = await axios.get('/api/patients/all')
-            console.log("Fetch All patints", response)
-            this.patients = response.data.patients
-
-        }
+    getOnePatientPayments(state) {
+      return state.onePatientPayments
     }
+  },
+  actions: {
+    async fetchPatientPayments() {
+      let response = await axios.get('/api/payments/all')
+      console.log('Fetch All patints', response)
+      this.patientPayments = response.data.payments
+    },
+    async fetchOnePatientPayments(payload) {
+      let response = await axios.post('/api/payments/filter', payload)
+      
+      console.log('Fetch one patints', response)
+      this.onePatientPayments = response.data.payments
+    }
+  }
 })

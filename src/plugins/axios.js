@@ -1,9 +1,8 @@
 import axios from 'axios'
 
 // baseurl
-// axios.defaults.baseURL = 'http://192.168.19.111:5000/'
-axios.defaults.baseURL = 'http://127.0.0.1:4000'
-
+axios.defaults.baseURL = 'http://192.168.1.193:4000/'
+// axios.defaults.baseURL = 'http://127.0.0.1:4000'
 
 // for outgoing requests
 axios.interceptors.request.use((config) => {

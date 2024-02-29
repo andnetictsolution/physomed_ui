@@ -17,11 +17,11 @@ const allUsers = computed(() => {
 const deleteUser = () => {
   userPinia.deletuser('65b95eaa73bfd186397612cd')
 }
-const openModal = (value) => {
+const openModal = () => {
   visible.value = !visible.value
 }
 
-const column = ['first_name', 'last_name', 'phone', 'email', 'role']
+const column = ['first_name', 'last_name', 'phone', 'email']
 </script>
 <template>
   <div>
@@ -30,16 +30,20 @@ const column = ['first_name', 'last_name', 'phone', 'email', 'role']
         <th scope="col" class="px-6 py-3" v-for="(item, i) in column" :key="i">
           {{ item }}
         </th>
+        <th scope="col" class="px-6 py-3">Roles</th>
         <th scope="col" class="px-6 py-3">Actions</th>
       </template>
       <template v-slot:body>
         <tr
-          class="bg-white border-b dark:bg-gray-000 dark:border-gray-700"
+          class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400"
           v-for="item in allUsers"
           :key="item._id"
         >
           <td class="px-6 py-4" v-for="col in column" :key="col">
             {{ item[col] }}
+          </td>
+          <td class="px-6 py-4">
+            {{ item.role.name }}
           </td>
           <td class="px-6 py-4">
             <button class="mx-2" @click="edit">Edit</button>
@@ -50,7 +54,6 @@ const column = ['first_name', 'last_name', 'phone', 'email', 'role']
     </BaseTable>
   </div>
 
-  //
   <div>
     <Dialog
       v-model:visible="visible"

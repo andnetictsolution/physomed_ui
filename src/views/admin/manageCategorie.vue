@@ -34,7 +34,6 @@ console.log(allCategories)
     <div class="table">
       <DataTable :value="allCategories" tableStyle="min-width: 50rem">
         <Column field="name" header="Name"></Column>
-        
       </DataTable>
     </div>
   </div>

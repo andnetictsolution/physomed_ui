@@ -26,7 +26,7 @@ const saveVS = async () => {
 
 <template>
   <div class="flex justify-start gap-2">
-    <div class="flex flex-col ">
+    <div class="flex flex-col">
       <div class="flex flex-col md:flex-row gap-2">
         <div class="flex flex-col">
           <label>BP</label>
@@ -52,8 +52,13 @@ const saveVS = async () => {
           <label>T</label>
           <InputText class="border border-gray-400 p-1" v-model="vs.Temp" />
         </div>
-        <div class="flex flex-col mt-8">
-          <button @click="saveVS" class="text-base font-medium">Save vital sign</button>
+        <div class="flex flex-col mt-4">
+          <button
+            @click="saveVS"
+            class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Save vital sign
+          </button>
         </div>
       </div>
     </div>

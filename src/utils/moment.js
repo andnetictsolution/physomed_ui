@@ -4,3 +4,6 @@ export const convertDOBToAge = (dob) => {
   console.log(dob,age)
   return age
 }
+export const convertToString=(date)=>{
+  return moment(date).format("LLL")
+}

@@ -1,29 +1,29 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
-import { orderStore } from '../../stores/reception/order'
+// import { orderStore } from '../../stores/reception/order'
+import { queueStore } from '../../stores/queue/queue'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-const orderPina = orderStore()
+import { convertToString } from '@/utils/moment'
+// const orderPina = orderStore()
+const queue = queueStore()
 
-// const confirm = useConfirm();
-onMounted(() => {
-  orderPina.fetchOrders()
+onMounted(async () => {
+  await queue.fetchNurseQueue()
 })
-const allOrders = computed(() => {
-  return orderPina.getAllOrders
+const allQueue = computed(() => {
+  return queue.getNurseQueue
 })
 const router = useRouter()
 const routeTo = (id) => {
   router.push(`/nurse/patient/${id}`)
 }
+const convertDate = (date) => {
+  return convertToString(date)
+}
 
-const column = ['Full Name', 'Sex', 'Payment Status']
+const column = ['Full Name', 'Sex', 'Queue Date']
 </script>
-<!-- <template>
-  <div>
-    <BaseTable :column="column" route="#" :data="allPatients" :actions="action" />
-  </div>
-</template> -->
 
 <template>
   <div>
@@ -36,21 +36,29 @@ const column = ['Full Name', 'Sex', 'Payment Status']
       </template>
       <template v-slot:body>
         <tr
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-          v-for="item in allOrders"
+          class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400"
+          v-for="item in allQueue"
           :key="item._id"
         >
           <td class="px-6 py-4">
-            {{ item.patient.full_name }}
+            {{
+              item.patient.first_name +
+              ' ' +
+              item.patient.middle_name +
+              ' ' +
+              item.patient.last_name
+            }}
           </td>
           <td class="px-6 py-4">
             {{ item.patient.sex }}
           </td>
           <td class="px-6 py-4">
-            {{ item.payment.isPaid ? 'Paid' : 'Not paid' }}
+            {{ convertDate(item.date) }}
           </td>
           <td class="px-6 py-4">
-            <button @click="routeTo(item._id)" class="p-2 rounded-sm">Detail</button>
+            <button @click="routeTo(item.patient._id)" class="bg-primary p-1 px-10 text-white">
+              Detail
+            </button>
           </td>
         </tr>
       </template>

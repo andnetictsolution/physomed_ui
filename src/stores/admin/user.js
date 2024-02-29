@@ -23,7 +23,7 @@ export const userStore = defineStore('user', {
       axios.delete('/api/users/remove/', payload._id)
     },
     async fetchUsers() {
-      let response = await axios.get('/api/users');
+      let response = await axios.get('/api/users/all');
       console.log(response);
       this.users = response.data.users
     }

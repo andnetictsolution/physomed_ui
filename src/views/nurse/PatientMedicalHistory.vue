@@ -77,8 +77,7 @@ const saveAssesment = () => {
     <div class="relative max-w-sm">
       <input
         v-model="patientMedicalHistory.when_did_it_start"
-        datepicker
-        type="text"
+        type="date"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-000 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
         placeholder="Select date"
       />
@@ -140,8 +139,13 @@ const saveAssesment = () => {
         placeholder="Write your thoughts here..."
       ></textarea>
     </div>
-    <div class="flex flex-col justify-center my-2">
-      <button @click="saveAssesment" class="font-medium text-base">Save Assesment</button>
+    <div class="flex flex-col justify-center align-items-center my-2" style="align-items: center">
+      <button
+        @click="saveAssesment"
+        class="bg-blue-500 w-80 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Save Assesment
+      </button>
     </div>
   </div>
 </template>

@@ -34,23 +34,23 @@ export const receptionLinks = [
   {
     name: 'Dashboard',
     to: '/admin/dashboard',
-    icon: ''
+    icon: 'pi pi-microsoft'
   },
   {
     name: 'View Patient',
     to: '/patient/view',
-    icon: ''
+    icon: 'pi pi-list'
   },
   {
-    name: 'Add Patinet',
+    name: 'Add Patient',
     to: '/patient/register',
-    icon: ''
+    icon: 'pi pi-plus'
   },
 
   {
     name: 'Payment Order',
     to: '/payment/order',
-    icon: ''
+    icon: 'pi pi-wallet'
   },
 
 

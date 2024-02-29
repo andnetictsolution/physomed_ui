@@ -1,23 +1,30 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
-import { orderStore } from '../../stores/reception/order'
+import Tag from 'primevue/tag'
+// import { orderStore } from '../../stores/reception/order'
+import { patientCardPaymentStore } from '../../stores/reception/payment'
 import { computed, onMounted } from 'vue'
-const orderPina = orderStore()
-
+import { useRouter } from 'vue-router'
+import Button from 'primevue/button'
+// const orderPina = orderStore()
+const paymentPinia = patientCardPaymentStore()
+const router = useRouter()
 // const confirm = useConfirm();
 onMounted(() => {
-  orderPina.fetchOrders()
+  // orderPina.fetchOrders()
+  paymentPinia.fetchPatientPayments()
 })
-const allOrders = computed(() => {
-  return orderPina.getAllOrders
+
+const allPayments = computed(() => {
+  return paymentPinia.getAllPayments
 })
 
 const processPayment = (payment) => {
-  console.log(payment)
-  orderPina.confirmPayment({ payments: [payment] })
+  router.push('/payment/order/' + payment)
+  // orderPina.confirmCardPayment({ patient: payment })
 }
 
-const column = ['Full Name', 'sex', 'service', 'quantity', 'U.price', 'T.price', 'status']
+const column = ['Full Name', 'sex', 'quantity', 'U.price', 'T.price', 'status']
 </script>
 <!-- <template>
   <div>
@@ -36,33 +43,52 @@ const column = ['Full Name', 'sex', 'service', 'quantity', 'U.price', 'T.price',
       </template>
       <template v-slot:body>
         <tr
-          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-          v-for="item in allOrders"
+          class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400"
+          v-for="item in allPayments"
           :key="item._id"
         >
           <td class="px-6 py-4">
-            {{ item.patient.full_name }}
+            {{
+              item.patient.first_name +
+              ' ' +
+              item.patient.middle_name +
+              ' ' +
+              item.patient.last_name
+            }}
           </td>
           <td class="px-6 py-4">
             {{ item.patient.sex }}
           </td>
-          <td class="px-6 py-4">
+          <!-- <td class="px-6 py-4">
             {{ item.service.name }}
-          </td>
+          </td> -->
           <td class="px-6 py-4">
             {{ item.quantity }}
           </td>
           <td class="px-6 py-4">
-            {{ item.service.price_per_item }}
+            {{ item.price_per_item }}
           </td>
           <td class="px-6 py-4">
-            {{ item.payment.price }}
+            {{ item.price }}
           </td>
           <td class="px-6 py-4">
-            {{ item.payment.isPaid ? 'Paid' : 'Not paid' }}
+            <Tag
+              :value="item.payment_status"
+              :severity="
+                item.payment_status == 'none'
+                  ? 'danger'
+                  : item.payment_status == 'warning'
+                    ? 'warning'
+                    : 'primary'
+              "
+            />
           </td>
           <td class="px-6 py-4">
-            <button @click="processPayment(item.payment._id)" class="p-2 rounded-sm">Pay</button>
+            <Button
+              @click="processPayment(item.patient._id)"
+              class="bg-primary p-1 px-10 text-white"
+              label="Detail"
+            ></Button>
           </td>
         </tr>
       </template>

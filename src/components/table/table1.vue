@@ -1,7 +1,7 @@
 <template>
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-      <thead class="text-xs text-gray-700 uppercase bg-gray-50 :bg-gray-700 dark:text-gray-400">
+    <table class="w-full text-sm text-left bg-white border-gray-200 dark:bg-gray-900">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3" v-for="item in props.column" :key="item.id">
             {{ item }}
@@ -13,7 +13,7 @@
           v-for="row in data"
           @click="routeTo(row._id)"
           :key="row.id"
-          class="odd:bg-white :bg-gray-900 even:bg-gray-50 :bg-gray-800 border-b dark:border-gray-700"
+          class="odd:bg-white dark:bg-gray-900 even:bg-gray-50 border-b dark:border-gray-700"
         >
           <td v-for="column in column" :key="column.field" class="px-6 py-4">
             {{ row[column] }}
@@ -21,7 +21,7 @@
               <slot :name="column.slot" :row="row"> </slot>
             </template>
           </td>
-          <td v-for="act in actions" :key="actions.field" class="px-6 py-4">
+          <td v-for="act in actions" :key="act.field" class="px-6 py-4">
             <a
               href="#"
               type="button"
@@ -184,6 +184,5 @@ const props = defineProps({
 const router = useRouter()
 const routeTo = (id) => {
   router.push(`${props.route}/${id}`)
-  console.log('inside route cliked')
 }
 </script>

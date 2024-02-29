@@ -4,25 +4,33 @@ import { computed, onMounted, ref } from 'vue'
 
 import { serviceStore } from '../../stores/admin/service'
 import { categoryStore } from '../../stores/admin/category'
+import { authStore } from '@/stores/auth/auth'
+import Checkbox from 'primevue/checkbox'
 const servicePinia = serviceStore()
 const categoryPinia = categoryStore()
+const authPinia = authStore()
 onMounted(async () => {
   await categoryPinia.fetchCategories()
+  await authPinia.fetchRoles()
 })
 const allCategories = computed(() => {
   return categoryPinia.getAllCategories
+})
+const allRoles = computed(() => {
+  return authPinia.getRoles
 })
 console.log(allCategories)
 const service = ref({
   name: '',
   description: '',
   price_per_item: '',
-  category: ''
+  category: '',
+  roles_allowed: []
 })
 const category = ref('')
 const addService = () => {
   console.log(category.value)
-  servicePinia.addNewservice({...service.value,category:category.value})
+  servicePinia.addNewservice({ ...service.value, category: category.value })
 }
 console.log(allCategories)
 </script>
@@ -45,7 +53,7 @@ console.log(allCategories)
         type="text"
         name="floating_email"
         id="floating_email"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
         required
       />
@@ -64,7 +72,7 @@ console.log(allCategories)
         v-model="service.description"
         type="text"
         id="floating_standard"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
       />
       <label
@@ -79,7 +87,7 @@ console.log(allCategories)
         v-model="service.price_per_item"
         type="text"
         id="floating_standard"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
       />
       <label
@@ -87,6 +95,19 @@ console.log(allCategories)
         class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
         >Service price</label
       >
+    </div>
+    <div>
+      <div class="card flex flex-wrap justify-center gap-3 mt-4">
+        <div v-for="role of allRoles" :key="role._id" class="flex items-center">
+          <Checkbox
+            v-model="service.roles_allowed"
+            :inputId="role._id"
+            name="role"
+            :value="role._id"
+          />
+          <label :for="role._id">{{ role.name }}</label>
+        </div>
+      </div>
     </div>
 
     <div class="relative z-0 w-full mb-5 group"></div>

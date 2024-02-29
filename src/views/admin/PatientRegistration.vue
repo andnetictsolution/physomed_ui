@@ -1,135 +1,117 @@
 <script setup>
-import { ref, onMounted, defineComponent } from 'vue'
-
+import { ref } from 'vue'
 import { patientStore } from '../../stores/reception/patient.js'
-import { storeToRefs } from 'pinia'
-
+import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
+const toast = useToast()
 const patientPinia = patientStore()
 
 const patient = ref({
-  full_name: '',
+  middle_name: '',
+  first_name: '',
+  last_name: '',
   date_of_birth: '',
   sex: '',
-  phone: '',
-  medicalHistory: ''
+  phone: ''
 })
-const registerPatient = () => {
-  patientPinia.addNewPatient(patient.value)
+const registerPatient = async () => {
+  if (!patient.value.first_name || !patient.value.middle_name || !patient.value.last_name) {
+    return toast.add({
+      severity: 'info',
+      summary: 'Message',
+      detail: 'Please fill all required fields',
+      life: 6000
+    })
+  }
+  await patientPinia.addNewPatient(patient.value)
+
+  toast.add({
+    severity: 'success',
+    summary: 'Message',
+    detail: 'Patient registered successfully',
+    life: 6000
+  })
 }
 </script>
 <template>
-  <form>
-    <div>
-      <h1 class="text-xl pt-4">Patient Registration</h1>
-    </div>
-    <div class="grid gap-6 mb-6 md:grid-cols-2 pt-2">
-      <div class="relative z-0">
-        <input
-          v-model="patient.full_name"
-          type="text"
-          id="floating_standard"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-        />
-        <label
-          for="floating_standard"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >Full name</label
-        >
+  <div class="flex justify-center">
+    <Toast />
+    <div class="w-full sm:w-1/2 md:w-full lg:w-2/3 mt-8 p-4 bg-gray-100 rounded shadow">
+      <h2 class="text-2xl dark:text-black font-bold mb-4">Patient Registration</h2>
+      <div class="flex flex-wrap -mx-2">
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2">First Name:</label>
+          <input
+            v-model="patient.first_name"
+            id="name"
+            type="text"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter your first name"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2">Middle Name:</label>
+          <input
+            v-model="patient.middle_name"
+            id="name"
+            type="text"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter your middle name"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2">Last Name:</label>
+          <input
+            v-model="patient.last_name"
+            id="name"
+            type="text"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter your last name"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="date-of-birth" class="block text-gray-700 font-bold mb-2"
+            >Date of birth:</label
+          >
+          <input
+            v-model="patient.date_of_birth"
+            id="date-of-birth"
+            type="date"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="date of birth"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="phone" class="block text-gray-700 font-bold mb-2">Phone:</label>
+          <input
+            id="phone"
+            v-model="patient.phone"
+            type="tel"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter your phone number"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="address" class="block text-gray-700 font-bold mb-2">Sex</label>
+          <select
+            v-model="patient.sex"
+            id="sex"
+            class="w-full px-3 py-2 dark:text-black border border-primary-300 rounded focus:outline-none focus:border-primary"
+          >
+            <option selected value="">Select sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+          </select>
+        </div>
       </div>
-
-      <div>
-        <select
-          v-model="patient.sex"
-          id="countries"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        >
-          <option selected>Sex</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-        </select>
-      </div>
-
-      <div class="relative z-0">
-        <input
-          v-model="patient.date_of_birth"
-          type="text"
-          id="floating_standard"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-        />
-        <label
-          for="floating_standard"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >Age</label
-        >
-      </div>
-
-      <div class="relative z-0">
-        <input
-          v-model="patient.phone"
-          type="text"
-          id="floating_standard"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-        />
-        <label
-          for="floating_standard"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >Phone No.</label
-        >
-      </div>
-
-      <div class="relative z-0">
-        <input
-          type="text"
-          id="floating_standard"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-        />
-        <label
-          for="floating_standard"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >Email address</label
-        >
-      </div>
-
-      <div class="relative z-0">
-        <input
-          type="text"
-          id="floating_standard"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-        />
-        <label
-          for="floating_standard"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >Sub City</label
-        >
-      </div>
-      <div class="relative z-0">
-        <input
-          type="text"
-          id="floating_standard"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-        />
-        <label
-          for="floating_standard"
-          class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-          >Wereda</label
-        >
-      </div>
-      <div></div>
-      <div>
+      <div class="flex justify-end">
         <button
-          @click.prevent="registerPatient"
-          type="submit"
-          class="float-right text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800: text-end"
+          @click="registerPatient"
+          class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded"
         >
-          Submit
+          Register patient
         </button>
       </div>
     </div>
-  </form>
+  </div>
 </template>
