@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
 import RadioButton from 'primevue/radiobutton'
 const patientMedicalHistoryPinia = patientMedicalHistoryStore()
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const id = route.params.id
 const patientMedicalHistory = ref({
   chief_complaint: '',
   when_did_it_start: '',
@@ -44,15 +47,13 @@ const selectedPregnant = ref('')
 const saveAssesment = () => {
   console.log(selectedDiseases)
   console.log(patientMedicalHistory.value, 'in commponent')
-  patientMedicalHistoryPinia.saveMedicalAssement({
-    id: props.patientId,
-    medical_history: {
-      list_of_other_diagnosis: selectedDiseases.value,
-      when_did_it_start: patientMedicalHistory.value.when_did_it_start,
-      is_patient_pregnant: selectedPregnant.value,
-      chief_complaint: patientMedicalHistory.value.chief_complaint,
-      list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
-    }
+  patientMedicalHistoryPinia.addpatientmedicalHistory({
+    patient_id: id,
+    list_of_other_diagnosis: selectedDiseases.value,
+    when_did_it_start: patientMedicalHistory.value.when_did_it_start,
+    is_patient_pregnant: selectedPregnant.value,
+    chief_complaint: patientMedicalHistory.value.chief_complaint,
+    list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
   })
 }
 </script>
