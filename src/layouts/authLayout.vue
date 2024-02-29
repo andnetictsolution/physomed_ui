@@ -18,6 +18,7 @@ onMounted(() => {
 })
 const router = useRouter()
 const user_role = computed(() => {
+  console.log('Inside user role', localStorage.getItem('physomed_user_role'))
   return localStorage.getItem('physomed_user_role')
 })
 </script>

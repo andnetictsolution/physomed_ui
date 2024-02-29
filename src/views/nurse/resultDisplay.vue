@@ -10,7 +10,8 @@ const props = defineProps({
   data: {
     type: Object,
     required: true
-  }
+  },
+ 
 })
 const toast = useToast()
 const queuePinia = queueStore();

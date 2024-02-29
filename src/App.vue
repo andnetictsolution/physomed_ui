@@ -3,10 +3,12 @@ import { computed } from 'vue'
 import AuthLayout from './layouts/authLayout.vue'
 import DefaultLayout from './layouts/defaultLayout.vue'
 import { authStore } from './stores/auth/auth'
+import AddUser from './views/admin/UserRegistration.vue'
 export default {
   components: {
     DefaultLayout,
-    AuthLayout
+    AuthLayout,
+    AddUser
   },
   setup() {
     const authPinia = authStore()

@@ -14,6 +14,12 @@ const doctorInvestigations = ref({
   treatmentPlan: '',
   progressNotes: ''
 })
+const props = defineProps({
+  patientId: {
+    type: String,
+    required: true
+  }
+})
 const addDoctorInvestigation = () => {
   doctorInvestigationPinia.addDoctorInvestigation(doctorInvestigations.value)
 }

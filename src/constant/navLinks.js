@@ -5,6 +5,14 @@ export const adminLinks = [
     icon: ''
   },
   {
+    name: 'Add Role',
+    to: '/add/role'
+  },
+  {
+    name: 'View Role',
+    to: '/view/role'
+  },
+  {
     name: 'Add User',
     to: '/user/register',
     icon: ''
@@ -14,11 +22,7 @@ export const adminLinks = [
     to: '/user/view',
     icon: ''
   },
-  {
-    name: 'Add Category',
-    to: '/category',
-    icon: ''
-  },
+
   {
     name: 'Add Service',
     to: '/service/add',
@@ -85,21 +89,8 @@ export const doctorLinks = [
   //   to: '/user',
   //   icon: ''
   // },
-  {
-    name: 'Patient Medical History',
-    to: '/doctor/medicalHistory',
-    icon: ''
-  },
-  {
-    name: 'Investigations',
-    to: '/doctor/investigation',
-    icon: ''
-  },
-  {
-    name: 'Treatment Plan',
-    to: '/doctor/treatment',
-    icon: ''
-  }
+
+
 ]
 
 export const physotrapistLinks = [

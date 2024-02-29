@@ -21,12 +21,13 @@ const allRoles = computed(() => {
 const registerUser = () => {
   userPinia.addNewUser(user.value)
 }
-const getAllUser = userStore()
-const gettt = userPinia.getAllUsersss
+onMounted(() => {
+  rolePinia.fetchRoles()
+})
 
-console.log('DD', gettt)
-const firstName = getAllUser.getAllUsersss
-console.log('FFF', firstName)
+const allRoles = computed(() => {
+  return rolePinia.getAllRoles
+})
 </script>
 
 <template>
@@ -110,8 +111,9 @@ console.log('FFF', firstName)
           >Phone number (0909090909)</label
         >
       </div>
+
       <div class="relative z-0 w-full mb-5 group">
-        <select
+        <Dropdown
           v-model="user.role"
           id="role"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
