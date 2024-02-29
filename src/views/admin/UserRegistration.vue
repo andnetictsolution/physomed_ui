@@ -2,8 +2,10 @@
 import { computed, onMounted, ref } from 'vue'
 import { userStore } from '../../stores/admin/user'
 import { authStore } from '@/stores/auth/auth'
+import { roleStore } from "../../stores/admin/role"
 const userPinia = userStore()
 const authPinia = authStore()
+const rolePinia = roleStore()
 const user = ref({
   first_name: '',
   last_name: '',
@@ -13,11 +15,9 @@ const user = ref({
   password: ''
 })
 onMounted(() => {
-  authPinia.fetchRoles()
+  rolePinia.fetchRoles()
 })
-const allRoles = computed(() => {
-  return authPinia.getRoles
-})
+
 const registerUser = () => {
   userPinia.addNewUser(user.value)
 }
@@ -133,7 +133,7 @@ const allRoles = computed(() => {
           >
             {{ role.name }}
           </option>
-        </select>
+        </Dropdown>
         <label
           for="floating_company"
           class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
