@@ -42,17 +42,14 @@ const diseaseList = ref([
 const selectedDiseases = ref(['HIV', 'DM'])
 const selectedPregnant = ref('')
 const saveAssesment = () => {
-  console.log(selectedDiseases)
-  console.log(patientMedicalHistory.value, 'in commponent')
-  patientMedicalHistoryPinia.saveMedicalAssement({
+  patientMedicalHistoryPinia.addpatientmedicalHistory({
     id: props.patientId,
-    medical_history: {
       list_of_other_diagnosis: selectedDiseases.value,
       when_did_it_start: patientMedicalHistory.value.when_did_it_start,
       is_patient_pregnant: selectedPregnant.value,
       chief_complaint: patientMedicalHistory.value.chief_complaint,
       list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
-    }
+    
   })
 }
 </script>
@@ -129,7 +126,7 @@ const saveAssesment = () => {
   </div>
   <div>
     <label for="message" class="block pt-2 mb-2 text-sm font-medium text-gray-900 dark:text-black"
-      >5. Any previous x-ray, reuslt and treatment taken?</label
+      >5. Any previous x-ray, result and treatment taken?</label
     >
     <div>
       <textarea
@@ -145,7 +142,7 @@ const saveAssesment = () => {
         @click="saveAssesment"
         class="bg-blue-500 w-80 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
-        Save Assesment
+        Save Assessment
       </button>
     </div>
   </div>

@@ -13,23 +13,24 @@ export const patientMedicalHistoryStore = defineStore('patientMedicalHistory', {
     },
     actions: {
         async addpatientmedicalHistory(payload) {
-            await axios.post(`/api/medicalHistory/save/${payload.patient_id}`, { medical_history_data: payload })
+            await axios.post(`/api/medicalHistory/save/${payload.id}`, { medical_history_data: payload }).then((response) => {
+                this.medicalHistory = response.data.patient
+            })
         },
+        
         async fetchPatientsMedicalHistory(id) {
-            console.log(" IDDD", id)
-
-            let response = await axios.get(`/api/patients/single/${id}`)
-            console.log("Fetch All Medical History", response)
-            this.medicalHistory = response
+            let response = await axios.get(`/api/patients/${id}`)
+            this.medicalHistory = response.data.patient
         },
         async saveVitalSign(payload) {
-            console.log(payload.vitalSigns)
-            const response = await axios.post(`api/medicalhistory/save/${payload.id}`, {
+            await axios.post(`api/medicalhistory/save/${payload.id}`, {
                 medical_history_data: {
                     vitalSigns: [payload.vitalSigns]
                 }
+            }).then((response) => {
+                console.log(response);
+this.medicalHistory = response.data.patient
             })
-            console.log(response)
         }
     }
 })

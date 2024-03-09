@@ -3,7 +3,6 @@ import permisionDenied from '../views/403Page.vue'
 import notFound from '../views/404Page.vue'
 import welcome from "../views/welcome.vue"
 import adminRoutes from './admin.routes'
-import configurationRoutes from './configuration.routes'
 import doctorRoutes from './doctor.routes'
 import nurseRoutes from './nurse.routes'
 import physotrapistRoutes from './physotrapist.routes'
@@ -15,7 +14,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     ...adminRoutes,
-    ...configurationRoutes,
     ...doctorRoutes,
     ...nurseRoutes,
     ...physotrapistRoutes,

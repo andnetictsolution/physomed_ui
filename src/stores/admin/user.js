@@ -15,8 +15,12 @@ export const userStore = defineStore('user', {
 
   },
   actions: {
-    addNewUser(payload) {
-      axios.post('/api/users/register', payload)
+    async addNewUser(payload) {
+      console.log(payload,"payload")
+      await axios.post('/api/users/register', payload).then((response)=>{
+        console.log(response);
+        this.users.push(response.data.user)
+      })
     },
     deletuser(payload) {
       console.log("Inside delete")

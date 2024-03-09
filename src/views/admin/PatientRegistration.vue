@@ -3,9 +3,14 @@ import { ref } from 'vue'
 import { patientStore } from '../../stores/reception/patient.js'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
+import {authStore} from "../../stores/auth/auth.js"
+import {onMounted} from "vue"
 const toast = useToast()
+const authPinia = authStore()
 const patientPinia = patientStore()
-
+onMounted(()=>{
+   authPinia.setTitle("Patient Registration")
+})
 const patient = ref({
   middle_name: '',
   first_name: '',
@@ -36,11 +41,10 @@ const registerPatient = async () => {
 <template>
   <div class="flex justify-center">
     <Toast />
-    <div class="w-full sm:w-1/2 md:w-full lg:w-2/3 mt-8 p-4 bg-gray-100 rounded shadow">
-      <h2 class="text-2xl dark:text-black font-bold mb-4">Patient Registration</h2>
+    <div class="w-full sm:w-1/2 md:w-full lg:w-2/3 mt-8 p-4 bg-gray-100 dark:bg-gray-900 rounded shadow">
       <div class="flex flex-wrap -mx-2">
         <div class="w-full md:w-1/2 px-2 mb-4">
-          <label for="name" class="block text-gray-700 font-bold mb-2">First Name:</label>
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">First Name:</label>
           <input
             v-model="patient.first_name"
             id="name"
@@ -50,7 +54,7 @@ const registerPatient = async () => {
           />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
-          <label for="name" class="block text-gray-700 font-bold mb-2">Middle Name:</label>
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Middle Name:</label>
           <input
             v-model="patient.middle_name"
             id="name"
@@ -60,7 +64,7 @@ const registerPatient = async () => {
           />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
-          <label for="name" class="block text-gray-700 font-bold mb-2">Last Name:</label>
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Last Name:</label>
           <input
             v-model="patient.last_name"
             id="name"
@@ -69,8 +73,8 @@ const registerPatient = async () => {
             placeholder="Enter your last name"
           />
         </div>
-        <div class="w-full md:w-1/2 px-2 mb-4">
-          <label for="date-of-birth" class="block text-gray-700 font-bold mb-2"
+        <div class="w-full md:w-1/2 px-2 mb-4 ">
+          <label for="date-of-birth" class="block text-gray-700 font-bold mb-2 dark:text-white"
             >Date of birth:</label
           >
           <input
@@ -82,7 +86,7 @@ const registerPatient = async () => {
           />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
-          <label for="phone" class="block text-gray-700 font-bold mb-2">Phone:</label>
+          <label for="phone" class="block text-gray-700 font-bold mb-2 dark:text-white">Phone:</label>
           <input
             id="phone"
             v-model="patient.phone"
@@ -92,7 +96,7 @@ const registerPatient = async () => {
           />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
-          <label for="address" class="block text-gray-700 font-bold mb-2">Sex</label>
+          <label for="address" class="block text-gray-700 font-bold mb-2 dark:text-white">Sex</label>
           <select
             v-model="patient.sex"
             id="sex"

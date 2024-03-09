@@ -20,7 +20,7 @@ const adminRoutes = [
 
   {
     path: '/user/view',
-    name: 'fortest',
+    name: 'userView',
     component: () => import('../views/admin/ViewUsers.vue'),
     meta: { requiresAuth: false, userGuard: 'All', layout: "auth" }
   },
@@ -43,14 +43,19 @@ const adminRoutes = [
     meta: { requiresAuth: false, userGuard: 'All', layout: "auth" }
   },
   {
-    path: '/equpment/view',
-    name: 'equipmentView',
-    component: () => import('../views/admin/ViewService.vue')
+    path: '/add/categories',
+    name: 'addCategories',
+    component: () => import('../views/admin/manageCategorie.vue')
   },
   {
     path: '/add/role',
     name: 'AddRole',
     component: () => import('../views/admin/AddRole.vue')
+  },
+  {
+    path: '/add/card',
+    name: 'addCard',
+    component: () => import('../views/admin/cardConfig.vue')
   },
   {
     path: '/view/role',

@@ -1,42 +1,60 @@
 <script setup>
-import BaseTable from '@/components/table/tableHH.vue'
+import Column from 'primevue/column';
 import { serviceStore } from '../../stores/admin/service'
 import { computed, onMounted } from 'vue'
-const servicePinia = serviceStore()
-onMounted(() => {
-  servicePinia.fetchServices()
+import DataTable from 'primevue/datatable';
+import Button from 'primevue/button';
+import Toolbar from 'primevue/toolbar';
+import { useRouter } from 'vue-router';
+import { authStore } from '@/stores/auth/auth';
+const servicePinia = serviceStore();
+const router = useRouter();
+const authPinia = authStore();
+onMounted(async () => {
+  authPinia.setTitle("All Services");
+ await servicePinia.fetchServices()
 })
 const allServices = computed(() => {
   return servicePinia.getAllServices
 })
-console.log('Inside View service', allServices)
+const goToService = (()=>{
+router.push("/service/add")
+})
 
-const column = ['name', 'description', 'price_per_item']
 </script>
 <template>
   <div>
-    <BaseTable>
-      <template v-slot:header>
-        <th scope="col" class="px-6 py-3" v-for="(item, i) in column" :key="i">
-          {{ item }}
-        </th>
-        <th scope="col" class="px-6 py-3">Actions</th>
-      </template>
-      <template v-slot:body>
-        <tr
-          class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400"
-          v-for="item in allServices"
-          :key="item._id"
-        >
-          <td class="px-6 py-4" v-for="col in column" :key="col">
-            {{ item[col] }}
-          </td>
+    <div class="card">
+          <Toolbar class="mb-4">
+              <template #start>
+                  <Button @click="goToService" label="Add New Service" icon="pi pi-plus" severity="primary" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" />
+              </template>
 
-          <td class="px-6 py-4">
-            <button class="mx-2" @click="edit">Edit</button>
-          </td>
-        </tr>
-      </template>
-    </BaseTable>
+              
+          </Toolbar>
+          <DataTable ref="dt" :value="allServices"  dataKey="id"
+              :paginator="true" :rows="10">
+              
+
+              
+              <Column  header="Service Name"  style="min-width:12rem">
+              <template #body="slotProps">
+                  <span class="text-sm">{{slotProps.data?.name}}</span>
+              </template>
+              </Column>
+              <Column field="price_per_item" header="Price"  style="min-width:8rem"></Column>
+              <Column header="Category"  style="min-width:10rem">
+                <template #body="slotProps">
+                  <span class="text-sm">{{slotProps.data?.category.name}}</span>
+              </template>
+              </Column>
+              <Column :exportable="false" header="Actions" style="min-width:12rem">
+                  <template #body>
+                      <Button icon="pi pi-pencil" outlined rounded class="mr-2" />
+                      <Button icon="pi pi-trash" outlined rounded severity="danger" />
+                  </template>
+              </Column>
+          </DataTable>
+      </div>
   </div>
 </template>

@@ -1,6 +1,5 @@
 <script setup>
 import { useRoute } from 'vue-router'
-import { orderStore } from '../../stores/reception/order'
 import { patientCardPaymentStore } from '@/stores/reception/payment'
 import { authStore } from '@/stores/auth/auth'
 const authPinia = authStore()
@@ -8,21 +7,25 @@ import { computed, onMounted } from 'vue'
 import BaseTable from '@/components/table/tableHH.vue'
 import Tag from 'primevue/tag'
 import Button from 'primevue/button'
+import { useRouter } from 'vue-router'
 const route = useRoute()
+const router = useRouter()
 const payment = patientCardPaymentStore()
 const id = route.params.id
-const orderPinia = orderStore()
-onMounted(async() => {
-  await authPinia.setTitle('Payment Details')
-  await payment.fetchOnePatientPayments({ patient: id,date:new Date() })
+// const orderPinia = orderStore()
+onMounted(async () => {
+  authPinia.setTitle('Payment Details')
+  await payment.fetchOnePatientPayments({ patient: id, date: new Date() })
 })
 const paymentList = computed(() => {
   return payment.getOnePatientPayments
 })
 const payOrder = (payment) => {
-  orderPinia.confirmPayment({ payments: [payment._id],patient_id:payment.patient._id })
+  console.log(payment, 'payment')
+  router.push('/payment/order/schedule/' + payment.order)
+  // orderPinia.confirmPayment({ payments: [payment._id],patient_id:payment.patient._id })
 }
-const column = ['Full Name', 'Sex',"Service", 'quantity', 'U.price', 'T.price', 'status']
+const column = ['Full Name', 'Sex', 'Service', 'quantity', 'U.price', 'T.price', 'status']
 </script>
 
 <template>
@@ -80,7 +83,7 @@ const column = ['Full Name', 'Sex',"Service", 'quantity', 'U.price', 'T.price', 
             <Button
               @click="payOrder(item)"
               class="bg-primary p-1 px-10 text-white"
-              label="Pay"
+              label="Detail"
             ></Button>
           </td>
         </tr>

@@ -1,36 +1,30 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
-import Tag from 'primevue/tag'
-// import { orderStore } from '../../stores/reception/order'
-import { patientCardPaymentStore } from '../../stores/reception/payment'
+import { queueStore } from '@/stores/queue/queue'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import Button from 'primevue/button'
-// const orderPina = orderStore()
-const paymentPinia = patientCardPaymentStore()
+import { convertToString } from '@/utils/moment'
+import { authStore } from '@/stores/auth/auth'
+const queuePinia = queueStore();
+const authPinia = authStore();
 const router = useRouter()
-// const confirm = useConfirm();
-onMounted(() => {
-  // orderPina.fetchOrders()
-  paymentPinia.fetchPatientPayments()
+onMounted(async() => {
+  await queuePinia.fetchReceptionQueue();
+  authPinia.setTitle("Payment order")
 })
 
 const allPayments = computed(() => {
-  return paymentPinia.getAllPayments
+  return queuePinia.getReceptionQueue
 })
 
 const processPayment = (payment) => {
   router.push('/payment/order/' + payment)
-  // orderPina.confirmCardPayment({ patient: payment })
 }
 
-const column = ['Full Name', 'sex', 'quantity', 'U.price', 'T.price', 'status']
+const column = ['Full Name', 'sex', 'date']
 </script>
-<!-- <template>
-  <div>
-    <BaseTable :column="column" route="#" :data="allPatients" :actions="action" />
-  </div>
-</template> -->
+
 
 <template>
   <div>
@@ -59,30 +53,10 @@ const column = ['Full Name', 'sex', 'quantity', 'U.price', 'T.price', 'status']
           <td class="px-6 py-4">
             {{ item.patient.sex }}
           </td>
-          <!-- <td class="px-6 py-4">
-            {{ item.service.name }}
-          </td> -->
           <td class="px-6 py-4">
-            {{ item.quantity }}
+            {{ convertToString(item.date) }}
           </td>
-          <td class="px-6 py-4">
-            {{ item.price_per_item }}
-          </td>
-          <td class="px-6 py-4">
-            {{ item.price }}
-          </td>
-          <td class="px-6 py-4">
-            <Tag
-              :value="item.payment_status"
-              :severity="
-                item.payment_status == 'none'
-                  ? 'danger'
-                  : item.payment_status == 'warning'
-                    ? 'warning'
-                    : 'primary'
-              "
-            />
-          </td>
+          
           <td class="px-6 py-4">
             <Button
               @click="processPayment(item.patient._id)"

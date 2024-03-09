@@ -1,6 +1,6 @@
 <template>
-  <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <table class="w-full text-sm text-left bg-white border-gray-200 dark:bg-gray-900">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg h-full">
+    <table class="w-full text-sm text-left bg-white border-gray-200 dark:bg-gray-900 h-full">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400">
         <tr>
           <th scope="col" class="px-6 py-3" v-for="item in props.column" :key="item.id">

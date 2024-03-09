@@ -1,24 +1,22 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
-
+// import { orderStore } from '../../stores/reception/order'
 import { queueStore } from '../../stores/queue/queue'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { convertToString } from '@/utils/moment'
-import { authStore } from '@/stores/auth/auth'
-const authPinia = authStore()
+// const orderPina = orderStore()
 const queue = queueStore()
 
 onMounted(async () => {
-  authPinia.setTitle("Patients Queue")
-  await queue.fetchNurseQueue()
+  await queue.fetchPhysioQueue()
 })
 const allQueue = computed(() => {
-  return queue.getNurseQueue
+  return queue.getPhysioQueue
 })
 const router = useRouter()
 const routeTo = (id) => {
-  router.push(`/nurse/patient/${id}`)
+  router.push(`/physio/order/${id}`)
 }
 const convertDate = (date) => {
   return convertToString(date)

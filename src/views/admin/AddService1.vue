@@ -1,25 +1,27 @@
 <script setup>
-import Dropdown from 'primevue/dropdown'
 import { computed, onMounted, ref } from 'vue'
 
 import { serviceStore } from '../../stores/admin/service'
 import { categoryStore } from '../../stores/admin/category'
 import { authStore } from '@/stores/auth/auth'
 import Checkbox from 'primevue/checkbox'
+import { useRouter } from 'vue-router'
 const servicePinia = serviceStore()
 const categoryPinia = categoryStore()
 const authPinia = authStore()
+const router = useRouter()
 onMounted(async () => {
+  authPinia.setTitle("Register Service")
   await categoryPinia.fetchCategories()
   await authPinia.fetchRoles()
 })
 const allCategories = computed(() => {
   return categoryPinia.getAllCategories
 })
+const category = ref('')
 const allRoles = computed(() => {
   return authPinia.getRoles
 })
-console.log(allCategories)
 const service = ref({
   name: '',
   description: '',
@@ -27,95 +29,86 @@ const service = ref({
   category: '',
   roles_allowed: []
 })
-const category = ref('')
-const addService = () => {
-  console.log(category.value)
-  servicePinia.addNewservice({ ...service.value, category: category.value })
+
+const addService = async() => {
+  try {
+    await servicePinia.addNewservice({ ...service.value, category: category.value });
+    router.push("/service/view")
+  } catch (error) {
+    console.log(error)
+  }
 }
-console.log(allCategories)
 </script>
 
 <template>
-  <div class="max-w-md mx-auto my-auto pt-2">
-    <div class="relative z-0 w-full mb-5 group">
-      <Dropdown
-        v-model="category"
-        :options="allCategories"
-        optionLabel="name"
-        option-value="_id"
-        placeholder="Select category"
-        class="w-full md:w-14rem"
-      />
-    </div>
-    <div class="relative z-0 w-full mb-5 group">
-      <input
-        v-model="service.name"
-        type="text"
-        name="floating_email"
-        id="floating_email"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
-        required
-      />
-      <label
-        for="floating_email"
-        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >Service name</label
-      >
-    </div>
-    <div>
-      <!-- <p>my First Name is {{ fName }}</p> -->
-    </div>
-
-    <div class="relative z-0">
-      <input
-        v-model="service.description"
-        type="text"
-        id="floating_standard"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
-      />
-      <label
-        for="floating_standard"
-        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-        >Service description</label
-      >
-    </div>
-    <div class="relative z-0 w-full mb-5 group"></div>
-    <div class="relative z-0">
-      <input
-        v-model="service.price_per_item"
-        type="text"
-        id="floating_standard"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
-      />
-      <label
-        for="floating_standard"
-        class="absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-100 peer-focus:-translate-y-6 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto"
-        >Service price</label
-      >
-    </div>
-    <div>
-      <div class="card flex flex-wrap justify-center gap-3 mt-4">
-        <div v-for="role of allRoles" :key="role._id" class="flex items-center">
-          <Checkbox
-            v-model="service.roles_allowed"
-            :inputId="role._id"
-            name="role"
-            :value="role._id"
-          />
-          <label :for="role._id">{{ role.name }}</label>
+  <div class="flex justify-center">
+    <div class="w-full sm:w-1/2 md:w-full lg:w-2/3 mt-8 p-4 bg-gray-100 dark:bg-gray-900 rounded shadow">
+      <div class="flex flex-wrap -mx-2">
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="address" class="block text-gray-700 font-bold mb-2 dark:text-white">Category</label>
+          <select
+            v-model="category"
+            id="sex"
+            class="w-full px-3 py-2 dark:text-black border border-primary-300 rounded focus:outline-none focus:border-primary"
+          >
+            <option selected value="">Select category</option>
+            <option v-for="category in allCategories" :key="category._id" :value="category._id">{{ category.name }}</option>
+          </select>
         </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Service Name:</label>
+          <input
+            v-model="service.name"
+            id="name"
+            type="text"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Service Name"
+          />
+        </div>
+        
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Description:</label>
+          <input
+            v-model="service.description"
+            id="name"
+            type="text"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Description"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4 ">
+          <label for="" class="block text-gray-700 font-bold mb-2 dark:text-white"
+            >Price:</label
+          >
+          <input
+            v-model="service.price_per_item"
+            id="price"
+            type="price"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Price"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4 ">
+          <label for="" class="block text-gray-700 font-bold mb-2 dark:text-white"
+            >Roles Allowed:</label
+          >
+          <div class="flex align-items-center" v-for="role in allRoles" :key="role._id">
+        <Checkbox v-model="service.roles_allowed" inputId="ingredient1" :name="role.name" :value="role._id" />
+        <label for="ingredient1" class="ml-2"> {{ role.name }} </label>
+    </div>
+    
+        </div>
+        
+        
+      </div>
+      <div class="flex justify-end">
+        <button
+          @click="addService"
+          class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Register service
+        </button>
       </div>
     </div>
-
-    <div class="relative z-0 w-full mb-5 group"></div>
-    <button
-      @click.prevent="addService"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      Add Service
-    </button>
   </div>
 </template>

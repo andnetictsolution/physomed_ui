@@ -1,40 +1,83 @@
 <script setup>
-import DataTable from 'primevue/datatable'
-import Column from 'primevue/column'
-import InputText from 'primevue/inputtext'
-import Button from 'primevue/button'
-import { categoryStore } from '../../stores/admin/category'
 import { computed, onMounted, ref } from 'vue'
-
-const categoryPinia = categoryStore()
-onMounted(() => {
-  categoryPinia.fetchCategories()
+import { authStore } from '@/stores/auth/auth';
+import InputText from 'primevue/inputtext';
+import DataTable from 'primevue/datatable';
+import Button from 'primevue/button';
+import Column from 'primevue/column';
+import Toolbar from 'primevue/toolbar';
+import Dialog from 'primevue/dialog';
+import { categoryStore } from '@/stores/admin/category';
+const categoryPinia = categoryStore();
+const authPinia = authStore()
+onMounted(async () => {
+  await categoryPinia.fetchCategories();
+  authPinia.setTitle("Add Category")
 })
+
 const allCategories = computed(() => {
   return categoryPinia.getAllCategories
 })
-const category = ref('')
-const registerCategory = () => {
-  categoryPinia.addNewCategorie({ name: category.value })
+
+const category = ref({
+  name: ''
+})
+const addCategory = async() => {
+  try {
+    await categoryPinia.addNewCategorie({name:category.value.name});
+    categoryDialog.value = false
+  } catch (error) {
+    console.log(error)
+  }
+  
 }
-console.log(allCategories)
+const categoryDialog = ref(false)
+const openNew = () => {
+  categoryDialog.value = true;
+};
+const hideDialog = () => {
+  categoryDialog.value = false;
+};
 </script>
 
 <template>
-  <div class="flex flex-col justify-center">
-    <div class="flex flex-row justify-between my-4">
-      <div>
-        <div class="flex flex-column gap-2 text-black">
-          <label for="username" class="text-black dark:text-white">Categorie</label>
-          <InputText class="p-1" v-model="category" />
-        </div>
+  <div>
+      <div class="card">
+          <Toolbar class="mb-4">
+              <template #start>
+                  <Button label="Add New Category" icon="pi pi-plus" severity="primary" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" @click="openNew" />
+              </template>
+
+              
+          </Toolbar>
+          <DataTable ref="dt" :value="allCategories"  dataKey="id"
+              :paginator="true" :rows="10">
+              
+
+              
+              <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
+              <Column :exportable="false" style="min-width:8rem">
+                  <template #body="slotProps">
+                      <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="openNew(slotProps.data)" />
+                      <Button icon="pi pi-trash" outlined rounded severity="danger" />
+                  </template>
+              </Column>
+          </DataTable>
       </div>
-      <Button label="Add category" @click="registerCategory" />
-    </div>
-    <div class="table">
-      <DataTable :value="allCategories" tableStyle="min-width: 50rem">
-        <Column field="name" header="Name"></Column>
-      </DataTable>
-    </div>
-  </div>
+
+      <Dialog v-model:visible="categoryDialog" :style="{width: '450px'}" header="Category Details" :modal="true" class="p-fluid">
+          <div class="field">
+              <label for="name">Category Name</label>
+              <InputText id="name" class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary" v-model.trim="category.name" required="true"  />
+              
+          </div>
+          
+          <template #footer>
+              <Button label="Cancel" icon="pi pi-times" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" text @click="hideDialog"/>
+              <Button label="Save" icon="pi pi-check" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" text @click="addCategory" />
+          </template>
+      </Dialog>
+
+      
+</div>
 </template>

@@ -1,12 +1,11 @@
 <template>
   <nav class="bg-white border-gray-200 dark:bg-gray-900">
     <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-      <a href="/login" class="flex items-center space-x-3 rtl:space-x-reverse">
-        <!-- <img src="https://flowbite.com/docs/images/logo.svg" class="h-8" alt="Flowbite Logo" /> -->
+      <button @click="navigateToLogin" class="flex items-center space-x-3 rtl:space-x-reverse">
         <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-primary"
-          >Physomed</span
+          >PhysoMed</span
         >
-      </a>
+      </button>
       <div class="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
         <button
           @click="navigateToPatientRegistration"
@@ -47,10 +46,11 @@ export default {
       // Use router.push() to navigate to the desired route
       router.push('/patient/register') // Replace '/my-route' with your desired route
     }
-
-    return {
-      navigateToPatientRegistration
+    const navigateToLogin = () => {
+      router.push('/login') // Replace '/my-route' with your desired route
     }
+
+   
     //
     const getNavClass = `
       display: flex;
@@ -75,6 +75,8 @@ export default {
     }
 
     return {
+      navigateToLogin,
+      navigateToPatientRegistration,
       windowWidth,
       isMobileMenuOpen,
       toggleMobileMenu,

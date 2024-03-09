@@ -20,7 +20,7 @@
         </button>
         <!-- Dropdown menu -->
         <div
-          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600"
+          class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-900 dark:divide-gray-600"
           id="user-dropdown"
         >
           <div class="px-4 py-3 capitalize">
@@ -29,25 +29,30 @@
           </div>
           <ul class="py-2" aria-labelledby="user-menu-button">
             <li class="flex flex-row items-center ml-2">
-              <i class="pi pi-user-edit" style="font-size: 1rem"></i>
+              
               <a
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >Edit Profile</a
+                >
+                <i class="pi pi-user-edit mr-2" style="font-size: 1rem"></i>
+                Edit Profile</a
               >
             </li>
             <li class="flex flex-row items-center ml-2">
-              <i class="pi pi-sync" style="font-size: 1rem"></i>
               <a
                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >Change Password</a
+                >
+                <i class="pi pi-sync mr-2" style="font-size: 1rem"></i>
+                Change Password</a
               >
             </li>
             <li class="flex flex-row items-center ml-2">
-              <i class="pi pi-unlock" style="font-size: 1rem"></i>
+              
               <a
                 @click="logout"
                 class="block px-4 pointer py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-                >logout</a
+                >
+                <i class="pi pi-unlock mr-2" style="font-size: 1rem"></i>
+                logout</a
               >
             </li>
           </ul>

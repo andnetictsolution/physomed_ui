@@ -16,11 +16,12 @@ export const roleStore = defineStore('roleStore', {
     },
     actions: {
         async addNewRole(payload) {
-            await axios.post('/api/roles/add', payload)
+            await axios.post('/api/roles/add', payload).then((response)=>{
+                this.roles.push(response.data.role)
+            })
         },
         async fetchRoles() {
             let response = await axios.get('/api/roles/all');
-            console.log('Responece in Roles', response);
             this.roles = response.data.roles
         }
     }

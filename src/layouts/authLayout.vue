@@ -18,7 +18,6 @@ onMounted(() => {
 })
 const router = useRouter()
 const user_role = computed(() => {
-  console.log('Inside user role', localStorage.getItem('physomed_user_role'))
   return localStorage.getItem('physomed_user_role')
 })
 </script>
@@ -55,16 +54,18 @@ const user_role = computed(() => {
     aria-label="Sidebar"
   >
     <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-      <div class="text-2xl font-bold text-primary border border-gray-500 rounded text-center">
-        {{ user_role }}
+      <div class="text-2xl font-bold text-primary mb-4 rounded text-center">
+        <img src="../assets/PhysioMed.png" style="margin-top: -30px;" class="w-full "  alt="" srcset="">
+        <p style="margin-top: -30px;">{{ user_role }}</p>
       </div>
       <ul class="space-y-2 font-medium" v-if="user_role == 'Admin'">
-        <i :class="link.icon" style="font-size: 1rem"></i>
+        
         <li v-for="(link, i) in adminLinks" :key="i">
           <RouterLink
             :to="link.to"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            class="flex items-center p-2 text-gray-900 rounded-lg w-full dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
+          <i :class="link.icon" style="font-size: 1rem"></i>
             <span class="ms-3">{{ link.name }}</span>
           </RouterLink>
         </li>
@@ -72,11 +73,12 @@ const user_role = computed(() => {
 
       <ul class="space-y-2 font-medium" v-if="user_role == 'Reception'">
         <li v-for="(link, i) in receptionLinks" :key="i" class="flex flex-row items-center">
-          <i :class="link.icon" style="font-size: 1rem"></i>
+          
           <RouterLink
             :to="link.to"
-            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+            class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group w-full"
           >
+          <i :class="link.icon" style="font-size: 1rem"></i>
             <span class="ms-3">{{ link.name }}</span>
           </RouterLink>
         </li>
@@ -84,11 +86,12 @@ const user_role = computed(() => {
 
       <ul class="space-y-2 font-medium" v-if="user_role == 'Nurse'">
         <li v-for="(link, i) in nurseLinks" :key="i">
-          <i :class="link.icon" style="font-size: 1rem"></i>
+          
           <RouterLink
             :to="link.to"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
+          <i :class="link.icon" style="font-size: 1rem"></i>
             <span class="ms-3">{{ link.name }}</span>
           </RouterLink>
         </li>
@@ -108,15 +111,17 @@ const user_role = computed(() => {
 
       <ul class="space-y-2 font-medium" v-if="user_role == 'Doctor'">
         <li v-for="(link, i) in doctorLinks" :key="i">
-          <i :class="link.icon" style="font-size: 1rem"></i>
+          
           <RouterLink
             :to="link.to"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
+          <i :class="link.icon" style="font-size: 1rem"></i>
             <span class="ms-3">{{ link.name }}</span>
           </RouterLink>
         </li>
       </ul>
+ 
     </div>
   </aside>
 

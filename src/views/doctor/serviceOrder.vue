@@ -47,7 +47,6 @@ const sendOrder = async () => {
         <div>
           <Checkbox
             class="border-primary"
-            variant="filled"
             v-model="selectedCategories"
             :inputId="category.service"
             name="category"
@@ -91,3 +90,21 @@ const sendOrder = async () => {
     </div>
   </div>
 </template>
+
+<style>
+.p-checkbox .p-checkbox-input {
+    appearance: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    z-index: 1 !important;
+    outline: 0 none;
+    border: 1px solid #cbd5e1!important;
+    border-radius: 6px !important;
+}
+</style>

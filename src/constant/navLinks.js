@@ -2,36 +2,43 @@ export const adminLinks = [
   {
     name: 'Dashboard',
     to: '/admin/dashboard',
-    icon: ''
+    icon: 'pi pi-microsoft'
   },
   {
-    name: 'Add Role',
-    to: '/add/role'
+    name: 'Manage Roles',
+    to: '/add/role',
+    icon:'pi pi-plus'
   },
-  {
-    name: 'View Role',
-    to: '/view/role'
-  },
+  
   {
     name: 'Add User',
     to: '/user/register',
-    icon: ''
+    icon: 'pi pi-plus'
   },
   {
     name: 'View User',
     to: '/user/view',
-    icon: ''
+    icon: 'pi pi-list'
   },
-
+  {
+    name: 'Manage Cards',
+    to: '/add/card',
+    icon:'pi pi pi-plus'
+  },
+  {
+    name: 'Manage Categories',
+    to: '/add/categories',
+    icon:'pi pi-filter-fill'
+  },
   {
     name: 'Add Service',
     to: '/service/add',
-    icon: ''
+    icon: 'pi pi-plus'
   },
   {
     name: 'View Service',
     to: '/service/view',
-    icon: ''
+    icon: 'pi pi-list'
   }
 ]
 export const receptionLinks = [
@@ -64,12 +71,12 @@ export const nurseLinks = [
   {
     name: 'Dashboard',
     to: '/nurse/dashboard',
-    icon: ''
+    icon: 'pi pi-microsoft'
   },
   {
     name: 'Patinet Queue',
     to: '/view/cardPaid/patients',
-    icon: ''
+    icon: 'pi pi-list'
   },
 ]
 
@@ -77,12 +84,12 @@ export const doctorLinks = [
   {
     name: 'Dashboard',
     to: '/admin/dashboard',
-    icon: ''
+    icon: 'pi pi-microsoft'
   },
   {
     name: 'Patient Queue',
     to: '/doctor/order',
-    icon: ''
+    icon: 'pi pi-list'
   },
   // {
   //   name: 'Daily appointment',
@@ -100,14 +107,14 @@ export const physotrapistLinks = [
     icon: ''
   },
   {
-    name: 'Patinet Queue',
-    to: '/patient/view',
+    name: 'Patient Queue',
+    to: '/physio/queue',
     icon: ''
   },
-  {
-    name: 'Patient Treatment',
-    to: '/physotrapist/treatment'
-  }
+  // {
+  //   name: 'Patient Treatment',
+  //   to: '/physotrapist/treatment'
+  // }
 ]
 
 export const diagnosis = [

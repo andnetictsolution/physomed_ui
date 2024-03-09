@@ -1,58 +1,83 @@
 <script setup>
-import Dropdown from 'primevue/dropdown'
 import { computed, onMounted, ref } from 'vue'
-
-import { roleStore } from '../../stores/admin/role'
-import { categoryStore } from '../../stores/admin/category'
-const rolePinia = roleStore()
-const categoryPinia = categoryStore()
+import { roleStore } from '@/stores/admin/role'
+import { authStore } from '@/stores/auth/auth';
+import InputText from 'primevue/inputtext';
+import DataTable from 'primevue/datatable';
+import Button from 'primevue/button';
+import Column from 'primevue/column';
+import Toolbar from 'primevue/toolbar';
+import Dialog from 'primevue/dialog';
+const rolePinia = roleStore();
+const authPinia = authStore()
 onMounted(async () => {
-  await categoryPinia.fetchCategories()
+  await rolePinia.fetchRoles();
+  authPinia.setTitle("Add Role")
 })
-const allCategories = computed(() => {
-  return categoryPinia.getAllCategories
+
+const allRoles = computed(() => {
+  return rolePinia.getAllRoles
 })
-console.log(allCategories)
+
 const role = ref({
   name: ''
 })
-const category = ref('')
-const addRole = () => {
-  console.log(category.value)
-  rolePinia.addNewRole(role.value)
+const addRole = async() => {
+  try {
+    await rolePinia.addNewRole({name:role.value.name});
+    roleDialog.value = false
+  } catch (error) {
+    console.log(error)
+  }
+  
 }
-console.log(allCategories)
+const roleDialog = ref(false)
+const openNew = () => {
+    roleDialog.value = true;
+};
+const hideDialog = () => {
+  roleDialog.value = false;
+};
 </script>
 
 <template>
-  <div class="max-w-md mx-auto my-auto pt-2">
-    <div class="relative z-0 w-full mb-5 group">
-      <input
-        v-model="role.name"
-        type="text"
-        name="floating_email"
-        id="floating_email"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-black dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
-        required
-      />
-      <label
-        for="floating_email"
-        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >Role name</label
-      >
-    </div>
-    <div>
-      <!-- <p>my First Name is {{ fName }}</p> -->
-    </div>
-    <div class="relative z-0 w-full mb-5 group"></div>
+  <div>
+      <div class="card">
+          <Toolbar class="mb-4">
+              <template #start>
+                  <Button label="Add New Role" icon="pi pi-plus" severity="primary" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" @click="openNew" />
+              </template>
 
-    <div class="relative z-0 w-full mb-5 group"></div>
-    <button
-      @click.prevent="addRole"
-      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      Add Role
-    </button>
-  </div>
+              
+          </Toolbar>
+          <DataTable ref="dt" :value="allRoles"  dataKey="id"
+              :paginator="true" :rows="10">
+              
+
+              
+              <Column field="name" header="Name" sortable style="min-width:16rem"></Column>
+              <Column :exportable="false" style="min-width:8rem">
+                  <template #body="slotProps">
+                      <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="openNew(slotProps.data)" />
+                      <Button icon="pi pi-trash" outlined rounded severity="danger" />
+                  </template>
+              </Column>
+          </DataTable>
+      </div>
+
+      <Dialog v-model:visible="roleDialog" :style="{width: '450px'}" header="Role Details" :modal="true" class="p-fluid">
+          <div class="field">
+              <label for="name">Role Name</label>
+              <InputText id="name" class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary" v-model.trim="role.name" required="true"  />
+              
+          </div>
+          
+          <template #footer>
+              <Button label="Cancel" icon="pi pi-times" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" text @click="hideDialog"/>
+              <Button label="Save" icon="pi pi-check" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" text @click="addRole" />
+          </template>
+      </Dialog>
+
+      
+</div>
 </template>

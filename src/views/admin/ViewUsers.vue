@@ -1,16 +1,21 @@
 <script setup>
-import BaseTable from '@/components/table/tableHH.vue'
 import { roleStore } from '../../stores/admin/role'
 import { userStore } from '../../stores/admin/user'
 import Dialog from 'primevue/dialog'
 
 import { computed, onMounted, ref } from 'vue'
+import Column from 'primevue/column'
+import DataTable from 'primevue/datatable'
+import Button from 'primevue/button'
+import { authStore } from '@/stores/auth/auth'
 const visible = ref(false)
 const rolePinia = roleStore()
 const userPinia = userStore()
-onMounted(() => {
-  userPinia.fetchUsers()
-  rolePinia.fetchRoles()
+const authPinia = authStore()
+onMounted(async() => {
+  authPinia.setTitle("All users")
+  await userPinia.fetchUsers()
+  await rolePinia.fetchRoles()
 })
 const allUsers = computed(() => {
   return userPinia.getAllUsers
@@ -19,41 +24,49 @@ const allUsers = computed(() => {
 const deleteUser = () => {
   userPinia.deletuser('65b95eaa73bfd186397612cd')
 }
-const openModal = () => {
-  visible.value = !visible.value
-}
+// const openModal = () => {
+//   visible.value = !visible.value
+// }
 
-const column = ['first_name', 'last_name', 'phone', 'email']
+// const column = ['Full Name',  'phone', 'email']
 </script>
 <template>
   <div>
-    <BaseTable>
-      <template v-slot:header>
-        <th scope="col" class="px-6 py-3" v-for="(item, i) in column" :key="i">
-          {{ item }}
-        </th>
-        <th scope="col" class="px-6 py-3">Roles</th>
-        <th scope="col" class="px-6 py-3">Actions</th>
-      </template>
-      <template v-slot:body>
-        <tr
-          class="text-base text-gray-700 uppercase bg-gray-50 dark:bg-gray-900 dark:text-gray-400"
-          v-for="item in allUsers"
-          :key="item._id"
-        >
-          <td class="px-6 py-4" v-for="col in column" :key="col">
-            {{ item[col] }}
-          </td>
-          <td class="px-6 py-4">
-            {{ item.role.name }}
-          </td>
-          <td class="px-6 py-4">
-            <button class="mx-2" @click="edit">Edit</button>
-            <button @click="openModal()">Delete</button>
-          </td>
-        </tr>
-      </template>
-    </BaseTable>
+    <div class="card">
+          <Toolbar class="mb-4">
+              <template #start>
+                  <Button label="Add New User" icon="pi pi-plus" severity="primary" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded" @click="openNew" />
+              </template>
+
+              
+          </Toolbar>
+          <DataTable ref="dt" :value="allUsers"  dataKey="id"
+              :paginator="true" :rows="10">
+              
+
+              
+              <Column  header="Full Name"  style="min-width:12rem">
+              <template #body="slotProps">
+                  <span class="text-sm">{{slotProps.data?.first_name + " "+ slotProps.data?.last_name}}</span>
+              </template>
+              </Column>
+              <Column field="phone" header="Phone"  style="min-width:8rem">
+              
+              </Column>
+              <Column field="email" header="Email"  style="min-width:8rem"></Column>
+              <Column header="Role"  style="min-width:10rem">
+                <template #body="slotProps">
+                  <span class="text-sm">{{slotProps.data?.role.name}}</span>
+              </template>
+              </Column>
+              <Column :exportable="false" header="Actions" style="min-width:12rem">
+                  <template #body>
+                      <Button icon="pi pi-pencil" outlined rounded class="mr-2" />
+                      <Button icon="pi pi-trash" outlined rounded severity="danger" />
+                  </template>
+              </Column>
+          </DataTable>
+      </div>
   </div>
 
   <div>

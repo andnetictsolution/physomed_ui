@@ -5,7 +5,8 @@ export const orderStore = defineStore('order', {
     order: {},
     patients: [],
     orders: [],
-    queue: []
+    queue: [],
+    patientOrder: []
   }),
   getters: {
     getAllPatients(state) {
@@ -19,6 +20,9 @@ export const orderStore = defineStore('order', {
     },
     getQueue(state) {
       return state.queue
+    },
+    getPatientOrder(state) {
+      return state.patientOrder
     }
   },
   actions: {
@@ -29,6 +33,11 @@ export const orderStore = defineStore('order', {
           const response = await axios.post('/api/orders/add', payload[i])
           console.log(response, 'response')
         }
+        let queue = await axios.post('/api/queue/reception', {
+          date: new Date(),
+          patient_id: payload[0].patient
+        })
+        console.log(queue, 'queue')
       }
     },
     async fetchPatients() {
@@ -55,22 +64,37 @@ export const orderStore = defineStore('order', {
     },
     async fetchSingleOrder(id) {
       let response = await axios.get(`/api/orders/single/${id}`)
-      console.log('Fetch All orders', response)
+      console.log('Fetch single orders', response)
       this.order = response.data.order
+    },
+    async fetchSinglePatientOrder(id) {
+      let response = await axios.post(`/api/orders/filter`, { patient: id })
+      this.patientOrder = response.data.orders
+      console.log('Fetch Single orders', response)
     },
     async confirmPayment(payments) {
       console.log(payments)
-      let response = await axios.post(`/api/payments/confirm`, payments.payments)
-      let takeQueue = await axios.post('/api/queue/physiotherapy', {
-        date: new Date(),
-        patient_id: payments.patient_id,
-      })
-      console.log(takeQueue)
-      console.log('Confirm payment', response)
+      await axios
+        .post(`/api/payments/confirm`, {
+          payments: payments.payments,
+          payment_method: payments.paymentMethod
+        })
+        .then(async (res) => {
+          console.log(res, 'confirm')
+          await axios.post('/api/queue/physiotherapy', {
+            date: new Date(),
+            patient_id: payments.patient_id
+          })
+        })
     },
     async confirmCardPayment(payments) {
       let response = await axios.post(`/api/card/payment/confirm`, payments)
       console.log('Confirm payment', response)
+    },
+
+    async addPatientProgressNote(order) {
+      let response = await axios.post(`/api/orders/update`, order)
+      console.log('Update order', response)
     }
   }
 })

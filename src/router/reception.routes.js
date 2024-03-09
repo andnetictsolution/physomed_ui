@@ -20,6 +20,11 @@ const receptionRoutes = [
     name: 'paymentDetail',
     component: () => import('../views/reception/paymentDetail.vue')
   },
+  {
+    path: '/payment/order/schedule/:id',
+    name: 'paymentScheduleDetail',
+    component: () => import('../views/reception/paymentSchedule.vue')
+  },
 ]
 
 export default receptionRoutes

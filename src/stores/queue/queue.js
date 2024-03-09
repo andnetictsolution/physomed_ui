@@ -39,6 +39,16 @@ export const queueStore = defineStore('queue', {
       const response = await axios.get('/api/queue/doctor')
       console.log(response,"doctor")
       this.drQueue = response.data.queue
+    },
+    async fetchReceptionQueue() {
+      const response = await axios.get('/api/queue/reception')
+      console.log(response,"reception")
+      this.receptionQueue = response.data.queue
+    },
+    async fetchPhysioQueue() {
+      const response = await axios.get('/api/queue/physiotherapy')
+      console.log(response,"physiotherapy")
+      this.physioQueue = response.data.queue
     }
   }
 })

@@ -3,6 +3,8 @@ import { computed, onMounted, ref } from 'vue'
 import { userStore } from '../../stores/admin/user'
 import { authStore } from '@/stores/auth/auth'
 import { roleStore } from "../../stores/admin/role"
+import { useRouter } from 'vue-router'
+const router = useRouter()
 const userPinia = userStore()
 const authPinia = authStore()
 const rolePinia = roleStore()
@@ -12,18 +14,21 @@ const user = ref({
   phone: '',
   email: '',
   role: '',
-  password: ''
 })
-onMounted(() => {
-  rolePinia.fetchRoles()
+onMounted(async() => {
+  await rolePinia.fetchRoles();
+  authPinia.setTitle("User Registration")
 })
 
-const registerUser = () => {
-  userPinia.addNewUser(user.value)
+const registerUser = async() => {
+  try {
+    await userPinia.addNewUser(user.value)
+    router.push("/user/view")
+  } catch (error) {
+    console.log(error)
+  }
 }
-onMounted(() => {
-  rolePinia.fetchRoles()
-})
+
 
 const allRoles = computed(() => {
   return rolePinia.getAllRoles
@@ -31,121 +36,72 @@ const allRoles = computed(() => {
 </script>
 
 <template>
-  <div class="max-w-md mx-auto my-auto pt-2">
-    <div class="relative z-0 w-full mb-5 group">
-      <input
-        v-model="user.email"
-        type="email"
-        name="floating_email"
-        id="floating_email"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
-        required
-      />
-      <label
-        for="floating_email"
-        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >Email address</label
-      >
-    </div>
-    <div>
-      <!-- <p>my First Name is {{ fName }}</p> -->
-    </div>
-
-    <div class="grid md:grid-cols-3 md:gap-6">
-      <div class="relative z-0 w-full mb-5 group">
-        <input
-          v-model="user.first_name"
-          type="text"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=""
-          required
-        />
-        <label
-          for="floating_first_name"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >First name</label
-        >
-      </div>
-      <div class="relative z-0 w-full mb-5 group">
-        <input
-          v-model="user.last_name"
-          type="text"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=""
-          required
-        />
-        <label
-          for="floating_middle_name"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Last name</label
-        >
-      </div>
-      <div class="relative z-0 w-full mb-5 group">
-        <input
-          v-model="user.password"
-          type="text"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-          required
-        />
-        <label
-          for="floating_last_name"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Password</label
-        >
-      </div>
-    </div>
-    <div class="grid md:grid-cols-2 md:gap-6">
-      <div class="relative z-0 w-full mb-5 group">
-        <input
-          v-model="user.phone"
-          type="tel"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-          placeholder=" "
-          required
-        />
-        <label
-          for="floating_phone"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Phone number (0909090909)</label
-        >
-      </div>
-
-      <div class="relative z-0 w-full mb-5 group">
-        <Dropdown
-          v-model="user.role"
-          id="role"
-          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        >
-          <option
-            value="null"
-            selected
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+  <div class="flex justify-center">
+    <div class="w-full sm:w-1/2 md:w-full lg:w-2/3 mt-8 p-4 bg-gray-100 dark:bg-gray-900 rounded shadow">
+      <div class="flex flex-wrap -mx-2">
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">First Name:</label>
+          <input
+            v-model="user.first_name"
+            id="name"
+            type="text"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter your first name"
+          />
+        </div>
+        
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Last Name:</label>
+          <input
+            v-model="user.last_name"
+            id="name"
+            type="text"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter your last name"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4 ">
+          <label for="date-of-birth" class="block text-gray-700 font-bold mb-2 dark:text-white"
+            >Email:</label
           >
-            Choose a role
-          </option>
-          <option
-            v-for="role in allRoles"
-            :key="role._id"
-            :value="role._id"
-            class="dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          <input
+            v-model="user.email"
+            id="email"
+            type="email"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Email"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="phone" class="block text-gray-700 font-bold mb-2 dark:text-white">Phone:</label>
+          <input
+            id="phone"
+            v-model="user.phone"
+            type="tel"
+            class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
+            placeholder="Enter your phone number"
+          />
+        </div>
+        <div class="w-full md:w-1/2 px-2 mb-4">
+          <label for="address" class="block text-gray-700 font-bold mb-2 dark:text-white">Role</label>
+          <select
+            v-model="user.role"
+            id="sex"
+            class="w-full px-3 py-2 dark:text-black border border-primary-300 rounded focus:outline-none focus:border-primary"
           >
-            {{ role.name }}
-          </option>
-        </Dropdown>
-        <label
-          for="floating_company"
-          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-          >Role</label
+            <option selected value="">Select role</option>
+            <option v-for="role in allRoles" :key="role._id" :value="role._id">{{ role.name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="flex justify-end">
+        <button
+          @click="registerUser"
+          class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded"
         >
+          Register user
+        </button>
       </div>
     </div>
-    <button
-      @click.prevent="registerUser"
-      class="text-white bg-primary hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-    >
-      Register User
-    </button>
   </div>
 </template>

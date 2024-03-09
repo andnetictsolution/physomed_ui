@@ -6,7 +6,7 @@ import DefaultFooter from '../components/default/DefaultFooter.vue'
 <template>
   <div class="">
     <DefaultHeader />
-    <RouterView class="mb-20"/>
+    <RouterView  style="margin-bottom: 140px;"/>
     <DefaultFooter class="md:hidden fixed bottom-0" />
   </div>
 </template>

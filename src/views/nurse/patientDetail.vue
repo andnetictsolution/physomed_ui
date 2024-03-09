@@ -8,11 +8,11 @@
       <TabPanel header="Vital Sign">
         <VS :patient-id="patient?._id" />
       </TabPanel>
-      <TabPanel header="Medical Assesment">
+      <TabPanel header="Medical Assessment">
         <PMH :patient-id="patient?._id" />
       </TabPanel>
       <TabPanel header="Medical Result">
-        <PR :data="patient"/>
+        <PR :data="patient?._id"/>
       </TabPanel>
     </TabView>
   </div>
@@ -24,17 +24,17 @@ import TabPanel from 'primevue/tabpanel'
 import PersonalInfo from '@/components/auth/personalInfo.vue'
 import PMH from './PatientMedicalHistory.vue'
 import PR from './resultDisplay.vue'
-// import { orderStore } from '@/stores/reception/order'
+import { authStore } from '@/stores/auth/auth'
 import { patientStore } from '../../stores/reception/patient'
 import VS from './vitalSign.vue'
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 const route = useRoute()
 const id = route.params.id
-// const orderPinia = orderStore()
+const authPinia = authStore()
 const patientPinia = patientStore()
 onMounted(async () => {
-  console.log('created hook')
+  authPinia.setTitle("Patient Details")
   await patientPinia.fetchSinglePatient(id)
   // await orderPinia.fetchSingleOrder(id)
 })

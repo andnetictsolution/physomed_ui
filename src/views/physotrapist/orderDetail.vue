@@ -5,17 +5,8 @@
       class="sticky top-0 z-30 dark:bg-white dark:text-black text-white bg-gray-700"
     />
     <TabView class="dark:text-black h-full z-0">
-      <TabPanel header="Patient History">
-        <PR :data="patient" />
-      </TabPanel>
       <TabPanel header="Order Exercise">
-        <SO />
-      </TabPanel>
-      <!-- <TabPanel header="Result">
-        <p class="m-0">This is for expecting result</p>
-      </TabPanel> -->
-      <TabPanel header="Follow up">
-        <p class="m-0">this is follow up</p>
+        <OP />
       </TabPanel>
     </TabView>
   </div>
@@ -25,8 +16,7 @@
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import PersonalInfo from '@/components/auth/personalInfo.vue'
-import PR from '../nurse/resultDisplay.vue'
-import SO from "./serviceOrder.vue"
+import OP from './ViewTreatmentPlan.vue'
 import { patientStore } from '../../stores/reception/patient'
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'

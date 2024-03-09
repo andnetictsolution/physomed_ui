@@ -7,3 +7,6 @@ export const convertDOBToAge = (dob) => {
 export const convertToString=(date)=>{
   return moment(date).format("LLL")
 }
+export const convertShortDate=(date)=>{
+  return moment(date).format("LL")
+}
