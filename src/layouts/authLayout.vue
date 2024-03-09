@@ -99,11 +99,12 @@ const user_role = computed(() => {
 
       <ul class="space-y-2 font-medium" v-if="user_role == 'Physotrapist'">
         <li v-for="(link, i) in physotrapistLinks" :key="i">
-          <i :class="link.icon" style="font-size: 1rem"></i>
+          
           <RouterLink
             :to="link.to"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
+          <i :class="link.icon" style="font-size: 1rem"></i>
             <span class="ms-3">{{ link.name }}</span>
           </RouterLink>
         </li>

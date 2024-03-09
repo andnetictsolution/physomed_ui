@@ -52,6 +52,7 @@ export const receptionLinks = [
     to: '/patient/view',
     icon: 'pi pi-list'
   },
+  
   {
     name: 'Add Patient',
     to: '/patient/register',
@@ -74,7 +75,7 @@ export const nurseLinks = [
     icon: 'pi pi-microsoft'
   },
   {
-    name: 'Patinet Queue',
+    name: 'Patient Queue',
     to: '/view/cardPaid/patients',
     icon: 'pi pi-list'
   },
@@ -104,12 +105,12 @@ export const physotrapistLinks = [
   {
     name: 'Dashboard',
     to: '/admin/dashboard',
-    icon: ''
+    icon: 'pi pi-microsoft'
   },
   {
     name: 'Patient Queue',
     to: '/physio/queue',
-    icon: ''
+    icon: 'pi pi-list'
   },
   // {
   //   name: 'Patient Treatment',

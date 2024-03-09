@@ -5,12 +5,15 @@ import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 import {authStore} from "../../stores/auth/auth.js"
 import {onMounted} from "vue"
+import { useRouter } from 'vue-router'
 const toast = useToast()
 const authPinia = authStore()
-const patientPinia = patientStore()
+const patientPinia = patientStore();
+const router = useRouter()
 onMounted(()=>{
    authPinia.setTitle("Patient Registration")
 })
+const user_role = localStorage.getItem("physomed_user_role")
 const patient = ref({
   middle_name: '',
   first_name: '',
@@ -29,13 +32,20 @@ const registerPatient = async () => {
     })
   }
   await patientPinia.addNewPatient(patient.value)
-
+  console.log(user_role,"user_role")
+if(user_role == 'Reception'){
   toast.add({
     severity: 'success',
     summary: 'Message',
     detail: 'Patient registered successfully',
     life: 6000
   })
+  router.push("/patient/view")
+
+}else{
+  router.push("/success")
+}
+  
 }
 </script>
 <template>

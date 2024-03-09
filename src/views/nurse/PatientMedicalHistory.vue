@@ -14,12 +14,7 @@ const patientMedicalHistory = ref({
   is_patient_pregnant: '',
   patient_id: ''
 })
-const props = defineProps({
-  patientId: {
-    type: String,
-    required: true
-  }
-})
+
 
 const pregnancyCheckList = ref([
   {
@@ -36,7 +31,7 @@ const diseaseList = ref([
   { label: 'HIV' },
   { label: 'Cancer' },
   { label: 'Balance problem' },
-  { label: 'Hypertation' },
+  { label: 'Hyperbaton' },
   { label: 'Stroke' },
   { label: 'DM' },
   { label: 'Pacemaker' },
@@ -46,13 +41,12 @@ const selectedDiseases = ref(['HIV', 'DM'])
 const selectedPregnant = ref('')
 const saveAssesment = () => {
   patientMedicalHistoryPinia.addpatientmedicalHistory({
-    id: props.patientId,
-      list_of_other_diagnosis: selectedDiseases.value,
-      when_did_it_start: patientMedicalHistory.value.when_did_it_start,
-      is_patient_pregnant: selectedPregnant.value,
-      chief_complaint: patientMedicalHistory.value.chief_complaint,
-      list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
-    
+    patient_id: id,
+    list_of_other_diagnosis: selectedDiseases.value,
+    when_did_it_start: patientMedicalHistory.value.when_did_it_start,
+    is_patient_pregnant: selectedPregnant.value,
+    chief_complaint: patientMedicalHistory.value.chief_complaint,
+    list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
   })
 }
 </script>

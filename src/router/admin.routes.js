@@ -53,6 +53,11 @@ const adminRoutes = [
     component: () => import('../views/admin/AddRole.vue')
   },
   {
+    path: '/success',
+    name: 'success',
+    component: () => import('../views/admin/success.vue')
+  },
+  {
     path: '/add/card',
     name: 'addCard',
     component: () => import('../views/admin/cardConfig.vue')

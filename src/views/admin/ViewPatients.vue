@@ -100,7 +100,7 @@ const confirmPayment = async () => {
     :value="allPatients" scrollable scrollHeight="600px" tableStyle="min-width: 50rem">
     <Column field="name" header="Full Name">
       <template #body="slotProps">
-                    {{ slotProps.data.first_name + " " +slotProps.data.middle_name + slotProps.data.last_name   }}
+                    {{ slotProps.data.first_name + " " +slotProps.data.middle_name +" "+ slotProps.data.last_name   }}
                 </template>
     </Column>
     <Column field="sex" header="Sex"></Column>

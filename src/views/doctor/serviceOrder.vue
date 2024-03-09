@@ -38,15 +38,18 @@ const sendOrder = async () => {
 
 <template>
   <div class="my-2">
-    <div class="flex">
+    <div class="flex flex-wrap">
       <div
         v-for="category in filteredServices"
         :key="category.service"
-        class="flex flex-col align-items-center w-2/3"
+        class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
       >
         <div>
           <Checkbox
-            class="border-primary"
+            style="z-index: 1 !important;
+    outline: 0 none;
+    border: 1px solid #cbd5e1!important;
+    border-radius: 6px !important; margin-right: 2px;"
             v-model="selectedCategories"
             :inputId="category.service"
             name="category"

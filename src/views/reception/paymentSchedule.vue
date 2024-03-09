@@ -51,7 +51,6 @@ const confirmPayment = async () => {
 <template>
   <div>
     <PI :personal="singleOrder.patient" />
-    {{ SelectedSchedule }}
     <div>
       <Toolbar class="mb-4">
         <template #start>
@@ -72,6 +71,10 @@ const confirmPayment = async () => {
         tableStyle="min-width: 50rem"
       >
         <Column
+        style="z-index: 1 !important;
+    outline: 0 none;
+    border: 1px solid #cbd5e1!important;
+    border-radius: 6px !important; margin: 2px;"
           selectionMode="multiple"
           class="border-gray-400 rounded-lg"
           headerStyle="width: 3rem"

@@ -15,7 +15,7 @@
         <p class="m-0">This is for expecting result</p>
       </TabPanel> -->
       <TabPanel header="Follow up">
-        <p class="m-0">this is follow up</p>
+        <FU/>
       </TabPanel>
     </TabView>
   </div>
@@ -26,14 +26,18 @@ import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import PersonalInfo from '@/components/auth/personalInfo.vue'
 import PR from '../nurse/resultDisplay.vue'
+import FU from "./followUp.vue"
 import SO from "./serviceOrder.vue"
 import { patientStore } from '../../stores/reception/patient'
 import { computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-const route = useRoute()
+import { authStore } from '@/stores/auth/auth'
+const route = useRoute();
+const authPina = authStore()
 const id = route.params.id
 const patientPinia = patientStore()
 onMounted(async () => {
+  authPina.setTitle("Patient Details")
   await patientPinia.fetchSinglePatient(id)
 })
 const patient = computed(() => {
