@@ -31,7 +31,7 @@ const updateOrder = async (count, index) => {
     <Accordion :activeIndex="0" v-for="(order, count) in patientOrder" :key="order._id">
       <AccordionTab :title="order.service.name" :header="order.service.name">
         <span v-for="(schedule, index) in order.schedule" :key="schedule._id">
-          <ul v-if="!schedule.isPaidFor" class="my-2 border border-gray-200 p-2 rounded-lg">
+          <ul v-if="schedule.isPaidFor" class="my-2 border border-gray-200 p-2 rounded-lg">
             <li>
               Sequence: <span class="font-semibold">{{ schedule.sequence }}</span>
             </li>

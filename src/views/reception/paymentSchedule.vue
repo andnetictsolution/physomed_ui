@@ -34,7 +34,7 @@ const confirmPayment = async () => {
   if (SelectedSchedule.value.length) {
     for (let i = 0; i < SelectedSchedule.value.length; i++) {
       payments.push({
-        schedules_paid_for: SelectedSchedule.value[i]._id,
+        schedules_paid_for: [SelectedSchedule.value[i]._id],
         amount: singleOrder.value.service.price_per_item,
         payment_id: singleOrder.value.payment
       })
