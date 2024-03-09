@@ -3,6 +3,9 @@ import { ref } from 'vue'
 import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
 import RadioButton from 'primevue/radiobutton'
 const patientMedicalHistoryPinia = patientMedicalHistoryStore()
+import { useRoute } from 'vue-router'
+const route = useRoute()
+const id = route.params.id
 const patientMedicalHistory = ref({
   chief_complaint: '',
   when_did_it_start: '',
