@@ -3,7 +3,8 @@
     <div class="container mx-auto px-4 py-8">
       <div class="max-w-md mx-auto bg-white rounded-lg h-full rounded-lg overflow-hidden shadow-lg">
         <div class="px-6 py-4">
-          <h3 class="dark:text-primary text-2xl text-center font-medium my-3">Welcome back!</h3>
+          <img src="../assets/PhysioMed.png" style="height: 300px;width: 100%;" alt="" srcset="">
+          <h3 class="dark:text-primary text-2xl text-center font-medium my-3" style="margin-top: -60px;">Welcome back!</h3>
           <p class="dark:text-black text-base text-center my-2 font-semibold">
             Sign in to start your work!
           </p>
