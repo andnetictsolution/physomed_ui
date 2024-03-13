@@ -8,12 +8,12 @@
       <TabPanel header="Patient History">
         <PR :data="patient" />
       </TabPanel>
-      <TabPanel header="Order Exercise">
+      <TabPanel header="Observation">
+        <Observation :data="patient" />
+      </TabPanel>
+      <TabPanel header="Treatment Plan">
         <SO />
       </TabPanel>
-      <!-- <TabPanel header="Result">
-        <p class="m-0">This is for expecting result</p>
-      </TabPanel> -->
       <TabPanel header="Follow up">
         <FU/>
       </TabPanel>
@@ -25,7 +25,8 @@
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
 import PersonalInfo from '@/components/auth/personalInfo.vue'
-import PR from '../nurse/resultDisplay.vue'
+import Observation from "./observation.vue"
+import PR from './doctorHistory.vue'
 import FU from "./followUp.vue"
 import SO from "./serviceOrder.vue"
 import { patientStore } from '../../stores/reception/patient'

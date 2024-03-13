@@ -3,15 +3,15 @@ import { ref } from 'vue'
 import { patientStore } from '../../stores/reception/patient.js'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
-import {authStore} from "../../stores/auth/auth.js"
-import {onMounted} from "vue"
+import { authStore } from "../../stores/auth/auth.js"
+import { onMounted } from "vue"
 import { useRouter } from 'vue-router'
 const toast = useToast()
 const authPinia = authStore()
 const patientPinia = patientStore();
 const router = useRouter()
-onMounted(()=>{
-   authPinia.setTitle("Patient Registration")
+onMounted(() => {
+  authPinia.setTitle("Patient Registration")
 })
 const user_role = localStorage.getItem("physomed_user_role")
 const patient = ref({
@@ -23,7 +23,7 @@ const patient = ref({
   phone: ''
 })
 const registerPatient = async () => {
-  if (!patient.value.first_name || !patient.value.middle_name || !patient.value.last_name) {
+  if (!patient.value.first_name || !patient.value.middle_name || !patient.value.last_name || !patient.value.date_of_birth || !patient.value.sex || !patient.value.phone)  {
     return toast.add({
       severity: 'info',
       summary: 'Message',
@@ -31,21 +31,30 @@ const registerPatient = async () => {
       life: 6000
     })
   }
-  await patientPinia.addNewPatient(patient.value)
-  console.log(user_role,"user_role")
-if(user_role == 'Reception'){
-  toast.add({
-    severity: 'success',
-    summary: 'Message',
-    detail: 'Patient registered successfully',
-    life: 6000
-  })
-  router.push("/patient/view")
+  try {
+    await patientPinia.addNewPatient(patient.value)
+    if (user_role == 'Reception') {
+      toast.add({
+        severity: 'success',
+        summary: 'Message',
+        detail: 'Patient registered successfully',
+        life: 6000
+      })
+      router.push("/patient/view")
 
-}else{
-  router.push("/success")
-}
-  
+    } else {
+      router.push("/success")
+    }
+  } catch (error) {
+    console.log(error)
+    toast.add({
+      severity: 'error',
+      summary: 'Message',
+      detail: error?.response?.data?.message,
+      life: 6000
+    })
+  }
+
 }
 </script>
 <template>
@@ -55,63 +64,38 @@ if(user_role == 'Reception'){
       <div class="flex flex-wrap -mx-2">
         <div class="w-full md:w-1/2 px-2 mb-4">
           <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">First Name:</label>
-          <input
-            v-model="patient.first_name"
-            id="name"
-            type="text"
+          <input v-model="patient.first_name" id="name" type="text"
             class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
-            placeholder="Enter your first name"
-          />
+            placeholder="Enter your first name" />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
-          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Middle Name:</label>
-          <input
-            v-model="patient.middle_name"
-            id="name"
-            type="text"
+          <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Father Name:</label>
+          <input v-model="patient.middle_name" id="name" type="text"
             class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
-            placeholder="Enter your middle name"
-          />
+            placeholder="Enter your middle name" />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
           <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">Last Name:</label>
-          <input
-            v-model="patient.last_name"
-            id="name"
-            type="text"
+          <input v-model="patient.last_name" id="name" type="text"
             class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
-            placeholder="Enter your last name"
-          />
+            placeholder="Enter your last name" />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4 ">
-          <label for="date-of-birth" class="block text-gray-700 font-bold mb-2 dark:text-white"
-            >Date of birth:</label
-          >
-          <input
-            v-model="patient.date_of_birth"
-            id="date-of-birth"
-            type="date"
+          <label for="date-of-birth" class="block text-gray-700 font-bold mb-2 dark:text-white">Date of birth:</label>
+          <input v-model="patient.date_of_birth" id="date-of-birth" type="date"
             class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
-            placeholder="date of birth"
-          />
+            placeholder="date of birth" />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
           <label for="phone" class="block text-gray-700 font-bold mb-2 dark:text-white">Phone:</label>
-          <input
-            id="phone"
-            v-model="patient.phone"
-            type="tel"
+          <input id="phone" v-model="patient.phone" type="tel"
             class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
-            placeholder="Enter your phone number"
-          />
+            placeholder="Enter your phone number" />
         </div>
         <div class="w-full md:w-1/2 px-2 mb-4">
           <label for="address" class="block text-gray-700 font-bold mb-2 dark:text-white">Sex</label>
-          <select
-            v-model="patient.sex"
-            id="sex"
-            class="w-full px-3 py-2 dark:text-black border border-primary-300 rounded focus:outline-none focus:border-primary"
-          >
+          <select v-model="patient.sex" id="sex"
+            class="w-full px-3 py-2 dark:text-black border border-primary-300 rounded focus:outline-none focus:border-primary">
             <option selected value="">Select sex</option>
             <option value="Male">Male</option>
             <option value="Female">Female</option>
@@ -119,11 +103,10 @@ if(user_role == 'Reception'){
         </div>
       </div>
       <div class="flex justify-end">
-        <button
-          @click="registerPatient"
-          class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Register patient
+        <button :class="{ 'cursor-not-allowed': !patient.first_name || !patient.last_name || !patient.middle_name }"
+          :disabled="!patient.first_name || !patient.last_name || !patient.middle_name" @click="registerPatient"
+          class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
+          Register
         </button>
       </div>
     </div>
