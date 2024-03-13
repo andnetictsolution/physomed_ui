@@ -6,7 +6,10 @@ import AccordionTab from 'primevue/accordiontab'
 import Accordion from 'primevue/accordion'
 import { convertShortDate } from '@/utils/moment'
 import Textarea from 'primevue/textarea'
+import Toast from 'primevue/toast'
+import { useToast } from 'primevue/usetoast'
 const route = useRoute()
+const toast = useToast()
 const orderPinia = orderStore()
 const id = route.params.id
 onMounted(() => {
@@ -23,11 +26,27 @@ const updateOrder = async (count, index) => {
     isServiceGiven: true,
     note: patientOrder.value[count].schedule[index].note
   }
-  await orderPinia.addPatientProgressNote(payload)
+  try {
+    await orderPinia.addPatientProgressNote(payload);
+    toast.add({
+      severity: 'success',
+      summary: 'Message',
+      detail: 'Progress note added successfully',
+      life: 6000
+    })
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Message',
+      detail: error.response.data.message,
+      life: 6000
+    })
+  }
 }
 </script>
 <template>
   <div class="text-base font-semibold">
+    <Toast />
     <Accordion :activeIndex="0" v-for="(order, count) in patientOrder" :key="order._id">
       <AccordionTab :title="order.service.name" :header="order.service.name">
         <span v-for="(schedule, index) in order.schedule" :key="schedule._id">
@@ -45,25 +64,20 @@ const updateOrder = async (count, index) => {
             <li>
               Service status:
               <span class="font-semibold">{{
-                schedule.isServiceGiven ? 'Service given' : 'Not given'
-              }}</span>
+      schedule.isServiceGiven ? 'Service given' : 'Not given'
+    }}</span>
             </li>
             <li class="my-2">
               <div class="my-1">Progress note:</div>
               <div>
-                <Textarea
-                  v-model="schedule.note"
-                  rows="3"
-                  class="w-full border border-gray-200 p-2 rounded-lg"
-                ></Textarea>
+                <Textarea  v-model="schedule.note" rows="3"
+                  class="w-full border border-gray-200 p-2 rounded-lg"></Textarea>
               </div>
             </li>
             <li class="my-2">
-              <button
-                @click="updateOrder(count, index)"
-                type="button"
-                class="block bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              >
+              <button @click="updateOrder(count, index)" :class="{ 'cursor-not-allowed': !schedule.note }"
+                :disabled="!schedule.note" type="button"
+                class="block bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Add Note
               </button>
             </li>

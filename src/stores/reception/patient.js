@@ -15,11 +15,17 @@ export const patientStore = defineStore('patient', {
   },
   actions: {
     async addNewPatient(payload) {
-      await axios.post('/api/patients/register', payload)
+      await axios
+        .post('/api/patients/register', payload)
+        .then((res) => {
+          console.log(res)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     async fetchPatients() {
       let response = await axios.get('/api/patients/all')
-      console.log('Fetch All patints', response)
       this.patients = response.data.patients
     },
     async fetchSinglePatient(id) {

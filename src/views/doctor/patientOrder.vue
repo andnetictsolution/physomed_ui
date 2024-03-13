@@ -5,11 +5,16 @@ import { queueStore } from '../../stores/queue/queue'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { convertToString } from '@/utils/moment'
-// const orderPina = orderStore()
+import socket from '@/utils/socket'
+import { authStore } from '@/stores/auth/auth'
 const queue = queueStore()
-
+const authPina = authStore()
 onMounted(async () => {
-  await queue.fetchDrQueue()
+  authPina.setTitle("Doctor Queue")
+  await queue.fetchDrQueue();
+  socket.on('newDoctorQueue', async(data) => {
+      await patientPinia.fetchDrQueue()
+    });
 })
 const allQueue = computed(() => {
   return queue.getDrQueue
@@ -56,7 +61,7 @@ const column = ['Full Name', 'Sex', 'Queue Date']
             {{ convertDate(item.date) }}
           </td>
           <td class="px-6 py-4">
-            <button @click="routeTo(item.patient._id)" class="bg-primary p-1 px-10 text-white">
+            <button @click="routeTo(item.patient._id)" class="bg-primary p-1 px-10 text-white rounded">
               Detail
             </button>
           </td>
