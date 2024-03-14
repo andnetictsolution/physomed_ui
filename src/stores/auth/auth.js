@@ -23,13 +23,22 @@ export const authStore = defineStore('authStore', {
   },
   actions: {
     async login(payload) {
-      console.log('inside pinia')
-      console.log(payload)
-      const response = await axios.post('/api/users/login', payload)
-      console.log(response, 'response here')
-      if (!response) return
-      console.log(response.data, 'response')
-      const { first_name, last_name, role, phone, email, _id, token } = response.data
+      let first_name = '',
+        last_name = '',
+        role = '',
+        phone = '',
+        email = '',
+        _id = '',
+        token = ''
+      await axios.post('/api/users/login', payload).then((response) => {
+        first_name = response.data.first_name
+        last_name = response.data.last_name
+        phone = response.data.phone
+        email = response.data.email
+        token = response.data.token
+        _id = response.data._id
+        role = response.data.role
+      })
 
       this.isAuthenticated = true
       localStorage.setItem('physomed_token', token)

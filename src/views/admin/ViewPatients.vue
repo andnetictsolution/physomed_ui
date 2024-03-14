@@ -75,15 +75,26 @@ const confirmPayment = async () => {
       life: 6000
     })
   }
-  await cardPinia.confirmCardPayment({ patient: patientId.value })
-  await queuePinia.addNurseQueue({ date: new Date(), patient_id: patientId.value })
-  toast.add({
-    severity: 'info',
-    summary: 'Message',
-    detail: 'Patient paid succesfully',
-    life: 6000
-  })
-  visible.value = false
+  try {
+    await cardPinia.confirmCardPayment({ patient: patientId.value })
+    await queuePinia.addNurseQueue({ date: new Date(), patient_id: patientId.value })
+    toast.add({
+      severity: 'info',
+      summary: 'Message',
+      detail: 'Patient paid successfully',
+      life: 6000
+    })
+    visible.value = false
+  } catch (error) {
+    console.log(error)
+    toast.add({
+      severity: 'error',
+      summary: 'Message',
+      detail: error.response.data.message,
+      life: 6000
+    })
+  }
+
 }
 
 </script>
@@ -131,12 +142,12 @@ const confirmPayment = async () => {
             {{ cardPrice?.validity_duration_in_days }} days in order to send the patient to nurse
           </div>
           <div class="flex justify-center gap-3">
-            <Button class="bg-gray-200 hover:bg-blue-700 text-black hover:text-white font-bold py-2 px-4 rounded"
+            <Button class="bg-gray-200 hover:bg-primary text-black hover:text-white font-bold py-2 px-4 rounded"
               @click="visible = false">
               Cancel
             </Button>
             <Button @click="confirmPayment"
-              class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+              class="bg-primary hover:bg-primary text-white font-bold py-2 px-4 rounded">
               Confirm
             </Button>
           </div>

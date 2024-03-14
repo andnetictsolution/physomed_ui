@@ -2,8 +2,11 @@
 import { ref } from 'vue'
 import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
 import { useRoute } from 'vue-router'
+import Toast from 'primevue/toast';
+import { useToast } from 'primevue/usetoast';
 const route = useRoute()
-const id = route.params.id
+const id = route.params.id;
+const toast = useToast()
 const patientMedicalHistoryPinia = patientMedicalHistoryStore()
 const patientMedicalHistory = ref({
   chief_complaint: '',
@@ -36,22 +39,42 @@ const diseaseList = ref([
   { label: 'Pacemaker' },
   { label: 'Allergies' }
 ])
-const selectedDiseases = ref(['HIV', 'DM'])
+const selectedDiseases = ref([])
 const selectedPregnant = ref('')
 const saveAssesment = () => {
-  patientMedicalHistoryPinia.addpatientmedicalHistory({
-    patient_id: id,
-    list_of_other_diagnosis: selectedDiseases.value,
-    when_did_it_start: patientMedicalHistory.value.when_did_it_start,
-    is_patient_pregnant: selectedPregnant.value,
-    chief_complaint: patientMedicalHistory.value.chief_complaint,
-    list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
-  })
+  try {
+    patientMedicalHistoryPinia.addpatientmedicalHistory({
+      patient_id: id,
+      list_of_other_diagnosis: selectedDiseases.value,
+      when_did_it_start: patientMedicalHistory.value.when_did_it_start,
+      is_patient_pregnant: selectedPregnant.value,
+      chief_complaint: patientMedicalHistory.value.chief_complaint,
+      list_of_previous_diagnosis: patientMedicalHistory.value.list_of_previous_diagnosis
+    })
+    patientMedicalHistory.value = {}
+    selectedDiseases.value = [];
+    selectedPregnant.value = ''
+    toast.add({
+      severity: 'success',
+      summary: 'Message',
+      detail: 'Assessment added successfully',
+      life: 6000
+    })
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Message',
+      detail: error.response.data.message,
+      life: 6000
+    })
+  }
+
 }
 </script>
 
 <template>
   <div>
+    <Toast />
     <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-black">1. What is your chief
       compliant?</label>
     <textarea v-model="patientMedicalHistory.chief_complaint" id="whenToStrat" rows="4"
@@ -75,7 +98,7 @@ const saveAssesment = () => {
     <div class="grid gap-1 mb-6 md:grid-cols-3 ml-4">
       <div class="flex items-center" v-for="disease in diseaseList" :key="disease">
         <input v-model="selectedDiseases" type="checkbox" :value="disease.label"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          class="w-4 h-4 text-primary  bg-gray-100 border-gray-300 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
         <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00">{{ disease.label }}
         </label>
       </div>
@@ -90,8 +113,9 @@ const saveAssesment = () => {
         <div v-for="category in pregnancyCheckList" :key="category.key" class="flex items-center">
 
           <input v-model="selectedPregnant" type="radio" :value="category.label"
-            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
-          <label :for="category.key" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00 mr-2">{{ category.label }}</label>
+            class="w-4 h-4 text-primary bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+          <label :for="category.key" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-00 mr-2">{{
+      category.label }}</label>
         </div>
       </div>
     </div>
