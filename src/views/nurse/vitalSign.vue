@@ -1,6 +1,8 @@
 <script setup>
 import { patientMedicalHistoryStore } from '../../stores/nurse/patientMedicalHistory'
 import InputText from 'primevue/inputtext'
+import Toast from 'primevue/toast';
+import { useToast } from 'primevue/usetoast';
 import { ref } from 'vue'
 const MHPinia = patientMedicalHistoryStore()
 const props = defineProps({
@@ -9,6 +11,7 @@ const props = defineProps({
     required: true
   }
 })
+const toast = useToast()
 const vs = ref({
   BP: '',
   PR: '',
@@ -17,15 +20,33 @@ const vs = ref({
   Temp: ''
 })
 const saveVS = async () => {
-  await MHPinia.saveVitalSign({
-    id: props.patientId,
-    vitalSigns: vs.value
-  })
+  try {
+    await MHPinia.saveVitalSign({
+      id: props.patientId,
+      vitalSigns: vs.value
+    });
+    vs.value = {}
+    toast.add({
+      severity: 'success',
+      summary: 'Message',
+      detail: 'Vital sign added successfully',
+      life: 6000
+    })
+  } catch (error) {
+    toast.add({
+      severity: 'error',
+      summary: 'Message',
+      detail: error.response.data.message,
+      life: 6000
+    })
+  }
+
 }
 </script>
 
 <template>
   <div class="flex justify-start gap-2">
+    <Toast />
     <div class="flex flex-col">
       <div class="flex flex-col md:flex-row gap-2">
         <div class="flex flex-col">
@@ -53,10 +74,7 @@ const saveVS = async () => {
           <InputText class="border border-gray-400 p-1" v-model="vs.Temp" />
         </div>
         <div class="flex flex-col mt-4">
-          <button
-            @click="saveVS"
-            class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded"
-          >
+          <button @click="saveVS" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
             Save vital sign
           </button>
         </div>

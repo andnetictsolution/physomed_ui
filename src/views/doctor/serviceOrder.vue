@@ -43,7 +43,6 @@ const sendOrder = async () => {
     })
     this.selectedCategories.value = []
   } catch (error) {
-    console.log(error.response.data,"error in order")
     toast.add({
       severity: 'error',
       summary: 'Message',

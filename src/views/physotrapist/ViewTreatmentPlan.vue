@@ -24,7 +24,8 @@ const updateOrder = async (count, index) => {
     schedule_id: patientOrder.value[count].schedule[index]._id,
     date: new Date(),
     isServiceGiven: true,
-    note: patientOrder.value[count].schedule[index].note
+    note: patientOrder.value[count].schedule[index].note,
+    service_given_by:localStorage.getItem("physomed_user_id")
   }
   try {
     await orderPinia.addPatientProgressNote(payload);

@@ -54,6 +54,7 @@ const confirmPayment = async () => {
       patient_id: singleOrder.value.patient._id,
       paymentMethod: schedule.value
     })
+    await orderPinia.fetchSingleOrder(id)
     toast.add({
       severity: 'success',
       summary: 'Message',
