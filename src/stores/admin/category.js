@@ -26,13 +26,11 @@ export const categoryStore = defineStore('categoryStore', {
 
     async fetchCards(){
       await axios.get('/api/card/payment/get').then((response) => {
-        console.log(response.data,"response")
         this.cards = response.data.card_payment_config
       })
     },
     async configureCard(payload){
 await axios.post('/api/card/payment/set',payload).then((response) => {
-  console.log(response.data)
 })
     },
 

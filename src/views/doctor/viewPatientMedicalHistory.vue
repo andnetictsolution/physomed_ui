@@ -23,7 +23,6 @@ onMounted(() => {
   }, 200)
 })
 const viewvitalsign = computed(() => {
-  console.log('Responce', viewvitalsign)
   return medicalAssesmentPinia.getVitalSign
 })
 const vitalsignResults = computed(() => {

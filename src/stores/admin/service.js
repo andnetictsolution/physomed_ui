@@ -19,10 +19,13 @@ export const serviceStore = defineStore('serviceStore', {
     },
 
     async fetchServices() {
-      console.log('inside fetchServices')
       let response = await axios.get('/api/services/all')
-      console.log(response)
       this.services = response.data.services
+    },
+    async fetchSingleService(id) {
+      await axios.get('api/services/single/' + id).then((response) => {
+        this.service = response.data.service
+      })
     }
   }
 })

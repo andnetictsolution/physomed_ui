@@ -36,9 +36,8 @@ const patientPinia = patientStore()
 onMounted(async () => {
   authPinia.setTitle("Patient Details")
   await patientPinia.fetchSinglePatient(id)
-  // await orderPinia.fetchSingleOrder(id)
 })
 const patient = computed(() => {
-  return patientPinia.getPatient
+  return patientPinia.getSinglePatient
 })
 </script>

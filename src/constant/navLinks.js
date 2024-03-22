@@ -112,10 +112,11 @@ export const physotrapistLinks = [
     to: '/physio/queue',
     icon: 'pi pi-list'
   },
-  // {
-  //   name: 'Patient Treatment',
-  //   to: '/physotrapist/treatment'
-  // }
+  {
+    name: 'All Patients',
+    to: '/physiotherapist/patient',
+    icon: 'pi pi-list'
+  }
 ]
 
 export const diagnosis = [

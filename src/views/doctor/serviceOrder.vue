@@ -51,7 +51,6 @@ const sendOrder = async () => {
     })
   }
 
-  console.log('selected order', selectedCategories.value)
 }
 </script>
 

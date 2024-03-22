@@ -9,7 +9,7 @@ export const patientStore = defineStore('patient', {
     getAllPatients(state) {
       return state.patients
     },
-    getPatient(state) {
+    getSinglePatient(state) {
       return state.patient
     }
   },
@@ -18,7 +18,16 @@ export const patientStore = defineStore('patient', {
       await axios
         .post('/api/patients/register', payload)
         .then((res) => {
-          console.log(res)
+          // console.log(res)
+        })
+        .catch((err) => {
+        })
+    },
+    async updatePatient(payload) {
+      await axios
+        .put('/api/patients/update/' + payload.id, payload.patient)
+        .then((response) => {
+          // console.log(response)
         })
         .catch((err) => {
           console.log(err)
@@ -27,7 +36,9 @@ export const patientStore = defineStore('patient', {
     async fetchPatients() {
       let response = await axios.get('/api/patients/all')
       this.patients = response.data.patients
+      // console.log(this.patients)
     },
+    
     async fetchSinglePatient(id) {
       let response = await axios.get('api/patients/' + id)
       this.patient = response.data.patient

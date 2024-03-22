@@ -1,18 +1,37 @@
 <script setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { patientStore } from '../../stores/reception/patient.js'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 import { authStore } from "../../stores/auth/auth.js"
 import { onMounted } from "vue"
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { convertDatePicker } from '@/utils/moment.js'
 const toast = useToast()
 const authPinia = authStore()
 const patientPinia = patientStore();
-const router = useRouter()
-onMounted(() => {
-  authPinia.setTitle("Patient Registration")
+const router = useRouter();
+const route = useRoute();
+const id = route.params.id;
+onMounted(async () => {
+  if (id) {
+    authPinia.setTitle("Update patient details")
+    await patientPinia.fetchSinglePatient(id)
+    patient.value.first_name = singlePatient.value.first_name;
+    patient.value.last_name = singlePatient.value.last_name;
+    patient.value.middle_name = singlePatient.value.middle_name;
+    patient.value.sex = singlePatient.value.sex;
+    patient.value.date_of_birth = convertDatePicker(singlePatient.value.date_of_birth);
+    patient.value.phone = singlePatient.value.phone;
+  } else {
+    authPinia.setTitle("Add new patinet")
+  }
+
 })
+const singlePatient = computed(() => {
+  return patientPinia.getSinglePatient
+})
+
 const user_role = localStorage.getItem("physomed_user_role")
 const patient = ref({
   middle_name: '',
@@ -22,8 +41,25 @@ const patient = ref({
   sex: '',
   phone: ''
 })
+const updatePatient = async () => {
+  try {
+    await patientPinia.updatePatient({
+      id: id,
+      patient: patient.value
+    })
+    router.push("/patient/view")
+  } catch (error) {
+    console.log(error)
+    toast.add({
+      severity: 'error',
+      summary: 'Message',
+      detail: error?.response?.data?.message,
+      life: 6000
+    })
+  }
+}
 const registerPatient = async () => {
-  if (!patient.value.first_name || !patient.value.middle_name || !patient.value.last_name || !patient.value.date_of_birth || !patient.value.sex || !patient.value.phone)  {
+  if (!patient.value.first_name || !patient.value.middle_name || !patient.value.last_name || !patient.value.date_of_birth || !patient.value.sex || !patient.value.phone) {
     return toast.add({
       severity: 'info',
       summary: 'Message',
@@ -63,6 +99,7 @@ const registerPatient = async () => {
     <div class="w-full sm:w-1/2 md:w-full lg:w-2/3 mt-8 p-4 bg-gray-100 dark:bg-gray-900 rounded shadow">
       <div class="flex flex-wrap -mx-2">
         <div class="w-full md:w-1/2 px-2 mb-4">
+
           <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white">First Name:</label>
           <input v-model="patient.first_name" id="name" type="text"
             class="w-full px-3 py-2 dark:text-black border border-gray-300 rounded focus:outline-none focus:border-primary"
@@ -103,10 +140,17 @@ const registerPatient = async () => {
         </div>
       </div>
       <div class="flex justify-end">
-        <button :class="{ 'cursor-not-allowed': !patient.first_name || !patient.last_name || !patient.middle_name }"
+        <button v-if="!id"
+          :class="{ 'cursor-not-allowed': !patient.first_name || !patient.last_name || !patient.middle_name }"
           :disabled="!patient.first_name || !patient.last_name || !patient.middle_name" @click="registerPatient"
           class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
           Register
+        </button>
+        <button v-if="user_role == 'Reception' && id"
+          :class="{ 'cursor-not-allowed': !patient.first_name || !patient.last_name || !patient.middle_name }"
+          :disabled="!patient.first_name || !patient.last_name || !patient.middle_name" @click="updatePatient"
+          class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
+          Update
         </button>
       </div>
     </div>

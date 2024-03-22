@@ -27,7 +27,6 @@ const addRole = async() => {
     await rolePinia.addNewRole({name:role.value.name});
     roleDialog.value = false
   } catch (error) {
-    console.log(error)
   }
   
 }

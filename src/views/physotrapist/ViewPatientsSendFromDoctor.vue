@@ -13,7 +13,6 @@ onMounted(async () => {
 const allPatientsInPhysotrapy = computed(() => {
   return patientInPhysotrapistPinia.getAllPatientsFromPhysotrapist
 })
-console.log('All Patientss', allPatientsInPhysotrapy)
 
 // const visible = ref(false)
 // const orderVars = ref({

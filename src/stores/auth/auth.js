@@ -70,7 +70,6 @@ export const authStore = defineStore('authStore', {
     async fetchRoles() {
       const roles = await axios.get('/api/roles/all')
       this.roles = roles.data.roles
-      console.log(roles, 'roles')
     }
   }
 })

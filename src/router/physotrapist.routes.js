@@ -21,6 +21,11 @@ const physotrapistRoutes = [
     component: () => import('../views/physotrapist/physioQueue.vue')
   },
   {
+    path: '/physiotherapist/patient',
+    name: 'physioPatient',
+    component: () => import('../views/physotrapist/allPatients.vue')
+  },
+  {
     path: '/physio/order/:id',
     name: 'physioOrder',
     component: () => import('../views/physotrapist/orderDetail.vue')

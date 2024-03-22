@@ -48,6 +48,7 @@ const openModal = (id) => {
 const allServices = computed(() => {
   return servicePinia.getAllServices
 })
+
 const allRevenue = computed(() => {
   return reportPinia.getRevenue
 })
@@ -131,7 +132,6 @@ const filterCompareReport = async () => {
               placeholder=""
             />
           </div>
-          {{ filteredRoles }}
           <div class="">
             <label for="name" class="block text-gray-700 font-bold mb-2 dark:text-white"
               >End Date:</label
@@ -261,7 +261,7 @@ const filterCompareReport = async () => {
     <h3 class="font-bold text-xl my-1">Physiotherapist work statistics</h3>
     <DataTable
       class="h-screen"
-      :value="physiotherapist"
+      :value="filteredRoles"
       scrollable
       scrollHeight="600px"
       tableStyle="min-width: 50rem"

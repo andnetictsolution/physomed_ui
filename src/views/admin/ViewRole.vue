@@ -9,7 +9,6 @@ onMounted(() => {
 const allRoles = computed(() => {
   return rolePinia.getAllRoles
 })
-console.log('Inside View service', allRoles)
 
 const column = ['name']
 </script>

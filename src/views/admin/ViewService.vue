@@ -20,6 +20,9 @@ const allServices = computed(() => {
 const goToService = (()=>{
 router.push("/service/add")
 })
+const editService = ((id)=>{
+  router.push("/service/edit/"+id)
+})
 
 </script>
 <template>
@@ -49,8 +52,8 @@ router.push("/service/add")
               </template>
               </Column>
               <Column :exportable="false" header="Actions" style="min-width:12rem">
-                  <template #body>
-                      <Button icon="pi pi-pencil" outlined rounded class="mr-2" />
+                  <template #body="slotProps">
+                      <Button icon="pi pi-pencil" outlined rounded class="mr-2" @click="editService(slotProps.data._id)"/>
                       <Button icon="pi pi-trash" outlined rounded severity="danger" />
                   </template>
               </Column>

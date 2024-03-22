@@ -1,6 +1,5 @@
 <script setup>
 import BaseTable from '@/components/table/tableHH.vue'
-// import { orderStore } from '../../stores/reception/order'
 import { queueStore } from '../../stores/queue/queue'
 import { computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'

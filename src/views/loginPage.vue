@@ -20,8 +20,6 @@ const login = async () => {
       life: 6000
     })
   } catch (error) {
-    console.log(error)
-    console.log(toast)
     toast.add({
       severity: 'error',
       summary: 'Message',

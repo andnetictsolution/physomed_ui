@@ -16,7 +16,7 @@
           data-dropdown-placement="bottom"
         >
           <!-- <span class="sr-only">Open user menu</span> -->
-          <img class="w-8 h-8 rounded-full" src="../../assets/andnet.jpeg" alt="user photo" />
+          <img class="w-8 h-8 rounded-full" src="../../assets/images.png" alt="user photo" />
         </button>
         <!-- Dropdown menu -->
         <div

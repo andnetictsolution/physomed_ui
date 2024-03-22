@@ -1,13 +1,13 @@
 import axios from 'axios'
 
 // baseurl for haf pc
-// axios.defaults.baseURL = 'http://192.168.1.106:5000/'
+axios.defaults.baseURL = 'http://192.168.1.106:5000/'
 
 // base url for localhost
 // axios.defaults.baseURL = 'http://localhost:4000'
 
 // base url for physioMed pc
-axios.defaults.baseURL = 'http://192.168.100.4:4000/'
+// axios.defaults.baseURL = 'http://192.168.100.4:4000/'
 
 // for outgoing requests
 axios.interceptors.request.use((config) => {

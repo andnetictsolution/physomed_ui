@@ -21,7 +21,6 @@ const paymentList = computed(() => {
   return payment.getOnePatientPayments
 })
 const payOrder = (payment) => {
-  console.log(payment, 'payment')
   router.push('/payment/order/schedule/' + payment.order)
   // orderPinia.confirmPayment({ payments: [payment._id],patient_id:payment.patient._id })
 }

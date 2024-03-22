@@ -53,7 +53,6 @@ router.beforeEach((to, from, next) => {
         localStorage.removeItem("physomed_token");
         next({ path: "/" });
       } else {
-        console.log("match ", to.matched);
       }
       const User = JSON.parse(
         localStorage.getItem("physomed_authenticated_user")

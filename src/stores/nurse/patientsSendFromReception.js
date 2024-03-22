@@ -7,7 +7,6 @@ export const patientStoreInNurse = defineStore('nurseePatient', {
     }),
     getters: {
         getAllPatientsFromNurse(state) {
-            console.log("Nurse patients", this.nursePatients)
             return this.nursePatients
         }
     },
@@ -18,8 +17,6 @@ export const patientStoreInNurse = defineStore('nurseePatient', {
         async fetchPatientsFromNurse() {
             let response = await axios.get('/api/orders/all')
             this.nursePatients = response.data.orders
-            console.log("Responce from .", response.data.orders)
-            console.log("Responce from order", this.nursePatients)
         }
     }
 })

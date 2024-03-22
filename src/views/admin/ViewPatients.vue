@@ -1,7 +1,6 @@
 <script setup>
 
 import { orderStore } from '../../stores/reception/order'
-import { serviceStore } from '../../stores/admin/service'
 import { authStore } from '@/stores/auth/auth'
 import { cardStore } from '../../stores/admin/cardConfig'
 import { queueStore } from '../../stores/queue/queue'
@@ -14,22 +13,37 @@ import { useToast } from 'primevue/usetoast'
 import DataTable from 'primevue/datatable'
 import Column from 'primevue/column'
 import { convertDOBToAge, convertShortDate } from '@/utils/moment'
+import { useRouter } from 'vue-router'
+import InputText from 'primevue/inputtext'
+import Dropdown from 'primevue/dropdown'
+import debounce from 'lodash.debounce';
 const patientPinia = orderStore()
 const queuePinia = queueStore()
-const servicePinia = serviceStore()
 const authPinia = authStore()
 const cardPinia = cardStore()
 const toast = useToast()
+const router = useRouter()
 onMounted(async () => {
   authPinia.setTitle('All Patients')
   await patientPinia.fetchPatients()
-  await servicePinia.fetchServices()
   await cardPinia.fetchCardPrice()
   socket.on('newNurseQueue', async (data) => {
     await patientPinia.fetchPatients()
   });
 })
-
+const filterPatient = debounce(async function () {
+  let payload = {};
+  if (searchBy.value == "card_no") {
+    payload = {
+      card_no: search.value
+    }
+  } else {
+    payload = {
+      first_name: search.value
+    }
+  }
+  await patientPinia.filterPatients(payload)
+}, 300)
 const allPatients = computed(() => {
   return patientPinia.getAllPatients
 })
@@ -37,11 +51,7 @@ const cardPrice = computed(() => {
   return cardPinia.getCardPrice
 })
 
-console.log('Patient in view patients', allPatients)
-const allServices = computed(() => {
-  return servicePinia.getAllServices
-})
-console.log('allServices', allServices)
+
 const visible = ref(false)
 const patientId = ref('')
 const openModal = async (value) => {
@@ -65,6 +75,21 @@ const openModal = async (value) => {
     visible.value = !visible.value
   }
 }
+const editPatient = (id) => {
+  router.push('/patient/edit/' + id)
+}
+const searchBy = ref("first_name");
+const search = ref("");
+const searchMethods = ref([
+  {
+    name: "Card No",
+    value: "card_no"
+  },
+  {
+    name: "Name",
+    value: "first_name"
+  }
+])
 
 const confirmPayment = async () => {
   if (!patientId.value) {
@@ -105,6 +130,17 @@ const confirmPayment = async () => {
 
     <div class="calc-screen">
       <Toast />
+      <div class="flex flex-col md:flex-row my-2 gap-2">
+        <span class="">
+          <Dropdown v-model="searchBy" :options="searchMethods" valueLabel="value" optionLabel="name"
+            placeholder="Select search method" class="w-full md:w-[14rem]" />
+        </span>
+        <span class="relative flex flex-row">
+          <i class="pi pi-search absolute top-2/4 -mt-2 left-3 text-black text-surface-400 dark:text-black" />
+          <InputText v-model="search" @input="filterPatient" placeholder="Type to search"
+            class="pl-10 py-2 text-black" />
+        </span>
+      </div>
       <DataTable class="h-screen" :value="allPatients" scrollable scrollHeight="600px" tableStyle="min-width: 50rem">
         <Column field="name" header="Full Name">
           <template #body="slotProps">
@@ -126,7 +162,7 @@ const confirmPayment = async () => {
         <Column header="Actions">
 
           <template #body="slotProps">
-            <Button type="button" label="Edit" icon="pi pi-pencil"
+            <Button type="button" label="Edit" icon="pi pi-pencil" @click="editPatient(slotProps.data._id)"
               class="mx-1 w-full md:w-auto bg-primary p-1 my-1 px-10 text-white" />
             <Button type="button" label="Send patient" icon="pi pi-send" @click="openModal(slotProps.data)"
               class="mx-1 bg-primary p-1 my-1 w-full md:w-auto px-10 text-white" />
@@ -146,8 +182,7 @@ const confirmPayment = async () => {
               @click="visible = false">
               Cancel
             </Button>
-            <Button @click="confirmPayment"
-              class="bg-primary hover:bg-primary text-white font-bold py-2 px-4 rounded">
+            <Button @click="confirmPayment" class="bg-primary hover:bg-primary text-white font-bold py-2 px-4 rounded">
               Confirm
             </Button>
           </div>
