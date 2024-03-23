@@ -97,7 +97,7 @@ const user_role = computed(() => {
         </li>
       </ul>
 
-      <ul class="space-y-2 font-medium" v-if="user_role == 'Physotrapist'">
+      <ul class="space-y-2 font-medium" v-if="user_role == 'Physiotherapist'">
         <li v-for="(link, i) in physotrapistLinks" :key="i">
           
           <RouterLink

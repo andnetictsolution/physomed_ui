@@ -25,7 +25,7 @@ const updateOrder = async (count, index) => {
     date: new Date(),
     isServiceGiven: true,
     note: patientOrder.value[count].schedule[index].note,
-    service_given_by:localStorage.getItem("physomed_user_id")
+    service_given_by: localStorage.getItem("physomed_user_id")
   }
   try {
     await orderPinia.addPatientProgressNote(payload);
@@ -71,7 +71,7 @@ const updateOrder = async (count, index) => {
             <li class="my-2">
               <div class="my-1">Progress note:</div>
               <div>
-                <Textarea  v-model="schedule.note" rows="3"
+                <Textarea v-model="schedule.note" rows="3"
                   class="w-full border border-gray-200 p-2 rounded-lg"></Textarea>
               </div>
             </li>

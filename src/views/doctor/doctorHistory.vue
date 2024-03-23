@@ -138,6 +138,12 @@ const sendToDr = async()=>{
           {{ PMH.medicalHistory[0]?.referral_diagnosis }}
         </p>
       </div>
+      <div class="flex my-1 flex-col border border-gray-200 rounded-lg p-4">
+        <h2 class="m-0 font-semibold">Treatment plan note</h2>
+        <p v-if="PMH.medicalHistory">
+          {{ PMH.medicalHistory[0]?.treatment_plan_note }}
+        </p>
+      </div>
     </AccordionTab>
   </Accordion>
 </template>

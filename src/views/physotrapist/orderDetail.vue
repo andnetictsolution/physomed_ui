@@ -6,9 +6,11 @@
       <TabPanel header="Order Exercise">
         <OP />
       </TabPanel>
+      <TabPanel header="Medical history">
+        <MH />
+      </TabPanel>
     </TabView>
     <div class="my-10 text-white text-center text-lg" v-if="!patient">
-      {{ patient }}
       Sorry there is no treatment plan for this patient.
     </div>
   </div>
@@ -17,6 +19,7 @@
 <script setup>
 import TabView from 'primevue/tabview'
 import TabPanel from 'primevue/tabpanel'
+import MH from "../doctor/doctorHistory.vue"
 import PersonalInfo from '@/components/auth/personalInfo.vue'
 import OP from './ViewTreatmentPlan.vue'
 import { patientStore } from '../../stores/reception/patient'

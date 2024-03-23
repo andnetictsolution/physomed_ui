@@ -42,6 +42,6 @@ onMounted(async () => {
   await patientPinia.fetchSinglePatient(id)
 })
 const patient = computed(() => {
-  return patientPinia.getPatient
+  return patientPinia.getSinglePatient
 })
 </script>

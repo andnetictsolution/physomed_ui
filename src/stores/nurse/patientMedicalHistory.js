@@ -13,6 +13,7 @@ export const patientMedicalHistoryStore = defineStore('patientMedicalHistory', {
     },
     actions: {
         async addpatientmedicalHistory(payload) {
+            console.log(payload);
             await axios.post(`/api/medicalHistory/save/${payload.patient_id}`, { medical_history_data: payload }).then((response) => {
                 this.medicalHistory = response.data.patient
             })

@@ -5,8 +5,10 @@ import { computed, onMounted, ref } from 'vue'
 import Toast from 'primevue/toast'
 import { useToast } from 'primevue/usetoast'
 import { useRoute } from 'vue-router'
+import { patientMedicalHistoryStore } from '@/stores/nurse/patientMedicalHistory'
 const servicePinia = serviceStore()
-const orderPinia = orderStore()
+const orderPinia = orderStore();
+const patientPinia = patientMedicalHistoryStore()
 const toast = useToast()
 onMounted(async () => {
   await servicePinia.fetchServices()
@@ -17,6 +19,7 @@ const allServices = computed(() => {
   return servicePinia.getAllServices
 })
 const selectedCategories = ref([])
+const treatment_plan_note = ref("")
 const filteredServices = computed(() => {
   let services = []
   allServices.value.forEach((service) => {
@@ -41,6 +44,14 @@ const sendOrder = async () => {
       detail: 'Treatment plan sent successfully',
       life: 6000
     })
+    if (treatment_plan_note.value != "") {
+      await patientPinia.addpatientmedicalHistory({
+        patient_id: id,
+        treatment_plan_note: treatment_plan_note.value,
+      })
+    }
+
+    this.treatment_plan_note.value = ""
     this.selectedCategories.value = []
   } catch (error) {
     toast.add({
@@ -59,7 +70,7 @@ const sendOrder = async () => {
     <Toast />
     <div class="flex flex-wrap">
       <div v-for="category in filteredServices" :key="category.service" class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4">
-        
+
         <div class="flex items-center">
           <input v-model="selectedCategories" type="checkbox" :value="category"
             class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
@@ -83,9 +94,17 @@ const sendOrder = async () => {
           </div>
         </div>
       </div>
+
+    </div>
+    <div>
+      <textarea v-model="treatment_plan_note" id="treatment-plan_note" rows="4"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-00 dark:border-gray-600 dark:placeholder-gray-400 dark:text-black dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        placeholder="Write your thoughts here..."></textarea>
     </div>
     <div class="my-2">
-      <button :class="{'cursor-not-allowed':selectedCategories.length <= 0}" :disabled="selectedCategories.length <= 0" @click="sendOrder" class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
+      <button :class="{ 'cursor-not-allowed': selectedCategories.length <= 0 }"
+        :disabled="selectedCategories.length <= 0" @click="sendOrder"
+        class="bg-primary hover:bg-primary-700 text-white font-bold py-2 px-4 rounded">
         Send Order
       </button>
     </div>
